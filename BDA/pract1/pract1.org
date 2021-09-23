@@ -1,0 +1,60 @@
+#+TITLE: Pract1
+** Consultas sobre una solo tablas
+*** 1. Obtener ordenados ascendentemente los códigos de los países de donde son los actores
+#+begin_src sql
+SELECT DISTINCT cod_pais
+FROM BDA_CINE.actor
+ORDER BY cod_pais;
+#+end_src
+*** 2. Obtener el código y el título de las películas de año anterior a 1970 que no estén basadas en ningún libro ordenadas por título.
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM pelicula
+WHERE anyo < 1970 AND cod_lib IS NULL
+ORDER BY titulo;
+#+end_src
+*** TODO 3. Obtener el código y el nombre de los actores cuyo nombre incluye “John”.
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM pelicula
+WHERE anyo < 1970 AND cod_lib IS NULL
+ORDER BY titulo;
+#+end_src
+*** 4. Obtener el código y el título de las películas de más de 120 minutos de la década de los 80
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM pelicula
+WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
+ORDER BY titulo;
+#+end_src
+*** TODO 5. Obtener el código y el título de las películas que estén basadas en algún libro y cuyo director se apellide ‘Pakula’.
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM pelicula
+WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
+ORDER BY titulo;
+#+end_src
+*** 6. ¿Cuántas películas hay de más de 120 minutos de la década de los 80?
+#+begin_src sql
+SELECT count(*)
+FROM pelicula
+WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
+ORDER BY titulo;
+#+end_src
+*** 7. ¿Cuántas películas se han clasificado de los géneros de código 'BB5' o 'GG4' o'JH6'.
+#+begin_src sql
+SELECT count(DISTINCT cod_peli)
+FROM clasificacion
+WHERE cod_gen IN('BB5','GG4','JH6')
+#+end_src
+*** 8. ¿De qué año es el libro más antiguo?
+*** 9. ¿Cuál es la duración media de las películas del año 1987?
+*** 10. ¿Cuántos minutos ocupan todas las películas dirigidas por ‘Steven Spielberg’?
+** Consultas sobre varias tablas
+*** 13. Obtener el código y el título de las películas basadas en algún libro anterior a 1950
+#+begin_src sql
+SELECT cod_peli, pelicula.titulo
+FROM pelicula, libro --Producto cartesiano de pelicula X libro
+WHERE pelicula.cod_lib = libro.cod_lib AND libro.anyo < 1950
+#+end_src
+*** 14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género de nombre ‘Comedia’ (ordenados por nombre).
