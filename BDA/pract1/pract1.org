@@ -1,5 +1,5 @@
 #+TITLE: Pract1
-**Base de Datos CINE
+*Base de Datos CINE
 ** Consultas sobre una sola tabla
 *** 1. Obtener ordenados ascendentemente los códigos de los países de donde son los actores
 #+begin_src sql
