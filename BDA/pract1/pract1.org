@@ -1,5 +1,5 @@
 #+TITLE: Pract1
-*Base de Datos CINE
+* Base de Datos CINE
 ** Consultas sobre una sola tabla
 *** 1. Obtener ordenados ascendentemente los códigos de los países de donde son los actores
 #+begin_src sql
@@ -58,13 +58,13 @@ FROM libro_peli
 SELECT AVG(duracion)
 FROM pelicula
 WHERE anyo=1987
-#end_src
+#+end_src
 *** 10. ¿Cuántos minutos ocupan todas las películas dirigidas por ‘Steven Spielberg’?
 #+begin_src sql
 SELECT SUM(duracion)
 FROM pelicula
 WHERE director='Steven Spielberg'
-#end_src
+#+end_src
 ** Consultas sobre varias tablas
 *** 13. Obtener el código y el título de las películas basadas en algún libro anterior a 1950
 #+begin_src sql
@@ -75,4 +75,4 @@ WHERE pelicula.cod_lib = libro.cod_lib AND libro.anyo < 1950
 *** 14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género de nombre ‘Comedia’ (ordenados por nombre).
 #+begin_src sql
 
-#end_src
+#+end_src
