@@ -16,7 +16,9 @@ ORDER BY titulo;
 #+end_src
 *** TODO 3. Obtener el código y el nombre de los actores cuyo nombre incluye “John”.
 #+begin_src sql
-
+SELECT cod_act, nombre
+FROM actor
+WHERE nombre LIKE '%John%'
 #+end_src
 *** 4. Obtener el código y el título de las películas de más de 120 minutos de la década de los 80
 #+begin_src sql
@@ -27,7 +29,9 @@ ORDER BY titulo;
 #+end_src
 *** TODO 5. Obtener el código y el título de las películas que estén basadas en algún libro y cuyo director se apellide ‘Pakula’.
 #+begin_src sql
-
+SELECT cod_peli, titulo
+FROM pelicula
+WHERE cod_lib is not null and director LIKE '% Pakula%'
 #+end_src
 *** 6. ¿Cuántas películas hay de más de 120 minutos de la década de los 80?
 #+begin_src sql
@@ -96,4 +100,3 @@ FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
 WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=act.cod_peli and act.cod_act=atr.cod_act and atr.cod_pais=pa.cod_pais
 ORDER BY pa.nombre
 #+end_src
-** Consultas con subconsultas
