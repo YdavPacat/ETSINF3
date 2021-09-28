@@ -1,18 +1,20 @@
 * SIN
 
 ** Evaluación 
-(1,25 puntos) A1. Prueba de respuesta abierta sobre laboratorio de B1 .
-(1,75 puntos) A2. Prueba de test sobre B1 .
-(2 puntos)    A3. Prueba de respuesta abierta sobre B1.
-(1,25 puntos) A4. Prueba de respuesta abierta sobre laboratorio de B2 .
-(1,75 puntos) A5. Prueba de test sobre B2 .
-(2 puntos)    A6. Prueba de respuesta abierta sobre B2 .
+ - (1,25 puntos) A1. Prueba de respuesta abierta sobre laboratorio de B1 .
+ - (1,75 puntos) A2. Prueba de test sobre B1 .
+ - (2 puntos)    A3. Prueba de respuesta abierta sobre B1.
+ - (1,25 puntos) A4. Prueba de respuesta abierta sobre laboratorio de B2 .
+ - (1,75 puntos) A5. Prueba de test sobre B2 .
+ - (2 puntos)    A6. Prueba de respuesta abierta sobre B2 .
 
 No se requieren puntuaciones mínimas en los diferentes actos de evaluación.
 
 La nota final (NF) se calcula mediante la fórmula siguiente:
-    NF = L + ( 1 - L/10 ) * (T+P) * 10/7,5
+   - NF = L + ( 1 - L/10 ) * (T+P) * 10/7,5
 
 L es la nota de laboratorio: L=A1+A4
+
 T es la nota de test: T=A2+A5
+
 P es la nota de problemas: P=A3+A6
