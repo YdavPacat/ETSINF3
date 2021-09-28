@@ -93,7 +93,9 @@ FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
 WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=pe.cod_peli and pe.cod_peli=act.cod_peli and act.cod_act=atr.cod_act and atr.cod_pais=pa.cod_pais
 ORDER BY pa.nombre
 #+end_src
-/*Otra manera*/
+
+/Otra manera/
+
 #+begin_src sql
 SELECT DISTINCT pa.cod_pais, pa.nombre
 FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
