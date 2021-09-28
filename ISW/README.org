@@ -1,0 +1,13 @@
+* ISW
+** Evaluación
+- Teoría
+  + Prueba escrita de respuesta abierta 
+    - Acto Teoría 1 - 20% | Mínimo de 4/10
+    - Acto Teoría 2 - 20% | Mínimo de 4/10
+  + Caso práctico en clase
+    - 2 Casos - 5% cada uno 
+- Prácticas 
+  + Proyecto de laboratorio | Mínimo de 4/10 
+    - Sesión de práctica 8 - 30%
+    - Sesión de práctica 10 - 10%
+  + Coevaluación por pares - 10%
