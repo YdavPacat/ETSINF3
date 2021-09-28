@@ -1,0 +1,10 @@
+* TSR
+** Evaluación
+  - Dos pruebas tipo test [40% cada una]
+    + Cada una requiere un MÍNIMO de 3/10.
+  - Una prueba de respuesta abierta [20%]
+    + Contenidos de la práctica 2
+    + MÍNIMO de 3/10
+    + Fecha intermedia entre los parciales
+  - Las tres pruebas pueden recuperase de forma independiente al final de semestre 
+  - La evaluación de prácticas está incluida en estos parciales
