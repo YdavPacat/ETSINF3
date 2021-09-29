@@ -1,7 +1,9 @@
 (defglobal ?*nod_gen* = 0)
 (defglobal ?*prof* = 60)
 
+
 (deffacts mapa
+    ;; Atributos estáticos
     (limites 8 5)
     (hueco 2 1)
     (hueco 6 1)
@@ -13,11 +15,12 @@
     (hueco 4 5)
     (hueco 7 5)
 
-    (juego pos 7 3 latas l 3 3 l 3 1 l 6 4)
+    ;; Atributos dinámicos
+    (problema pos 7 3 latas l 3 3 l 3 1 l 6 4)
 )
 
 (defrule mov_der
-	?f <- (juego pos ?x ?y latas $?z)
+	?f <- (problema tas $?z)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?x ?lim_x))
@@ -25,11 +28,11 @@
     (test (not (member$ (create$ l(+ ?x 1) ?y) $?z)))
 =>
     (bind ?*nod_gen* (+ ?*nod_gen* 1))
-    (assert (juego pos (+ ?x 1) ?y latas $?z))
+    (assert (problema pos (+ ?x 1) ?y latas $?z))
 )
 
 (defrule mov_izq
-	?f <- (juego pos ?x ?y latas $?z)
+	?f <- (problema pos ?x ?y latas $?z)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?x 1))
@@ -37,11 +40,12 @@
     (test (not (member$ (create$ l(- ?x 1) ?y) $?z))); No se mueva hacia la lata
 =>
     (bind ?*nod_gen* (+ ?*nod_gen* 1))
-    (assert (juego pos (- ?x 1) ?y latas $?z))
+    (assert (problema pos (- ?x 1) ?y latas $?z))
 )
 
 (defrule mov_aba
-	?f <- (juego pos ?x ?y latas $?z)
+	?f <- (problema pos ?x ?y latas $?z)
+
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?y 1))
@@ -49,11 +53,11 @@
     (test (not (member$ (create$ l ?x (- ?y 1)) $?z)))
 =>
     (bind ?*nod_gen* (+ ?*nod_gen* 1))
-    (assert (juego pos ?x (- ?y 1) latas $?z))
+    (assert (problema pos ?x (- ?y 1) latas $?z))
 )
 
 (defrule mov_arr
-	?f <- (juego pos ?x ?y latas $?z)
+	?f <- (problema pos ?x ?y latas $?z)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?y ?lim_y))
@@ -61,7 +65,7 @@
     (test (not (member$ (create$ l ?x (+ ?y 1)) $?z)))
 =>
     (bind ?*nod_gen* (+ ?*nod_gen* 1))
-    (assert (juego pos ?x (+ ?y 1) latas $?z))
+    (assert (problema pos ?x (+ ?y 1) latas $?z))
 )
 
 (defrule mov_lata_arr
@@ -74,5 +78,18 @@
 =>
 )
 (defrule mov_lata_izq
+=>
+)
+
+(defrule tirar_lata_arr
+=>
+)
+(defrule tirar_lata_aba
+=>
+)
+(defrule tirar_lata_der
+=>
+)
+(defrule tirar_lata_izq
 =>
 )
