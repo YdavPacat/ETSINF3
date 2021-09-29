@@ -1,4 +1,5 @@
-
+
+
   (deffacts datos
       (ADN 1 A A C C T C G A A A)
       (ADN 2 A G G C T A G A A A)
@@ -20,4 +21,4 @@
     (declare (salience -10))
      (mutations ?m)
    =>
-     (printout t "El número de mutaciones es " ?m crlf))
+     (printout t "El nÃºmero de mutaciones es " ?m crlf))
