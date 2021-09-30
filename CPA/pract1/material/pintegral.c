@@ -17,7 +17,7 @@ double calcula_integral1(double a, double b, int n)
    int i;
 
    h=(b-a)/n;
-#pragma parallel omp for reduntion(+:s)
+#pragma omp parallel for reduction(+:s)
    for (i=0; i<n; i++) {
       s+=f(a+h*(i+0.5));
    }
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 #pragma omp parallel
    {
       int id = omp_get_thread_num();
-      if (id = 0)
+      if (id == 0)
          printf("Número de hilos: %d\n", omp_get_num_threads());
    }
 
