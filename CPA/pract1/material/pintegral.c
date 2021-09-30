@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 {
    double a, b, result;
    int n, variante;
+   float t1, t2;
 
    if (argc<2) {
       fprintf(stderr, "Numero de argumentos incorrecto\n");
@@ -60,6 +61,16 @@ int main(int argc, char *argv[])
    b=1;
 
    variante=atoi(argv[1]);
+
+#pragma omp parallel
+   {
+      int id = omp_get_thread_num();
+      if (id = 0)
+         printf("Número de hilos: %d\n", omp_get_num_threads());
+   }
+
+   t1=omp_get_wtime();
+
    switch (variante) {
       case 1:
          result = calcula_integral1(a,b,n);
@@ -72,7 +83,10 @@ int main(int argc, char *argv[])
          return 1;
    }
 
+   t2=omp_get_wtime();
+
    printf("Valor de la integral = %.12f\n", result);
+   printf("El tiempo de ejecucion ha siod de %f segunos\n", t2-t1);
 
    return 0;
 }
