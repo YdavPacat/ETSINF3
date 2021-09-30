@@ -2,12 +2,14 @@
 * Base de Datos CINE
 ** Consultas sobre una sola tabla
 *** 1. Obtener ordenados ascendentemente los códigos de los países de donde son los actores
+
 #+begin_src sql
 SELECT DISTINCT cod_pais
 FROM actor
 ORDER BY cod_pais;
 #+end_src
 *** 2. Obtener el código y el título de las películas de año anterior a 1970 que no estén basadas en ningún libro ordenadas por título.
+
 #+begin_src sql
 SELECT cod_peli, titulo
 FROM pelicula
@@ -15,12 +17,14 @@ WHERE anyo < 1970 AND cod_lib IS NULL
 ORDER BY titulo;
 #+end_src
 *** TODO 3. Obtener el código y el nombre de los actores cuyo nombre incluye “John”.
+
 #+begin_src sql
 SELECT cod_act, nombre
 FROM actor
 WHERE nombre LIKE '%John%'
 #+end_src
 *** 4. Obtener el código y el título de las películas de más de 120 minutos de la década de los 80
+
 #+begin_src sql
 SELECT cod_peli, titulo
 FROM pelicula
@@ -28,12 +32,14 @@ WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
 *** TODO 5. Obtener el código y el título de las películas que estén basadas en algún libro y cuyo director se apellide ‘Pakula’.
+
 #+begin_src sql
 SELECT cod_peli, titulo
 FROM pelicula
 WHERE cod_lib is not null and director LIKE '% Pakula%'
 #+end_src
 *** 6. ¿Cuántas películas hay de más de 120 minutos de la década de los 80?
+
 #+begin_src sql
 SELECT count(*)
 FROM pelicula
@@ -41,23 +47,27 @@ WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
 *** 7. ¿Cuántas películas se han clasificado de los géneros de código 'BB5' o 'GG4' o'JH6'?
+
 #+begin_src sql
 SELECT count(DISTINCT cod_peli)
 FROM clasificacion
 WHERE cod_gen IN('BB5','GG4','JH6')
 #+end_src
 *** 8. ¿De qué año es el libro más antiguo?
+
 #+begin_src sql
 SELECT MIN(anyo)
 FROM libro_peli
 #+end_src
 *** 9. ¿Cuál es la duración media de las películas del año 1987?
+
 #+begin_src sql
 SELECT AVG(duracion)
 FROM pelicula
 WHERE anyo=1987
 #+end_src
 *** 10. ¿Cuántos minutos ocupan todas las películas dirigidas por ‘Steven Spielberg’?
+
 #+begin_src sql
 SELECT SUM(duracion)
 FROM pelicula
@@ -66,6 +76,7 @@ WHERE director='Steven Spielberg'
 ** Consultas sobre varias tablas
 *** 11. Obtener el código y el título de las películas en las que actúa un actor con el mismo nombre que el director
 de la película (ordenadas por título).
+
 #+begin_src sql
 SELECT p.cod_peli, p.titulo
 FROM pelicula p, actua act, actor atr
@@ -74,6 +85,7 @@ ORDER BY p.titulo
 #+end_src
 *** 12. Obtener el código y el título de las películas clasificadas del género de nombre ‘Comedia’ (ordenadas por
 título).
+
 #+begin_src sql
 SELECT p.cod_peli, p.titulo
 FROM pelicula p, clasificacion c, genero g
@@ -81,31 +93,191 @@ WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=p.cod_peli
 ORDER BY p.titulo
 #+end_src
 *** 13. Obtener el código y el título de las películas basadas en algún libro anterior a 1950
+
 #+begin_src sql
 SELECT cod_peli, pelicula.titulo
-FROM pelicula, libro --Producto cartesiano de pelicula X libro
-WHERE pelicula.cod_lib = libro.cod_lib AND libro.anyo < 1950
+FROM pelicula, libro_peli l --Producto cartesiano de pelicula X libro
+WHERE pelicula.cod_lib = l.cod_lib AND libro.anyo < 1950
 #+end_src
 *** 14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género de nombre ‘Comedia’ (ordenados por nombre).
+
 #+begin_src sql
 SELECT DISTINCT pa.cod_pais, pa.nombre
 FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
 WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=act.cod_peli and act.cod_act=atr.cod_act and atr.cod_pais=pa.cod_pais
 ORDER BY pa.nombre
 #+end_src
+
 ** Consultas con subconsultas
-*** 15.11. Obtener el código y el título de las películas en las que actúa un actor con el mismo nombre que el director
-de la película (ordenadas por título).
+
+*** 15.11. Obtener el código y el título de las películas en las que actúa un actor con el mismo nombre que el director de la película (ordenadas por título).
+
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM Pelicula p
+WHERE EXISTS (SELECT * 
+              FROM Actua act 
+              WHERE p.cod_peli = act.cod_peli AND
+              act.cod_act IN (SELECT atr.cod_act 
+                              FROM Actor atr 
+                              WHERE p.director = atr.nombre))
+ORDER BY titulo
+#+end_src
+
+*** 15.12. Obtener el código y el título de las películas clasificadas del género de nombre ‘Comedia’ (ordenadas portítulo).
+
 #+begin_src sql
 SELECT cod_peli, titulo
 FROM Pelicula
-WHERE director IN (SELECT nombre FROM Actor)
+WHERE cod_peli IN (SELECT c.cod_peli 
+                   FROM Clasificacion c, Genero g 
+                   WHERE g.nombre = 'Comedia' AND c.cod_gen = g.cod_gen)
 ORDER BY titulo
 #+end_src
-*** 15.12. Obtener el código y el título de las películas clasificadas del género de nombre ‘Comedia’ (ordenadas por
-título).
 
 *** 15.13. Obtener el código y el título de las películas basadas en algún libro anterior a 1950.
 
-*** 15.14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género
-de nombre ‘Comedia’ (ordenados por nombre).
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM Pelicula
+WHERE cod_lib IN (SELECT cod_lib FROM libro_peli WHERE anyo < 1950)
+ORDER BY titulo
+#+end_src
+
+/Con EXISTS/
+#+begin_src sql
+SELECT p.con_peli, p.titulo
+FROM pelicula p
+WHERE EXISTS(
+    SELECT
+    FROM libro_peli l 
+    WHERE l.cod_lib = p.cod_lib AND l.anyo < 1950
+)
+ORDER BY titulo
+#+end_src
+
+*** 15.14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género de nombre ‘Comedia’ (ordenados por nombre).
+
+#+begin_src sql
+SELECT pa.cod_pais, pa.nombre
+FROM Pais pa
+WHERE pa.cod_pais IN 
+    (SELECT pa.cod_pais 
+    FROM Pais pa, Actor atr 
+    WHERE pa.cod_pais = atr.cod_pais AND atr.cod_act IN 
+        (SELECT act.cod_act 
+        FROM Actua act, Clasificacion c 
+        WHERE act.cod_peli = c.cod_peli AND c.cod_gen IN 
+            (SELECT g.cod_gen 
+            FROM Genero g 
+            WHERE g.nombre = 'Comedia')))
+ORDER BY pa.nombre
+#+end_src
+
+*** 16. Obtener el código y el nombre de los actores nacidos antes de 1950 que actúan con un papel ‘Principal’
+en alguna película (ordenados por nombre).
+
+#+begin_src sql
+SELECT cod_act, nombre
+FROM Actor
+WHERE EXTRACT(YEAR FROM fecha_nac) < 1950 AND cod_act IN (SELECT cod_act FROM Actua WHERE papel = 'Principal')
+ORDER BY nombre
+#+end_src
+
+*** 17. Obtener el código, el título y el autor de los libros en los que se ha basado alguna película de la década
+de los 90 (ordenados por título).
+
+#+begin_src sql
+SELECT cod_lib, titulo, autor
+FROM Libro_peli
+WHERE cod_lib IN (SELECT cod_lib FROM Pelicula WHERE anyo BETWEEN 1990 AND 1999 AND cod_lib IS NOT NULL)
+ORDER BY titulo
+#+end_src
+
+*** 18. Obtener el código, el título y el autor de los libros en los que no se haya basado ninguna película
+** HELP
+#+begin_src sql
+SELECT cod_lib, titulo, autor
+FROM Libro_peli
+WHERE
+#+end_src
+
+*** 19. Obtener el nombre del género o géneros a los que pertenecen películas en las que no actúa ningún actor
+(ordenados por nombre).
+** HELP
+#+begin_src sql
+SELECT nombre
+FROM Genero
+WHERE cod_gen IN (SELECT cod_gen FROM Clasificacion WHERE cod_peli IN (SELECT cod_peli FROM Actua WHERE cod_act IS NULL))
+#+end_src
+
+*** 20. Obtener el título de los libros en los que se haya basado alguna película en la que no hayan actuado
+actores del país de nombre ‘USA’ (ordenados por título).
+
+#+begin_src sql
+#+end_src
+
+*** 21. ¿Cuántas películas hay clasificadas del género de nombre ‘Comedia’ y en las que sólo aparece un actor
+con el papel ‘Secundario’?
+
+#+begin_src sql
+#+end_src
+
+*** 22. Obtener el año de la primera película en la que el actor de nombre ‘Jude Law’ tuvo un papel como
+‘Principal’.
+
+#+begin_src sql
+#+end_src
+
+*** 23. Obtener el código y el nombre de actor o actores más viejos.
+
+#+begin_src sql
+SELECT cod_act, nombre
+FROM Actor
+WHERE fecha_nac = (SELECT MIN(fecha_nac) FROM Actor)
+#+end_src
+
+*** 24. Obtener el código, el nombre y la fecha de nacimiento del actor más viejo nacido en el año 1940
+
+#+begin_src sql
+SELECT cod_act, nobre, fecha_nac
+FROM actor
+WHERE fecha_nac = (SELECT MIN (fecha_nac) FROM actor WHERE fecha_nac LIKE '%1904'
+#+end_src
+
+*** 25. Obtener el nombre del género (o de los géneros) en los que se ha clasificado la película más larga
+
+#+begin_src sql
+SELECT nombre 
+FROM genero
+WHERE cod_gen IN (SELECT cod_gen 
+                 FROM clasificacion
+                 WHERE cod_peli = (SELECT cod_peli
+                                   FROM pelicula
+                                   WHERE duracion = (SELECT MAX(duracion) FROM pelicula)));
+#+end_src
+
+*** 26. Obtener el código y el título de los libros en los que se han basado películas en las que actúan actores del país de nombre España (ordenados por título
+
+#+begin_src sql
+SELECT cod_lib, titulo
+FROM libro_peli
+WHERE cod_lib IN (SELECT cod_lib
+                  FROM pelicula
+                  WHERE cod_peli IN (SELECT cod_peli
+                                     FROM actua
+                                     WHERE cod_act IN (SELECT cod_act 
+                                                       FROM actor
+                                                       WHERE cod_pais = (SELECT cod_pais 
+                                                                         FROM pais
+                                                                         WHERE nombre = 'España'))))
+ORDER BY titulo;
+#+end_src
+
+*** 28. Obtener la cantidad de películas en las que han participado menos de 4 actores
+
+#+begin_src sql
+SELECT count(*)
+FROM Pelicula p
+WHERE 4 > (SELECT count(*) FROM Actua a WHERE a.cod_peli = p.cod_peli)
+#+end_src
