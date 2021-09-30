@@ -20,7 +20,7 @@
 )
 
 (defrule mov_der
-	?f <- (problema tas $?z)
+	?f <- (problema pos ?x ?y latas $?z)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?x ?lim_x))
@@ -45,7 +45,6 @@
 
 (defrule mov_aba
 	?f <- (problema pos ?x ?y latas $?z)
-
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
     (test (<> ?y 1))
@@ -69,27 +68,62 @@
 )
 
 (defrule mov_lata_arr
+    ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
+    (limites ?lim_x ?lim_y)
+    (hueco ?hue_x ?hue_y)
+    (test (<> ?l_y ?lim_y))
+    (not (hueco ?l_x =(+ ?l_y 1)))
+    (test (and (= ?l_x ?x) (= ?l_y (+ ?y 1))))
 =>
-)
-(defrule mov_lata_aba
-=>
-)
-(defrule mov_lata_der
-=>
-)
-(defrule mov_lata_izq
-=>
+    (assert (problema pos ?x (+ ?y 1) latas $?z l ?l_x (+ ?l_y 1) $?w))
 )
 
-(defrule tirar_lata_arr
+(defrule mov_lata_aba
+    ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
+    (limites ?lim_x ?lim_y)
+    (hueco ?hue_x ?hue_y)
+    (test (<> ?l_y 1))
+    (not (hueco ?l_x =(- ?l_y 1)))
+    (test (and (= ?l_x ?x) (= ?l_y (- ?y 1))))
 =>
+    (assert (problema pos ?x (- ?y 1) latas $?z l ?l_x (- ?l_y 1) $?w))
 )
-(defrule tirar_lata_aba
+(defrule mov_lata_der
+    ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
+    (limites ?lim_x ?lim_y)
+    (hueco ?hue_x ?hue_y)
+    (test (<> ?l_x ?lim_x))
+    (not (hueco =(+ ?l_x 1) ?l_y))
+    (test (and (= (+ ?l_x 1) ?x) (= ?l_y ?y)))
 =>
+    (assert (problema pos (+ ?x 1) ?y latas $?z l (+ ?l_x 1) ?l_y $?w))
 )
-(defrule tirar_lata_der
+(defrule mov_lata_izq
+    ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
+    (limites ?lim_x ?lim_y)
+    (hueco ?hue_x ?hue_y)
+    (test (<> ?l_y 1))
+    (not (hueco =(- ?l_x 1) ?l_y))
+    (test (and (= (- ?l_x 1) ?x) (= ?l_y ?y)))
 =>
+    (assert (problema pos (- ?x 1) ?y latas $?z l ?l_x (+ ?l_y 1) $?w))
 )
-(defrule tirar_lata_izq
-=>
-)
+
+; (defrule tirar_lata_arr
+;     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
+;     (limites ?lim_x ?lim_y)
+;     (hueco ?hue_x ?hue_y)
+;     (test (<> ?l_y ?lim_y))
+;     (hueco ?l_x =(+ ?l_y 1))
+; =>
+    
+; )
+; (defrule tirar_lata_aba
+; =>
+; )
+; (defrule tirar_lata_der
+; =>
+; )
+; (defrule tirar_lata_izq
+; =>
+; )
