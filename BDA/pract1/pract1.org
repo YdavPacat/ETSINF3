@@ -90,15 +90,17 @@ WHERE pelicula.cod_lib = libro.cod_lib AND libro.anyo < 1950
 #+begin_src sql
 SELECT DISTINCT pa.cod_pais, pa.nombre
 FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
-WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=pe.cod_peli and pe.cod_peli=act.cod_peli and act.cod_act=atr.cod_act and atr.cod_pais=pa.cod_pais
-ORDER BY pa.nombre
-#+end_src
-
-/Otra manera/
-
-#+begin_src sql
-SELECT DISTINCT pa.cod_pais, pa.nombre
-FROM pais pa, actor atr, actua act, pelicula pe, clasificacion c, genero g
 WHERE g.nombre='Comedia' and g.cod_gen=c.cod_gen and c.cod_peli=act.cod_peli and act.cod_act=atr.cod_act and atr.cod_pais=pa.cod_pais
 ORDER BY pa.nombre
 #+end_src
+** Consultas con subconsultas
+*** 15.11. Obtener el código y el título de las películas en las que actúa un actor con el mismo nombre que el director
+de la película (ordenadas por título).
+
+*** 15.12. Obtener el código y el título de las películas clasificadas del género de nombre ‘Comedia’ (ordenadas por
+título).
+
+*** 15.13. Obtener el código y el título de las películas basadas en algún libro anterior a 1950.
+
+*** 15.14. Obtener el código y el nombre de los países de los actores que actúan en películas clasificadas del género
+de nombre ‘Comedia’ (ordenados por nombre).
