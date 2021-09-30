@@ -96,7 +96,12 @@ ORDER BY pa.nombre
 ** Consultas con subconsultas
 *** 15.11. Obtener el código y el título de las películas en las que actúa un actor con el mismo nombre que el director
 de la película (ordenadas por título).
-
+#+begin_src sql
+SELECT cod_peli, titulo
+FROM Pelicula
+WHERE director IN (SELECT nombre FROM Actor)
+ORDER BY titulo
+#+end_src
 *** 15.12. Obtener el código y el título de las películas clasificadas del género de nombre ‘Comedia’ (ordenadas por
 título).
 
