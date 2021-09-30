@@ -17,7 +17,7 @@ double calcula_integral1(double a, double b, int n)
    int i;
 
    h=(b-a)/n;
-   #pragma parallel omp for
+#pragma parallel omp for reduntion(+:s)
    for (i=0; i<n; i++) {
       s+=f(a+h*(i+0.5));
    }
