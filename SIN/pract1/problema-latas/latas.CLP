@@ -112,7 +112,7 @@
     (test (and (= (- ?l_x 1) ?x) (= ?l_y ?y)))
 =>
     (bind ?*nod_gen* (+ ?*nod_gen* 1))
-    (assert (problema pos (- ?x 1) ?y latas $?z l ?l_x (+ ?l_y 1) $?w))
+    (assert (problema pos (- ?x 1) ?y latas $?z l (- ?l_x 1) ?l_y $?w))
 )
 
 (defrule tirar_lata_arr
