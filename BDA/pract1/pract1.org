@@ -230,7 +230,9 @@ WHERE l.cod_lib IN (SELECT p.cod_lib
                                         FROM Actua act 
                                         WHERE act.cod_act IN (SELECT atr.cod_act 
                                                             FROM Actor atr 
-                                                            WHERE atr.cod_pais IN (SELECT pa.cod_pais FROM Pais pa WHERE pa.nombre = 'USA'))))
+                                                            WHERE atr.cod_pais IN (SELECT pa.cod_pais 
+                                                                                  FROM Pais pa 
+                                                                                  WHERE pa.nombre = 'USA'))))
 ORDER BY l.titulo
 #+end_src
 
