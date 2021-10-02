@@ -195,38 +195,64 @@ ORDER BY titulo
 #+end_src
 
 *** 18. Obtener el código, el título y el autor de los libros en los que no se haya basado ninguna película
-** HELP
+
 #+begin_src sql
 SELECT cod_lib, titulo, autor
 FROM Libro_peli
-WHERE
+WHERE cod_lib NOT IN (SELECT cod_lib FROM Pelicula WHERE cod_lib IS NOT NULL)
 #+end_src
 
-*** 19. Obtener el nombre del género o géneros a los que pertenecen películas en las que no actúa ningún actor
-(ordenados por nombre).
-** HELP
+*** 19. Obtener el nombre del género o géneros a los que pertenecen películas en las que no actúa ningún actor (ordenados por nombre).
+
 #+begin_src sql
 SELECT nombre
 FROM Genero
-WHERE cod_gen IN (SELECT cod_gen FROM Clasificacion WHERE cod_peli IN (SELECT cod_peli FROM Actua WHERE cod_act IS NULL))
+WHERE cod_gen IN (SELECT cod_gen FROM Clasificacion WHERE cod_peli NOT IN (SELECT cod_peli FROM Actua))
+ORDER BY nombre
 #+end_src
 
 *** 20. Obtener el título de los libros en los que se haya basado alguna película en la que no hayan actuado
 actores del país de nombre ‘USA’ (ordenados por título).
 
 #+begin_src sql
+SELECT l.titulo
+FROM Libro_peli l
+WHERE l.cod_lib IN (SELECT p.cod_lib 
+                    FROM Pelicula p 
+                    WHERE p.cod_peli NOT IN (SELECT act.cod_peli 
+                                        FROM Actua act 
+                                        WHERE act.cod_act IN (SELECT atr.cod_act 
+                                                            FROM Actor atr 
+                                                            WHERE atr.cod_pais IN (SELECT pa.cod_pais FROM Pais pa WHERE pa.nombre = 'USA'))))
+ORDER BY l.titulo
 #+end_src
 
 *** 21. ¿Cuántas películas hay clasificadas del género de nombre ‘Comedia’ y en las que sólo aparece un actor
 con el papel ‘Secundario’?
 
 #+begin_src sql
+SELECT count(*)
+FROM Pelicula p
+WHERE p.cod_peli IN (SELECT c.cod_peli 
+                    FROM Clasificacion c
+                    WHERE c.cod_gen IN (SELECT g.cod_gen 
+                                        FROM Genero g 
+                                        WHERE g.nombre = 'Comedia')) AND p.cod_peli IN (SELECT a.cod_peli
+                                                                                        FROM Actua a 
+                                                                                        WHERE a.papel = 'Secundario')
 #+end_src
 
 *** 22. Obtener el año de la primera película en la que el actor de nombre ‘Jude Law’ tuvo un papel como
 ‘Principal’.
 
 #+begin_src sql
+SELECT MIN(p.anyo)
+FROM Pelicula p
+WHERE p.cod_peli IN (SELECT act.cod_peli 
+                    FROM Actua act 
+                    WHERE act.papel = 'Principal' AND act.cod_act IN (SELECT atr.cod_act 
+                                                                    FROM Actor atr 
+                                                                    WHERE atr.nombre = 'Jude Law'))
 #+end_src
 
 *** 23. Obtener el código y el nombre de actor o actores más viejos.
@@ -240,9 +266,9 @@ WHERE fecha_nac = (SELECT MIN(fecha_nac) FROM Actor)
 *** 24. Obtener el código, el nombre y la fecha de nacimiento del actor más viejo nacido en el año 1940
 
 #+begin_src sql
-SELECT cod_act, nobre, fecha_nac
+SELECT cod_act, nombre, fecha_nac
 FROM actor
-WHERE fecha_nac = (SELECT MIN (fecha_nac) FROM actor WHERE fecha_nac LIKE '%1904'
+WHERE fecha_nac = (SELECT MIN (fecha_nac) FROM actor WHERE fecha_nac LIKE '%1940')
 #+end_src
 
 *** 25. Obtener el nombre del género (o de los géneros) en los que se ha clasificado la película más larga
@@ -254,7 +280,7 @@ WHERE cod_gen IN (SELECT cod_gen
                  FROM clasificacion
                  WHERE cod_peli = (SELECT cod_peli
                                    FROM pelicula
-                                   WHERE duracion = (SELECT MAX(duracion) FROM pelicula)));
+                                   WHERE duracion = (SELECT MAX(duracion) FROM pelicula)))
 #+end_src
 
 *** 26. Obtener el código y el título de los libros en los que se han basado películas en las que actúan actores del país de nombre España (ordenados por título
@@ -271,7 +297,15 @@ WHERE cod_lib IN (SELECT cod_lib
                                                        WHERE cod_pais = (SELECT cod_pais 
                                                                          FROM pais
                                                                          WHERE nombre = 'España'))))
-ORDER BY titulo;
+ORDER BY titulo
+#+end_src
+
+*** 27. Obtener el título de las películas anteriores a 1950 clasificadas en más de un género (ordenadas por título).
+
+#+begin_src sql
+SELECT p.titulo
+FROM Pelicula p
+WHERE anyo < 1950 AND p.cod_peli IN (SELECT c1.cod_peli FROM Clasificacion c1, Clasificacion c2 WHERE c1.cod_gen <> c2.cod_gen AND c1.cod_peli = c2.cod_peli)
 #+end_src
 
 *** 28. Obtener la cantidad de películas en las que han participado menos de 4 actores
@@ -280,4 +314,31 @@ ORDER BY titulo;
 SELECT count(*)
 FROM Pelicula p
 WHERE 4 > (SELECT count(*) FROM Actua a WHERE a.cod_peli = p.cod_peli)
+#+end_src
+
+*** 29. Obtener los directores que han dirigido más de 250 minutos entre todas sus películas.
+
+INCOMPLETO
+
+#+begin_src sql
+SELECT DISTINCT p1.director
+FROM Pelicula p1
+WHERE 250 < (SELECT SUM(p2.duracion) FROM Pelicula p2 WHERE p1.director = p2.director AND p1.cod_peli <> p2.cod_peli) OR p1.duracion > 250
+#+end_src
+
+*** 30. Obtener el año o años en el que nacieron más de 3 actores.
+
+#+begin_src sql
+SELECT DISTINCT EXTRACT(YEAR FROM atr1.fecha_nac)
+FROM Actor atr1
+WHERE 2 < (SELECT COUNT (atr2.fecha_nac) FROM Actor atr2 WHERE EXTRACT(YEAR FROM atr1.fecha_nac) = EXTRACT(YEAR FROM atr2.fecha_nac) and atr1.nombre <> atr2.nombre)
+#+end_src
+
+*** 31. Obtener el código y nombre del actor más joven que ha participado en una película clasificada del género
+de código ‘DD8’.
+
+#+begin_src sql
+SELECT atr.cod_act, atr.nombre
+FROM Actor atr
+WHERE atr.fecha_nac = (SELECT MIN(atr2.fecha_nac) FROM Actor atr2 WHERE atr2.cod_act IN (SELECT act.cod_act FROM Actua act WHERE cod_peli IN (SELECT c.cod_peli FROM Clasificacion c WHERE cod_gen = 'DD8')))
 #+end_src
