@@ -152,3 +152,11 @@
 =>
     (assert (problema pos ?x ?y latas $?z $?w))
 )
+
+(defrule fin
+    (declare (salience 100))
+    (problema pos ?x ?y latas)
+=>
+    (printout T"Fin")
+    (halt)
+)
