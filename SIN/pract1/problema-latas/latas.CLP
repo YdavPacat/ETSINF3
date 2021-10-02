@@ -122,6 +122,7 @@
     (test (<> ?l_y ?lim_y))
     (test (and (= ?hue_x ?l_x) (= ?hue_y (+ ?l_y 1))))
 =>
+    (bind ?*nod_gen* (+ ?*nod_gen* 1))
     (assert (problema pos ?x ?y latas $?z $?w))
 )
 
@@ -132,6 +133,7 @@
     (test (<> ?l_y 1))
     (test (and (= ?hue_x ?l_x) (= ?hue_y (- ?l_y 1))))
 =>
+    (bind ?*nod_gen* (+ ?*nod_gen* 1))
     (assert (problema pos ?x ?y latas $?z $?w))
 )
 (defrule tirar_lata_der
@@ -141,6 +143,7 @@
     (test (<> ?l_x ?lim_x))
     (test (and (= ?hue_x (+ ?l_x 1)) (= ?hue_y ?l_y)))
 =>
+    (bind ?*nod_gen* (+ ?*nod_gen* 1))
     (assert (problema pos ?x ?y latas $?z $?w))
 )
 (defrule tirar_lata_izq
@@ -150,6 +153,7 @@
     (test (<> ?l_y 1))
     (test (and (= ?hue_x (- ?l_x 1)) (= ?hue_y ?l_y)))
 =>
+    (bind ?*nod_gen* (+ ?*nod_gen* 1))
     (assert (problema pos ?x ?y latas $?z $?w))
 )
 
