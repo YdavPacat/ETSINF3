@@ -120,6 +120,7 @@
 )
 
 (defrule tirar_lata_arr
+    (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
@@ -132,6 +133,7 @@
 )
 
 (defrule tirar_lata_aba
+    (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
@@ -143,6 +145,7 @@
     (assert (problema pos ?x (- ?y 1) latas $?z $?w))
 )
 (defrule tirar_lata_der
+    (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
@@ -154,6 +157,7 @@
     (assert (problema pos (+ ?x 1) ?y latas $?z $?w))
 )
 (defrule tirar_lata_izq
+    (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w)
     (limites ?lim_x ?lim_y)
     (hueco ?hue_x ?hue_y)
