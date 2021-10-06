@@ -10,7 +10,7 @@ function f(y){
 	}
 	return function(){
 			y++;
-			console.log("y: " + y);
+			console.log("y:     " + y);
 			console.log("y+g(): ",y+g());
 			return y;
 	}

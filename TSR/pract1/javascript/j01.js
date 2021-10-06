@@ -12,9 +12,12 @@ var u = Infinity;
 function f(y,z){
 	x = function(){ console.log("función x:      ",y,"     ",z,"    ",u);};
 	w = function(u){ 
-		  console.log("función w:      ",y,"     ",z,"   ",u);
-		  ww = function(){ console.log("función ww:     ",y,"     ",z,"   ",u); return y+z+u;};
+		console.log("función w:      ",y,"     ",z,"   ",u);
+		ww = function(){ 
+			console.log("función ww:     ",y,"     ",z,"   ",u); 
+			return y+z+u;
 		};
+	};
 	console.log(`argumentos de f: ${y}  ---  ${z}`);
 }
 

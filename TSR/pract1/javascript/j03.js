@@ -11,7 +11,9 @@ function main(y){
 	
 //   - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	function getY(){return y;}
+	function getY(){
+		return y;
+	}
 
 	function f(y){
 		var x=100+y;

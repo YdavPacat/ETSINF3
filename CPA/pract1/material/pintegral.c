@@ -34,6 +34,7 @@ double calcula_integral2(double a, double b, int n)
 
    h=(b-a)/n;
 
+#pragma omp parallel for reduction(+:s) private(x)
    for (i=0; i<n; i++) {
       x=a;
       x+=h*(i+0.5);

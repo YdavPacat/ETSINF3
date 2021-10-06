@@ -5,7 +5,8 @@
 
 for(var i=0; i<10; i++) 
   setTimeout(function(índice){
-	  return function(){console.log("índice: ",índice)}}(i),i*1000);
+	  return function(){console.log("índice: ",índice)}
+  }(i),i*1000);
 
 
 console.log("Terminado codigo script  valor actual de i: ",i);
