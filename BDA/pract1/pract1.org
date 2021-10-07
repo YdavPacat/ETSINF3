@@ -440,7 +440,9 @@ WHERE c.duracion > 5 AND c.cod = e.can AND e.cod = d.cod
 
 *** 10. Obtener los nombres de las canciones que dan nombre al disco en el que aparecen.
 #+begin_src sql
-SELECT 
+SELECT titulo  
+FROM  cancion c, esta e, disco d
+WHERE c.cod = e.can AND e.cod = d.cod AND c.titulo = d.nombre
 #+end_src
 
 *** 11. Obtener los nombres de compañías y direcciones postales de aquellas compañías que han grabado algún disco que empiece por ‘A’.
@@ -452,22 +454,37 @@ WHERE c.cod = d.cod_comp AND d.nombre LIKE 'A%'
 
 *** 12. DNI de los artistas que pertenecen a más de un grupo.
 #+begin_src sql
-SELECT a.dni
-FROM Artista a, Pertenece p
-WHERE a.dni = p.dni AND 
+SELECT DISTINCT a.dni
+FROM Artista a, Pertenece p1, Pertenece p2
+WHERE a.dni = p1.dni AND p1.dni = p2.dni AND p1.cod <> p2.cod
 #+end_src
 
 ** Consultas con subconsultas
 
 *** 13. Obtener el nombre de los discos del grupo más viejo.
 #+begin_src sql
+SELECT d.nombre
+FROM Disco d
+WHERE d.cod_gru IN (SELECT g.cod FROM Grupo g WHERE g.fecha IN (SELECT MIN(fecha) FROM Grupo))
 #+end_src
+
 *** 14. Obtener el nombre de los discos grabados por grupos con club de fans con más de 5000 personas
 #+begin_src sql
+SELECT d.nombre
+FROM Disco d
+WHERE d.cod_gru IN (SELECT c.cod_gru FROM Club c WHERE c.num > 5000)
 #+end_src
+
 *** 15. Obtener el nombre de los clubes con mayor número de fans indicando ese número.
 #+begin_src sql
+SELECT nombre, num
+FROM club  
+WHERE num = (SELECT MAX(num) FROM club)
 #+end_src
+
 *** 16. Obtener el título de las canciones de mayor duración indicando la duración.
 #+begin_src sql
+SELECT c1.titulo, c1.duracion
+FROM Cancion c1
+WHERE c1.duracion = (SELECT MAX(c2.duracion) FROM Cancion c2)
 #+end_src
