@@ -1,0 +1,52 @@
+###########################
+# Metodo de integración 1 #
+###########################
+
+
+Número de hilos: 1
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 1.000000 segunos
+
+Número de hilos: 2
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.500000 segunos
+
+Número de hilos: 4
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.500000 segunos
+
+Número de hilos: 8
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.250000 segunos
+
+Número de hilos: 16
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.000000 segunos
+
+
+###########################
+# Metodo de integración 2 #
+###########################
+
+
+Número de hilos: 1
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 1.250000 segunos
+
+Número de hilos: 2
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.500000 segunos
+
+Número de hilos: 4
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.250000 segunos
+
+Número de hilos: 8
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.250000 segunos
+
+Número de hilos: 16
+Valor de la integral = 1.000000000000
+El tiempo de ejecucion ha siod de 0.250000 segunos
+
+
