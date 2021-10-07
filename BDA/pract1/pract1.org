@@ -1,5 +1,9 @@
 #+TITLE: Pract1
 * Base de Datos CINE
+
+#+NAME: Base de datos CINE
+[[./CINE.png]]
+
 ** Consultas sobre una sola tabla
 *** 1. Obtener ordenados ascendentemente los códigos de los países de donde son los actores
 
@@ -30,7 +34,14 @@ WHERE nombre LIKE '%John%'
 
 #+begin_src sql
 SELECT cod_peli, titulo
-FROM pelicula
+FROM peliculatr2 
+                        WHERE atr2.cod_act IN (SELECT act.cod_act 
+                                                FROM Actua act 
+                                                WHERE cod_peli IN (SELECT c.cod_peli 
+                                                                    FROM Clasificacion c 
+                                                                    WHERE cod_gen = 'DD8')))
+#+end_src
+a
 WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
@@ -357,4 +368,106 @@ WHERE atr.fecha_nac = (SELECT MIN(atr2.fecha_nac)
                                                 WHERE cod_peli IN (SELECT c.cod_peli 
                                                                     FROM Clasificacion c 
                                                                     WHERE cod_gen = 'DD8')))
+#+end_src
+
+* Base de Datos MÚSICA
+
+#+NAME: Base de datos CINE
+[[./MUSICA.png]]
+
+**  Consultas sobre una sola relación
+*** 1. ¿Cuántos discos hay?
+#+begin_src sql
+SELECT count(cod)
+FROM Disco
+#+end_src
+
+*** 2. Selecciona el nombre de los grupos que no sean de España.
+#+begin_src sql
+SELECT nombre
+FROM Grupo
+WHERE pais <> 'España'
+#+end_src
+
+*** 3. Obtener el título de las canciones con más de 5 minutos de duración.
+#+begin_src sql
+SELECT titulo
+FROM Cancion
+WHERE duracion > 5
+#+end_src
+
+*** 4. Obtener la lista de las distintas funciones que se pueden realizar en un grupo.
+#+begin_src sql
+SELECT DISTINCT funcion
+FROM Pertenece
+#+end_src
+
+*** 5. Obtener la lista de clubs de fans junto con su tamaño (número de personas). La lista debe estar ordenada de menor a mayor según el tamaño del club.
+#+begin_src sql
+SELECT nombre, num
+FROM club
+ORDER BY num
+#+end_src
+
+*** 6. Selecciona el nombre y la sede de los clubes de fans con más de 500 socios. 
+#+begin_src sql
+SELECT nombre, sede
+FROM Club
+WHERE num > 500
+#+end_src
+
+** Consultas sobre varias relaciones
+*** 7. Obtener el nombre y la sede de cada club de fans de grupos de España así como el nombre del grupo al que admiran.
+#+begin_src sql
+SELECT c.nombre, c.sede, g.nombre
+FROM Club c, Grupo g
+WHERE c.cod_gru = g.cod AND g.pais = 'España'
+#+end_src
+
+*** 8. Obtener el nombre de los artistas que pertenezcan a un grupo de España.
+#+begin_src sql
+SELECT nombre
+FROM artista a, pertenece p, grupo g
+WHERE a.dni = p.dni AND p.cod = g.cod AND g.pais = 'España'
+#+end_src
+
+*** 9. Obtener el nombre de los discos que contienen alguna canción que dure más de 5 minutos.
+#+begin_src sql
+SELECT DISTINCT d.nombre
+FROM Disco d, Esta e, Cancion c
+WHERE c.duracion > 5 AND c.cod = e.can AND e.cod = d.cod
+#+end_src
+
+*** 10. Obtener los nombres de las canciones que dan nombre al disco en el que aparecen.
+#+begin_src sql
+SELECT 
+#+end_src
+
+*** 11. Obtener los nombres de compañías y direcciones postales de aquellas compañías que han grabado algún disco que empiece por ‘A’.
+#+begin_src sql
+SELECT c.nombre, c.dir
+FROM Companyia c, Disco d
+WHERE c.cod = d.cod_comp AND d.nombre LIKE 'A%'
+#+end_src
+
+*** 12. DNI de los artistas que pertenecen a más de un grupo.
+#+begin_src sql
+SELECT a.dni
+FROM Artista a, Pertenece p
+WHERE a.dni = p.dni AND 
+#+end_src
+
+** Consultas con subconsultas
+
+*** 13. Obtener el nombre de los discos del grupo más viejo.
+#+begin_src sql
+#+end_src
+*** 14. Obtener el nombre de los discos grabados por grupos con club de fans con más de 5000 personas
+#+begin_src sql
+#+end_src
+*** 15. Obtener el nombre de los clubes con mayor número de fans indicando ese número.
+#+begin_src sql
+#+end_src
+*** 16. Obtener el título de las canciones de mayor duración indicando la duración.
+#+begin_src sql
 #+end_src
