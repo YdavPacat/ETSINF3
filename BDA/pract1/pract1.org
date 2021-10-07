@@ -34,14 +34,7 @@ WHERE nombre LIKE '%John%'
 
 #+begin_src sql
 SELECT cod_peli, titulo
-FROM peliculatr2 
-                        WHERE atr2.cod_act IN (SELECT act.cod_act 
-                                                FROM Actua act 
-                                                WHERE cod_peli IN (SELECT c.cod_peli 
-                                                                    FROM Clasificacion c 
-                                                                    WHERE cod_gen = 'DD8')))
-#+end_src
-a
+FROM peliculatr2
 WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
@@ -440,7 +433,7 @@ WHERE c.duracion > 5 AND c.cod = e.can AND e.cod = d.cod
 
 *** 10. Obtener los nombres de las canciones que dan nombre al disco en el que aparecen.
 #+begin_src sql
-SELECT titulo  
+SELECT c.titulo  
 FROM  cancion c, esta e, disco d
 WHERE c.cod = e.can AND e.cod = d.cod AND c.titulo = d.nombre
 #+end_src
