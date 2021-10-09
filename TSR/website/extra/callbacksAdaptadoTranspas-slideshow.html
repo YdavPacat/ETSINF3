@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Funciones síncronas, asíncronas y callbacks</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Funciones síncronas, asíncronas y callbacks
+##### TSR 2018-19 Francisco Torres
+
+---
+<!-- page_number: true -->
+#HSLIDE
+
+## Lo que ya sabemos
+
+- Una función **síncrona** se ejecuta cuando se invoca
+- Ej `readFileSync` lee un fichero de forma síncrona, `writeFileSync` escribe fichero de forma síncrona:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node\nHello boys!')
+var buffer = fs.readFileSync('mydata.txt')
+console.log(buffer.toString())
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2));
+```
+```js
+Hello Node
+Hello boys!
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+```
+
+
+---
+<!-- footer: TSR 2018-19 -->
+#HSLIDE
+
+## Ejecución asíncrona
+
+- La variante **asíncrona** ejecuta la operación en 2º plano (no bloquea al resto del programa)
+- Muchas funciones predefinidas en Node tienen comportamiento asíncrono (ej `readFile`)```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node\nHello boys!')
+fs.readFile('mydata.txt') // ???? como se invoca
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2))
+```
+```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+```
+
+
+---
+#HSLIDE
+
+## Invocación función asíncrona
+
+- Debe proporcionar como último argumento una función **callback**
+- Compara las funciones de lectura de ficheros:
+ - Síncrona: `fs.readFileSync(path[, options])`
+ - Asíncrona:`fs.readFile(path[, options], callback)`
+- `path` = ruta del fichero a leer
+- `options` = opciones sobre el modo de lectura
+- `callback` = función a invocar cuando termine la ejecución de la función asíncrona
+
+
+---
+#HSLIDE
+
+## Invocación función asíncrona ...
+
+- Añadimos una función callback al ejemplo:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node\nHello boys!')
+fs.readFile('mydata.txt', ()=>{console.log("leido")})
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2))
+```
+```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+leido
+```
+
+
+---
+#HSLIDE
+
+## Invocación función asíncrona ...
+
+- Pero deseamos mostrar el contenido del fichero, no un mensaje `leido`
+- La función callback necesita 2 argumentos `(err,data)`:
+ - Si la función asíncrona se ejecuta sin errores, `data` contiene su resultado
+ - Si hay un error en la ejecución de la función síncrona, `err` contiene info. sobre el error
+
+
+---
+#HSLIDE
+
+## Invocación función asíncrona ...
+
+- Ejecución sin errores```js
+var fs = require('fs');
+var myCB = function (err, data) {
+ if (err) console.error(err.stack)
+ else console.log(data.toString())
+}
+fs.writeFileSync('mydata.txt', 'Hello Node\nHello boys!')
+fs.readFile('mydata.txt', myCB)
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2))
+```
+```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+Hello Node
+Hello boys!
+```
+
+
+---
+#HSLIDE
+
+## Invocación función asíncrona ...
+
+- Cuando intenta leer fichero inexistente```js
+var fs = require('fs');
+var myCB = function (err, data) {
+ if (err) console.error(err.stack)
+ else console.log(data.toString())
+}
+fs.readFile('none', myCB)
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2))
+```
+```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+Error: ENOENT: no such file or directory, open '...\none'
+  at Error (native)
+```
+
+
+---
+#HSLIDE
+
+## Otro ejemplo
+
+- Lee y procesa números desde fichero```js
+var fs = require('fs')
+fs.writeFileSync('mydata.txt', '1 2 3 4 5 6 7 8')
+var doble = (str) => str.split(" ").map(n => 2*n)
+var f = function (err, data) {
+ if (err) console.error(err.stack)
+ else console.log(doble(data.toString()))
+}
+fs.readFile('mydata.txt', f)
+console.log('ejecutando otras instrucciones')
+console.log('raiz(2) =', Math.sqrt(2))
+```
+```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+[ 2, 4, 6, 8, 10, 12, 14, 16 ]
+```
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

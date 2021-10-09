@@ -1,0 +1,821 @@
+<!DOCTYPE html><html lang="es-ES"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><style>.bespoke-marp-note,.bespoke-marp-osc,.bespoke-progress-parent{display:none;transition:none}@media screen{body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:transparent;border:0;color:inherit;cursor:pointer;font-size:inherit;opacity:.8;outline:none;padding:0;transition:opacity .2s linear;-webkit-tap-highlight-color:transparent}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:disabled{cursor:not-allowed;opacity:.15!important}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover{opacity:1}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:active{opacity:.6}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:not(:disabled){transition:none}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-prev{background:transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNNjggOTBMMjggNTBsNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-next{background:transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMzIgOTBsNDAtNDAtNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen]{background:transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IGNsYXNzPSJhIiB4PSIxMCIgeT0iMjAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgcng9IjUuNjciLz48cGF0aCBjbGFzcz0iYSIgZD0iTTQwIDcwSDIwVjUwbTIwIDBMMjAgNzBtNDAtNDBoMjB2MjBtLTIwIDBsMjAtMjAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen]{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IGNsYXNzPSJhIiB4PSIxMCIgeT0iMjAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgcng9IjUuNjciLz48cGF0aCBjbGFzcz0iYSIgZD0iTTIwIDUwaDIwdjIwbS0yMCAwbDIwLTIwbTQwIDBINjBWMzBtMjAgMEw2MCA1MCIvPjwvc3ZnPg==")}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter]{background:transparent url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS13aWR0aDo1cHh9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMCA2MGgtNWE1IDUgMCAwMS01LTVWMjBhNSA1IDAgMDE1LTVoNjBhNSA1IDAgMDE1IDV2NU0zMCA4NWg2MCIvPjxyZWN0IHg9IjMwIiB5PSIzNSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIi8+PHJlY3QgY2xhc3M9ImEiIHg9IjMwIiB5PSIzNSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQwIiByeD0iNSIvPjxwYXRoIGNsYXNzPSJhIiBkPSJNNDAgNTBoNDBNNDAgNjBoMzAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body,html{height:100%;margin:0}body{background:#000;overflow:hidden}svg.bespoke-marp-slide{opacity:0;pointer-events:none;z-index:-1}svg.bespoke-marp-slide.bespoke-marp-active{opacity:1;pointer-events:auto;z-index:0}svg.bespoke-marp-slide[data-bespoke-marp-load=hideable]{display:none}svg.bespoke-marp-slide[data-bespoke-marp-load=hideable].bespoke-marp-active{display:block}[data-bespoke-marp-fragment=inactive]{visibility:hidden}body[data-bespoke-view=""] .bespoke-marp-parent,body[data-bespoke-view=next] .bespoke-marp-parent{bottom:0;left:0;position:absolute;right:0;top:0}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc{background:rgba(0,0,0,.65);border-radius:7px;bottom:50px;color:#fff;display:block;font-family:Helvetica,Arial,sans-serif;font-size:16px;left:50%;line-height:0;opacity:1;padding:12px;position:absolute;touch-action:manipulation;transform:translateX(-50%);transition:opacity .2s linear;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;white-space:nowrap;z-index:1;will-change:transform}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>*,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>*{margin-left:6px}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>:first-child,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>:first-child{margin-left:0}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span{opacity:.8}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page]{display:inline-block;min-width:140px;text-align:center}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev]{height:32px;line-height:32px;width:32px}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive{cursor:none}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc{opacity:0;pointer-events:none}body[data-bespoke-view=""] svg.bespoke-marp-slide,body[data-bespoke-view=next] svg.bespoke-marp-slide{height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent{background:#222;display:flex;height:5px;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent+.bespoke-marp-parent{top:5px}body[data-bespoke-view=""] .bespoke-progress-parent .bespoke-progress-bar{flex:0 0 0;background:#0288d1;transition:flex-basis .2s cubic-bezier(0,1,1,1)}body[data-bespoke-view=next]{background:transparent}body[data-bespoke-view=presenter]{background:#161616}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container{height:100%;left:0;position:absolute;top:0;width:100%;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:minmax(140px,1fr) 2fr 3em;grid-template-areas:"current next" "current note" "info    note"}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent{grid-area:current;position:relative;overflow:hidden}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide{height:calc(100% - 40px);left:20px;position:absolute;pointer-events:none;top:20px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide.bespoke-marp-active{-webkit-filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));filter:drop-shadow(0 3px 10px rgba(0,0,0,.5))}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container{background:#222;cursor:pointer;display:none;grid-area:next;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container iframe.bespoke-marp-presenter-next{background:transparent;border:0;display:block;-webkit-filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));height:calc(100% - 40px);left:20px;position:absolute;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;top:20px;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container{background:#222;color:#ddd;grid-area:note}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note{margin:20px;width:calc(100% - 40px);height:calc(100% - 40px);box-sizing:border-box;overflow:auto;padding-right:3px;white-space:pre-wrap;word-wrap:break-word;scrollbar-width:thin;scrollbar-color:hsla(0,0%,86.7%,.5) transparent}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar{width:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-track{background:transparent}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-thumb{background:hsla(0,0%,86.7%,.5);border-radius:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note:empty{pointer-events:none}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:first-child{margin-top:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:last-child{margin-bottom:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container{align-items:center;box-sizing:border-box;color:#ddd;display:flex;flex-wrap:nowrap;grid-area:info;justify-content:center;padding:0 10px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{display:block;box-sizing:border-box;padding:0 10px;white-space:nowrap;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page{order:2;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page .bespoke-marp-presenter-info-page-text{display:inline-block;min-width:120px;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time{color:#999;order:1;text-align:left}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{color:#999;order:3;text-align:right}}@media print{.bespoke-marp-presenter-info-container,.bespoke-marp-presenter-next-container,.bespoke-marp-presenter-note-container{display:none}}</style><style>div#p>svg>foreignObject>section{width:1280px;height:720px;box-sizing:border-box;overflow:hidden;position:relative;scroll-snap-align:center center}div#p>svg>foreignObject>section:after{bottom:0;content:attr(data-marpit-pagination);padding:inherit;pointer-events:none;position:absolute;right:0}div#p>svg>foreignObject>section:not([data-marpit-pagination]):after{display:none}/* Normalization */div#p>svg>foreignObject>section h1{font-size:2em;margin:0.67em 0}div#p>svg>foreignObject>section video::-webkit-media-controls{will-change:transform}@page{size:1280px 720px;margin:0}@media print{body,html{background-color:#fff;margin:0;page-break-inside:avoid;break-inside:avoid-page}div#p>svg>foreignObject>section{page-break-before:always;break-before:page}div#p>svg>foreignObject>section,div#p>svg>foreignObject>section *{-webkit-print-color-adjust:exact!important;color-adjust:exact!important}div#p>svg[data-marpit-svg]{display:block;height:100vh;width:100vw}}@font-face{font-family:KaTeX_AMS;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_AMS-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_AMS-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_AMS-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Bold.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Bold.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Bold.ttf') format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Caligraphic-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Bold.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Bold.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Bold.ttf') format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Fraktur-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Bold.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Bold.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Bold.ttf') format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-BoldItalic.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-BoldItalic.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-BoldItalic.ttf') format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Main;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Italic.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Italic.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Italic.ttf') format("truetype");font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Main-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-BoldItalic.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-BoldItalic.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-BoldItalic.ttf') format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Math;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-Italic.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-Italic.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Math-Italic.ttf') format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Bold.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Bold.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Bold.ttf') format("truetype");font-weight:700;font-style:normal}@font-face{font-family:"KaTeX_SansSerif";src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Italic.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Italic.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Italic.ttf') format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_SansSerif-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Script-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Script-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Script-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size1-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size1-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size1-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size2-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size2-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size2-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size3-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size3-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size3-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size4-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size4-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Size4-Regular.ttf') format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Typewriter-Regular.woff2') format("woff2"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Typewriter-Regular.woff') format("woff"),url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/fonts/KaTeX_Typewriter-Regular.ttf') format("truetype");font-weight:400;font-style:normal}div#p>svg>foreignObject>section .katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto}div#p>svg>foreignObject>section .katex *{-ms-high-contrast-adjust:none!important}div#p>svg>foreignObject>section .katex .katex-version:after{content:"0.11.1"}div#p>svg>foreignObject>section .katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}div#p>svg>foreignObject>section .katex .katex-html>.newline{display:block}div#p>svg>foreignObject>section .katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}div#p>svg>foreignObject>section .katex .base,div#p>svg>foreignObject>section .katex .strut{display:inline-block}div#p>svg>foreignObject>section .katex .textbf{font-weight:700}div#p>svg>foreignObject>section .katex .textit{font-style:italic}div#p>svg>foreignObject>section .katex .textrm{font-family:KaTeX_Main}div#p>svg>foreignObject>section .katex .textsf{font-family:KaTeX_SansSerif}div#p>svg>foreignObject>section .katex .texttt{font-family:KaTeX_Typewriter}div#p>svg>foreignObject>section .katex .mathdefault{font-family:KaTeX_Math;font-style:italic}div#p>svg>foreignObject>section .katex .mathit{font-family:KaTeX_Main;font-style:italic}div#p>svg>foreignObject>section .katex .mathrm{font-style:normal}div#p>svg>foreignObject>section .katex .mathbf{font-family:KaTeX_Main;font-weight:700}div#p>svg>foreignObject>section .katex .boldsymbol{font-family:KaTeX_Math;font-weight:700;font-style:italic}div#p>svg>foreignObject>section .katex .amsrm,div#p>svg>foreignObject>section .katex .mathbb,div#p>svg>foreignObject>section .katex .textbb{font-family:KaTeX_AMS}div#p>svg>foreignObject>section .katex .mathcal{font-family:KaTeX_Caligraphic}div#p>svg>foreignObject>section .katex .mathfrak,div#p>svg>foreignObject>section .katex .textfrak{font-family:KaTeX_Fraktur}div#p>svg>foreignObject>section .katex .mathtt{font-family:KaTeX_Typewriter}div#p>svg>foreignObject>section .katex .mathscr,div#p>svg>foreignObject>section .katex .textscr{font-family:KaTeX_Script}div#p>svg>foreignObject>section .katex .mathsf,div#p>svg>foreignObject>section .katex .textsf{font-family:KaTeX_SansSerif}div#p>svg>foreignObject>section .katex .mathboldsf,div#p>svg>foreignObject>section .katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}div#p>svg>foreignObject>section .katex .mathitsf,div#p>svg>foreignObject>section .katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}div#p>svg>foreignObject>section .katex .mainrm{font-family:KaTeX_Main;font-style:normal}div#p>svg>foreignObject>section .katex .vlist-t{display:inline-table;table-layout:fixed}div#p>svg>foreignObject>section .katex .vlist-r{display:table-row}div#p>svg>foreignObject>section .katex .vlist{display:table-cell;vertical-align:bottom;position:relative}div#p>svg>foreignObject>section .katex .vlist>span{display:block;height:0;position:relative}div#p>svg>foreignObject>section .katex .vlist>span>span{display:inline-block}div#p>svg>foreignObject>section .katex .vlist>span>.pstrut{overflow:hidden;width:0}div#p>svg>foreignObject>section .katex .vlist-t2{margin-right:-2px}div#p>svg>foreignObject>section .katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px;min-width:2px}div#p>svg>foreignObject>section .katex .msupsub{text-align:left}div#p>svg>foreignObject>section .katex .mfrac>span>span{text-align:center}div#p>svg>foreignObject>section .katex .mfrac .frac-line{display:inline-block;width:100%;border-bottom-style:solid}div#p>svg>foreignObject>section .katex .hdashline,div#p>svg>foreignObject>section .katex .hline,div#p>svg>foreignObject>section .katex .mfrac .frac-line,div#p>svg>foreignObject>section .katex .overline .overline-line,div#p>svg>foreignObject>section .katex .rule,div#p>svg>foreignObject>section .katex .underline .underline-line{min-height:1px}div#p>svg>foreignObject>section .katex .mspace{display:inline-block}div#p>svg>foreignObject>section .katex .clap,div#p>svg>foreignObject>section .katex .llap,div#p>svg>foreignObject>section .katex .rlap{width:0;position:relative}div#p>svg>foreignObject>section .katex .clap>.inner,div#p>svg>foreignObject>section .katex .llap>.inner,div#p>svg>foreignObject>section .katex .rlap>.inner{position:absolute}div#p>svg>foreignObject>section .katex .clap>.fix,div#p>svg>foreignObject>section .katex .llap>.fix,div#p>svg>foreignObject>section .katex .rlap>.fix{display:inline-block}div#p>svg>foreignObject>section .katex .llap>.inner{right:0}div#p>svg>foreignObject>section .katex .clap>.inner,div#p>svg>foreignObject>section .katex .rlap>.inner{left:0}div#p>svg>foreignObject>section .katex .clap>.inner>span{margin-left:-50%;margin-right:50%}div#p>svg>foreignObject>section .katex .rule{display:inline-block;border:0 solid;position:relative}div#p>svg>foreignObject>section .katex .hline,div#p>svg>foreignObject>section .katex .overline .overline-line,div#p>svg>foreignObject>section .katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}div#p>svg>foreignObject>section .katex .hdashline{display:inline-block;width:100%;border-bottom-style:dashed}div#p>svg>foreignObject>section .katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size1{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size2{font-size:1.2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size3{font-size:1.4em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size4{font-size:1.6em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size5{font-size:1.8em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size6{font-size:2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size7{font-size:2.4em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size8{font-size:2.88em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size9{font-size:3.456em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size10{font-size:4.148em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size1.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size1.size11{font-size:4.976em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size1{font-size:.83333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size2{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size3{font-size:1.16666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size4{font-size:1.33333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size5{font-size:1.5em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size6{font-size:1.66666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size7{font-size:2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size8{font-size:2.4em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size9{font-size:2.88em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size10{font-size:3.45666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size2.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size2.size11{font-size:4.14666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size1{font-size:.71428571em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size2{font-size:.85714286em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size3{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size4{font-size:1.14285714em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size5{font-size:1.28571429em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size6{font-size:1.42857143em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size7{font-size:1.71428571em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size8{font-size:2.05714286em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size9{font-size:2.46857143em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size10{font-size:2.96285714em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size3.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size3.size11{font-size:3.55428571em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size1{font-size:.625em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size2{font-size:.75em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size3{font-size:.875em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size4{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size5{font-size:1.125em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size6{font-size:1.25em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size7{font-size:1.5em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size8{font-size:1.8em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size9{font-size:2.16em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size10{font-size:2.5925em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size4.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size4.size11{font-size:3.11em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size1{font-size:.55555556em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size2{font-size:.66666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size3{font-size:.77777778em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size4{font-size:.88888889em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size5{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size6{font-size:1.11111111em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size7{font-size:1.33333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size8{font-size:1.6em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size9{font-size:1.92em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size10{font-size:2.30444444em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size5.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size5.size11{font-size:2.76444444em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size1{font-size:.5em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size2{font-size:.6em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size3{font-size:.7em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size4{font-size:.8em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size5{font-size:.9em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size6{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size7{font-size:1.2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size8{font-size:1.44em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size9{font-size:1.728em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size10{font-size:2.074em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size6.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size6.size11{font-size:2.488em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size1{font-size:.41666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size2{font-size:.5em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size3{font-size:.58333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size4{font-size:.66666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size5{font-size:.75em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size6{font-size:.83333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size7{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size8{font-size:1.2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size9{font-size:1.44em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size10{font-size:1.72833333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size7.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size7.size11{font-size:2.07333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size1{font-size:.34722222em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size2{font-size:.41666667em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size3{font-size:.48611111em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size4{font-size:.55555556em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size5{font-size:.625em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size6{font-size:.69444444em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size7{font-size:.83333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size8{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size9{font-size:1.2em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size10{font-size:1.44027778em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size8.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size8.size11{font-size:1.72777778em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size1{font-size:.28935185em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size2{font-size:.34722222em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size3{font-size:.40509259em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size4{font-size:.46296296em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size5{font-size:.52083333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size6{font-size:.5787037em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size7{font-size:.69444444em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size8{font-size:.83333333em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size9{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size10{font-size:1.20023148em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size9.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size9.size11{font-size:1.43981481em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size1{font-size:.24108004em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size2{font-size:.28929605em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size3{font-size:.33751205em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size4{font-size:.38572806em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size5{font-size:.43394407em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size6{font-size:.48216008em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size7{font-size:.57859209em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size8{font-size:.69431051em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size9{font-size:.83317261em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size10{font-size:1em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size10.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size10.size11{font-size:1.19961427em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size1,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size1{font-size:.20096463em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size2,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size2{font-size:.24115756em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size3,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size3{font-size:.28135048em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size4,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size4{font-size:.32154341em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size5,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size5{font-size:.36173633em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size6,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size6{font-size:.40192926em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size7,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size7{font-size:.48231511em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size8,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size8{font-size:.57877814em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size9,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size9{font-size:.69453376em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size10,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size10{font-size:.83360129em}div#p>svg>foreignObject>section .katex .fontsize-ensurer.reset-size11.size11,div#p>svg>foreignObject>section .katex .sizing.reset-size11.size11{font-size:1em}div#p>svg>foreignObject>section .katex .delimsizing.size1{font-family:KaTeX_Size1}div#p>svg>foreignObject>section .katex .delimsizing.size2{font-family:KaTeX_Size2}div#p>svg>foreignObject>section .katex .delimsizing.size3{font-family:KaTeX_Size3}div#p>svg>foreignObject>section .katex .delimsizing.size4{font-family:KaTeX_Size4}div#p>svg>foreignObject>section .katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}div#p>svg>foreignObject>section .katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}div#p>svg>foreignObject>section .katex .nulldelimiter{display:inline-block;width:.12em}div#p>svg>foreignObject>section .katex .delimcenter,div#p>svg>foreignObject>section .katex .op-symbol{position:relative}div#p>svg>foreignObject>section .katex .op-symbol.small-op{font-family:KaTeX_Size1}div#p>svg>foreignObject>section .katex .op-symbol.large-op{font-family:KaTeX_Size2}div#p>svg>foreignObject>section .katex .accent>.vlist-t,div#p>svg>foreignObject>section .katex .op-limits>.vlist-t{text-align:center}div#p>svg>foreignObject>section .katex .accent .accent-body{position:relative}div#p>svg>foreignObject>section .katex .accent .accent-body:not(.accent-full){width:0}div#p>svg>foreignObject>section .katex .overlay{display:block}div#p>svg>foreignObject>section .katex .mtable .vertical-separator{display:inline-block;min-width:1px}div#p>svg>foreignObject>section .katex .mtable .arraycolsep{display:inline-block}div#p>svg>foreignObject>section .katex .mtable .col-align-c>.vlist-t{text-align:center}div#p>svg>foreignObject>section .katex .mtable .col-align-l>.vlist-t{text-align:left}div#p>svg>foreignObject>section .katex .mtable .col-align-r>.vlist-t{text-align:right}div#p>svg>foreignObject>section .katex .svg-align{text-align:left}div#p>svg>foreignObject>section .katex svg{display:block;position:absolute;width:100%;height:inherit;fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}div#p>svg>foreignObject>section .katex svg path{stroke:none}div#p>svg>foreignObject>section .katex img{border-style:none;min-width:0;min-height:0;max-width:none;max-height:none}div#p>svg>foreignObject>section .katex .stretchy{width:100%;display:block;position:relative;overflow:hidden}div#p>svg>foreignObject>section .katex .stretchy:after,div#p>svg>foreignObject>section .katex .stretchy:before{content:""}div#p>svg>foreignObject>section .katex .hide-tail{width:100%;position:relative;overflow:hidden}div#p>svg>foreignObject>section .katex .halfarrow-left{left:0}div#p>svg>foreignObject>section .katex .halfarrow-left,div#p>svg>foreignObject>section .katex .halfarrow-right{position:absolute;width:50.2%;overflow:hidden}div#p>svg>foreignObject>section .katex .halfarrow-right{right:0}div#p>svg>foreignObject>section .katex .brace-left{position:absolute;left:0;width:25.1%;overflow:hidden}div#p>svg>foreignObject>section .katex .brace-center{position:absolute;left:25%;width:50%;overflow:hidden}div#p>svg>foreignObject>section .katex .brace-right{position:absolute;right:0;width:25.1%;overflow:hidden}div#p>svg>foreignObject>section .katex .x-arrow-pad{padding:0 .5em}div#p>svg>foreignObject>section .katex .mover,div#p>svg>foreignObject>section .katex .munder,div#p>svg>foreignObject>section .katex .x-arrow{text-align:center}div#p>svg>foreignObject>section .katex .boxpad{padding:0 .3em}div#p>svg>foreignObject>section .katex .fbox,div#p>svg>foreignObject>section .katex .fcolorbox{box-sizing:border-box;border:.04em solid}div#p>svg>foreignObject>section .katex .cancel-pad{padding:0 .2em}div#p>svg>foreignObject>section .katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}div#p>svg>foreignObject>section .katex .sout{border-bottom-style:solid;border-bottom-width:.08em}div#p>svg>foreignObject>section .katex-display{display:block;margin:1em 0;text-align:center}div#p>svg>foreignObject>section .katex-display>.katex{display:block;text-align:center;white-space:nowrap}div#p>svg>foreignObject>section .katex-display>.katex>.katex-html{display:block;position:relative}div#p>svg>foreignObject>section .katex-display>.katex>.katex-html>.tag{position:absolute;right:0}div#p>svg>foreignObject>section .katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}div#p>svg>foreignObject>section .katex-display.fleqn>.katex{text-align:left}div#p>svg>foreignObject>section .katex-display{margin:0}div#p>svg>foreignObject>section svg[data-marp-fitting-math]{--preserve-aspect-ratio:xMidYMid meet}div#p>svg>foreignObject>section svg[data-marp-fitting-math] [data-marp-fitting-svg-content]{margin:0 auto}div#p>svg>foreignObject>section svg[data-marp-fitting=svg]{display:block;height:auto;width:100%}@supports (-ms-ime-align:auto){div#p>svg>foreignObject>section svg[data-marp-fitting=svg]{position:static}}div#p>svg>foreignObject>section svg[data-marp-fitting=svg].__reflow__{content:""}@supports (-ms-ime-align:auto){div#p>svg>foreignObject>section svg[data-marp-fitting=svg].__reflow__{position:relative}}div#p>svg>foreignObject>section [data-marp-fitting-svg-content]{display:table;white-space:nowrap}div#p>svg>foreignObject>section [data-marp-fitting-svg-content-wrap]{white-space:pre}div#p>svg>foreignObject>section img[data-marp-twemoji]{background:transparent;height:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;width:1em}
+/*!
+ * Marp default theme.
+ *
+ * @theme default
+ * @author Yuki Hattori
+ *
+ * @auto-scaling true
+ * @size 4:3 960px 720px
+ */div#p>svg>foreignObject>section .octicon{display:inline-block;fill:currentColor;vertical-align:text-bottom}div#p>svg>foreignObject>section .anchor{float:left;line-height:1;margin-left:-20px;padding-right:4px}div#p>svg>foreignObject>section .anchor:focus{outline:none}div#p>svg>foreignObject>section h1 .octicon-link,div#p>svg>foreignObject>section h2 .octicon-link,div#p>svg>foreignObject>section h3 .octicon-link,div#p>svg>foreignObject>section h4 .octicon-link,div#p>svg>foreignObject>section h5 .octicon-link,div#p>svg>foreignObject>section h6 .octicon-link{color:#1b1f23;vertical-align:middle;visibility:hidden}div#p>svg>foreignObject>section h1:hover .anchor,div#p>svg>foreignObject>section h2:hover .anchor,div#p>svg>foreignObject>section h3:hover .anchor,div#p>svg>foreignObject>section h4:hover .anchor,div#p>svg>foreignObject>section h5:hover .anchor,div#p>svg>foreignObject>section h6:hover .anchor{text-decoration:none}div#p>svg>foreignObject>section h1:hover .anchor .octicon-link,div#p>svg>foreignObject>section h2:hover .anchor .octicon-link,div#p>svg>foreignObject>section h3:hover .anchor .octicon-link,div#p>svg>foreignObject>section h4:hover .anchor .octicon-link,div#p>svg>foreignObject>section h5:hover .anchor .octicon-link,div#p>svg>foreignObject>section h6:hover .anchor .octicon-link{visibility:visible}div#p>svg>foreignObject>section h1:hover .anchor .octicon-link:before,div#p>svg>foreignObject>section h2:hover .anchor .octicon-link:before,div#p>svg>foreignObject>section h3:hover .anchor .octicon-link:before,div#p>svg>foreignObject>section h4:hover .anchor .octicon-link:before,div#p>svg>foreignObject>section h5:hover .anchor .octicon-link:before,div#p>svg>foreignObject>section h6:hover .anchor .octicon-link:before{width:16px;height:16px;content:" ";display:inline-block;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'/%3E%3C/svg%3E")}div#p>svg>foreignObject>section{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#24292e;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;font-size:16px;line-height:1.5;word-wrap:break-word}div#p>svg>foreignObject>section details{display:block}div#p>svg>foreignObject>section summary{display:list-item}div#p>svg>foreignObject>section a{background-color:initial}div#p>svg>foreignObject>section a:active,div#p>svg>foreignObject>section a:hover{outline-width:0}div#p>svg>foreignObject>section strong{font-weight:inherit;font-weight:bolder}div#p>svg>foreignObject>section h1{margin:.67em 0}div#p>svg>foreignObject>section img{border-style:none}div#p>svg>foreignObject>section code,div#p>svg>foreignObject>section kbd,div#p>svg>foreignObject>section pre{font-family:monospace,monospace;font-size:1em}div#p>svg>foreignObject>section hr{box-sizing:initial;overflow:visible}div#p>svg>foreignObject>section input{font:inherit;margin:0;overflow:visible}div#p>svg>foreignObject>section [type=checkbox]{padding:0}div#p>svg>foreignObject>section *,div#p>svg>foreignObject>section [type=checkbox]{box-sizing:border-box}div#p>svg>foreignObject>section input{font-family:inherit;font-size:inherit;line-height:inherit}div#p>svg>foreignObject>section a{color:#0366d6;text-decoration:none}div#p>svg>foreignObject>section a:hover{text-decoration:underline}div#p>svg>foreignObject>section strong{font-weight:600}div#p>svg>foreignObject>section hr{height:0;margin:15px 0;overflow:hidden;background:transparent;border-bottom:1px solid #dfe2e5}div#p>svg>foreignObject>section hr:after,div#p>svg>foreignObject>section hr:before{display:table;content:""}div#p>svg>foreignObject>section hr:after{clear:both}div#p>svg>foreignObject>section table{border-spacing:0;border-collapse:collapse}div#p>svg>foreignObject>section td,div#p>svg>foreignObject>section th{padding:0}div#p>svg>foreignObject>section details summary{cursor:pointer}div#p>svg>foreignObject>section h1,div#p>svg>foreignObject>section h2,div#p>svg>foreignObject>section h3,div#p>svg>foreignObject>section h4,div#p>svg>foreignObject>section h5,div#p>svg>foreignObject>section h6{margin-top:0;margin-bottom:0}div#p>svg>foreignObject>section h1{font-size:32px}div#p>svg>foreignObject>section h1,div#p>svg>foreignObject>section h2{font-weight:600}div#p>svg>foreignObject>section h2{font-size:24px}div#p>svg>foreignObject>section h3{font-size:20px}div#p>svg>foreignObject>section h3,div#p>svg>foreignObject>section h4{font-weight:600}div#p>svg>foreignObject>section h4{font-size:16px}div#p>svg>foreignObject>section h5{font-size:14px}div#p>svg>foreignObject>section h5,div#p>svg>foreignObject>section h6{font-weight:600}div#p>svg>foreignObject>section h6{font-size:12px}div#p>svg>foreignObject>section p{margin-top:0;margin-bottom:10px}div#p>svg>foreignObject>section blockquote{margin:0}div#p>svg>foreignObject>section ol,div#p>svg>foreignObject>section ul{padding-left:0;margin-top:0;margin-bottom:0}div#p>svg>foreignObject>section ol ol,div#p>svg>foreignObject>section ul ol{list-style-type:lower-roman}div#p>svg>foreignObject>section ol ol ol,div#p>svg>foreignObject>section ol ul ol,div#p>svg>foreignObject>section ul ol ol,div#p>svg>foreignObject>section ul ul ol{list-style-type:lower-alpha}div#p>svg>foreignObject>section dd{margin-left:0}div#p>svg>foreignObject>section code,div#p>svg>foreignObject>section pre{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px}div#p>svg>foreignObject>section pre{margin-top:0;margin-bottom:0}div#p>svg>foreignObject>section input::-webkit-inner-spin-button,div#p>svg>foreignObject>section input::-webkit-outer-spin-button{margin:0;-webkit-appearance:none;appearance:none}div#p>svg>foreignObject>section :checked+.radio-label{position:relative;z-index:1;border-color:#0366d6}div#p>svg>foreignObject>section .border{border:1px solid #e1e4e8!important}div#p>svg>foreignObject>section .border-0{border:0!important}div#p>svg>foreignObject>section .border-bottom{border-bottom:1px solid #e1e4e8!important}div#p>svg>foreignObject>section .rounded-1{border-radius:3px!important}div#p>svg>foreignObject>section .bg-white{background-color:#fff!important}div#p>svg>foreignObject>section .bg-gray-light{background-color:#fafbfc!important}div#p>svg>foreignObject>section .text-gray-light{color:#6a737d!important}div#p>svg>foreignObject>section .pl-3,div#p>svg>foreignObject>section .px-3{padding-left:16px!important}div#p>svg>foreignObject>section .px-3{padding-right:16px!important}div#p>svg>foreignObject>section .f6{font-size:12px!important}div#p>svg>foreignObject>section .lh-condensed{line-height:1.25!important}div#p>svg>foreignObject>section .text-bold{font-weight:600!important}div#p>svg>foreignObject>section .pl-c{color:#6a737d}div#p>svg>foreignObject>section .pl-c1,div#p>svg>foreignObject>section .pl-s .pl-v{color:#005cc5}div#p>svg>foreignObject>section .pl-e,div#p>svg>foreignObject>section .pl-en{color:#6f42c1}div#p>svg>foreignObject>section .pl-s .pl-s1,div#p>svg>foreignObject>section .pl-smi{color:#24292e}div#p>svg>foreignObject>section .pl-ent{color:#22863a}div#p>svg>foreignObject>section .pl-k{color:#d73a49}div#p>svg>foreignObject>section .pl-pds,div#p>svg>foreignObject>section .pl-s,div#p>svg>foreignObject>section .pl-s .pl-pse .pl-s1,div#p>svg>foreignObject>section .pl-sr,div#p>svg>foreignObject>section .pl-sr .pl-cce,div#p>svg>foreignObject>section .pl-sr .pl-sra,div#p>svg>foreignObject>section .pl-sr .pl-sre{color:#032f62}div#p>svg>foreignObject>section .pl-smw,div#p>svg>foreignObject>section .pl-v{color:#e36209}div#p>svg>foreignObject>section .pl-bu{color:#b31d28}div#p>svg>foreignObject>section .pl-ii{color:#fafbfc;background-color:#b31d28}div#p>svg>foreignObject>section .pl-c2{color:#fafbfc;background-color:#d73a49}div#p>svg>foreignObject>section .pl-c2:before{content:"^M"}div#p>svg>foreignObject>section .pl-sr .pl-cce{font-weight:700;color:#22863a}div#p>svg>foreignObject>section .pl-ml{color:#735c0f}div#p>svg>foreignObject>section .pl-mh,div#p>svg>foreignObject>section .pl-mh .pl-en,div#p>svg>foreignObject>section .pl-ms{font-weight:700;color:#005cc5}div#p>svg>foreignObject>section .pl-mi{font-style:italic;color:#24292e}div#p>svg>foreignObject>section .pl-mb{font-weight:700;color:#24292e}div#p>svg>foreignObject>section .pl-md{color:#b31d28;background-color:#ffeef0}div#p>svg>foreignObject>section .pl-mi1{color:#22863a;background-color:#f0fff4}div#p>svg>foreignObject>section .pl-mc{color:#e36209;background-color:#ffebda}div#p>svg>foreignObject>section .pl-mi2{color:#f6f8fa;background-color:#005cc5}div#p>svg>foreignObject>section .pl-mdr{font-weight:700;color:#6f42c1}div#p>svg>foreignObject>section .pl-ba{color:#586069}div#p>svg>foreignObject>section .pl-sg{color:#959da5}div#p>svg>foreignObject>section .pl-corl{text-decoration:underline;color:#032f62}div#p>svg>foreignObject>section .mb-0{margin-bottom:0!important}div#p>svg>foreignObject>section .my-2{margin-bottom:8px!important;margin-top:8px!important}div#p>svg>foreignObject>section .pl-0{padding-left:0!important}div#p>svg>foreignObject>section .py-0{padding-top:0!important;padding-bottom:0!important}div#p>svg>foreignObject>section .pl-1{padding-left:4px!important}div#p>svg>foreignObject>section .pl-2{padding-left:8px!important}div#p>svg>foreignObject>section .py-2{padding-top:8px!important;padding-bottom:8px!important}div#p>svg>foreignObject>section .pl-3{padding-left:16px!important}div#p>svg>foreignObject>section .pl-4{padding-left:24px!important}div#p>svg>foreignObject>section .pl-5{padding-left:32px!important}div#p>svg>foreignObject>section .pl-6{padding-left:40px!important}div#p>svg>foreignObject>section .pl-7{padding-left:48px!important}div#p>svg>foreignObject>section .pl-8{padding-left:64px!important}div#p>svg>foreignObject>section .pl-9{padding-left:80px!important}div#p>svg>foreignObject>section .pl-10{padding-left:96px!important}div#p>svg>foreignObject>section .pl-11{padding-left:112px!important}div#p>svg>foreignObject>section .pl-12{padding-left:128px!important}div#p>svg>foreignObject>section hr{border-bottom-color:#eee}div#p>svg>foreignObject>section kbd{display:inline-block;padding:3px 5px;font:11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #d1d5da;border-radius:3px;box-shadow:inset 0 -1px 0 #d1d5da}div#p>svg>foreignObject>section:after,div#p>svg>foreignObject>section:before{display:table
+  /* content:""; */}div#p>svg>foreignObject>section:after{clear:both}div#p>svg>foreignObject>section>:first-child{margin-top:0!important}div#p>svg>foreignObject>section>:last-child{margin-bottom:0!important}div#p>svg>foreignObject>section a:not([href]){color:inherit;text-decoration:none}div#p>svg>foreignObject>section blockquote,div#p>svg>foreignObject>section details,div#p>svg>foreignObject>section dl,div#p>svg>foreignObject>section ol,div#p>svg>foreignObject>section p,div#p>svg>foreignObject>section pre,div#p>svg>foreignObject>section table,div#p>svg>foreignObject>section ul{margin-top:0;margin-bottom:16px}div#p>svg>foreignObject>section hr{height:.25em;padding:0;margin:24px 0;background-color:#e1e4e8;border:0}div#p>svg>foreignObject>section blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}div#p>svg>foreignObject>section blockquote>:first-child{margin-top:0}div#p>svg>foreignObject>section blockquote>:last-child{margin-bottom:0}div#p>svg>foreignObject>section h1,div#p>svg>foreignObject>section h2,div#p>svg>foreignObject>section h3,div#p>svg>foreignObject>section h4,div#p>svg>foreignObject>section h5,div#p>svg>foreignObject>section h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}div#p>svg>foreignObject>section h1{font-size:2em}div#p>svg>foreignObject>section h1,div#p>svg>foreignObject>section h2{padding-bottom:.3em;border-bottom:1px solid #eaecef}div#p>svg>foreignObject>section h2{font-size:1.5em}div#p>svg>foreignObject>section h3{font-size:1.25em}div#p>svg>foreignObject>section h4{font-size:1em}div#p>svg>foreignObject>section h5{font-size:.875em}div#p>svg>foreignObject>section h6{font-size:.85em;color:#6a737d}div#p>svg>foreignObject>section ol,div#p>svg>foreignObject>section ul{padding-left:2em}div#p>svg>foreignObject>section ol ol,div#p>svg>foreignObject>section ol ul,div#p>svg>foreignObject>section ul ol,div#p>svg>foreignObject>section ul ul{margin-top:0;margin-bottom:0}div#p>svg>foreignObject>section li{word-wrap:break-all}div#p>svg>foreignObject>section li>p{margin-top:16px}div#p>svg>foreignObject>section li+li{margin-top:.25em}div#p>svg>foreignObject>section dl{padding:0}div#p>svg>foreignObject>section dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}div#p>svg>foreignObject>section dl dd{padding:0 16px;margin-bottom:16px}div#p>svg>foreignObject>section table{display:block;width:100%;overflow:auto}div#p>svg>foreignObject>section table th{font-weight:600}div#p>svg>foreignObject>section table td,div#p>svg>foreignObject>section table th{padding:6px 13px;border:1px solid #dfe2e5}div#p>svg>foreignObject>section table tr{background-color:#fff;border-top:1px solid #c6cbd1}div#p>svg>foreignObject>section table tr:nth-child(2n){background-color:#f6f8fa}div#p>svg>foreignObject>section img{max-width:100%;box-sizing:initial;background-color:#fff}div#p>svg>foreignObject>section img[align=right]{padding-left:20px}div#p>svg>foreignObject>section img[align=left]{padding-right:20px}div#p>svg>foreignObject>section code{padding:.2em .4em;margin:0;font-size:85%;background-color:rgba(27,31,35,.05);border-radius:3px}div#p>svg>foreignObject>section pre{word-wrap:normal}div#p>svg>foreignObject>section pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}div#p>svg>foreignObject>section .highlight{margin-bottom:16px}div#p>svg>foreignObject>section .highlight pre{margin-bottom:0;word-break:normal}div#p>svg>foreignObject>section pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}div#p>svg>foreignObject>section pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:initial;border:0}div#p>svg>foreignObject>section .commit-tease-sha{display:inline-block;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:90%;color:#444d56}div#p>svg>foreignObject>section .full-commit .btn-outline:not(:disabled):hover{color:#005cc5;border-color:#005cc5}div#p>svg>foreignObject>section .blob-wrapper{overflow-x:auto;overflow-y:hidden}div#p>svg>foreignObject>section .blob-wrapper-embedded{max-height:240px;overflow-y:auto}div#p>svg>foreignObject>section .blob-num{width:1%;min-width:50px;padding-right:10px;padding-left:10px;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;line-height:20px;color:rgba(27,31,35,.3);text-align:right;white-space:nowrap;vertical-align:top;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}div#p>svg>foreignObject>section .blob-num:hover{color:rgba(27,31,35,.6)}div#p>svg>foreignObject>section .blob-num:before{content:attr(data-line-number)}div#p>svg>foreignObject>section .blob-code{position:relative;padding-right:10px;padding-left:10px;line-height:20px;vertical-align:top}div#p>svg>foreignObject>section .blob-code-inner{overflow:visible;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;color:#24292e;word-wrap:normal;white-space:pre}div#p>svg>foreignObject>section .pl-token.active,div#p>svg>foreignObject>section .pl-token:hover{cursor:pointer;background:#ffea7f}div#p>svg>foreignObject>section .tab-size[data-tab-size="1"]{-moz-tab-size:1;-o-tab-size:1;tab-size:1}div#p>svg>foreignObject>section .tab-size[data-tab-size="2"]{-moz-tab-size:2;-o-tab-size:2;tab-size:2}div#p>svg>foreignObject>section .tab-size[data-tab-size="3"]{-moz-tab-size:3;-o-tab-size:3;tab-size:3}div#p>svg>foreignObject>section .tab-size[data-tab-size="4"]{-moz-tab-size:4;-o-tab-size:4;tab-size:4}div#p>svg>foreignObject>section .tab-size[data-tab-size="5"]{-moz-tab-size:5;-o-tab-size:5;tab-size:5}div#p>svg>foreignObject>section .tab-size[data-tab-size="6"]{-moz-tab-size:6;-o-tab-size:6;tab-size:6}div#p>svg>foreignObject>section .tab-size[data-tab-size="7"]{-moz-tab-size:7;-o-tab-size:7;tab-size:7}div#p>svg>foreignObject>section .tab-size[data-tab-size="8"]{-moz-tab-size:8;-o-tab-size:8;tab-size:8}div#p>svg>foreignObject>section .tab-size[data-tab-size="9"]{-moz-tab-size:9;-o-tab-size:9;tab-size:9}div#p>svg>foreignObject>section .tab-size[data-tab-size="10"]{-moz-tab-size:10;-o-tab-size:10;tab-size:10}div#p>svg>foreignObject>section .tab-size[data-tab-size="11"]{-moz-tab-size:11;-o-tab-size:11;tab-size:11}div#p>svg>foreignObject>section .tab-size[data-tab-size="12"]{-moz-tab-size:12;-o-tab-size:12;tab-size:12}div#p>svg>foreignObject>section .task-list-item{list-style-type:none}div#p>svg>foreignObject>section .task-list-item+.task-list-item{margin-top:3px}div#p>svg>foreignObject>section .task-list-item input{margin:0 .2em .25em -1.6em;vertical-align:middle}div#p>svg>foreignObject>section .hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}div#p>svg>foreignObject>section .hljs-comment,div#p>svg>foreignObject>section .hljs-meta{color:#969896}div#p>svg>foreignObject>section .hljs-emphasis,div#p>svg>foreignObject>section .hljs-quote,div#p>svg>foreignObject>section .hljs-strong,div#p>svg>foreignObject>section .hljs-template-variable,div#p>svg>foreignObject>section .hljs-variable{color:#df5000}div#p>svg>foreignObject>section .hljs-keyword,div#p>svg>foreignObject>section .hljs-selector-tag,div#p>svg>foreignObject>section .hljs-type{color:#d73a49}div#p>svg>foreignObject>section .hljs-attribute,div#p>svg>foreignObject>section .hljs-bullet,div#p>svg>foreignObject>section .hljs-literal,div#p>svg>foreignObject>section .hljs-symbol{color:#0086b3}div#p>svg>foreignObject>section .hljs-name,div#p>svg>foreignObject>section .hljs-section{color:#63a35c}div#p>svg>foreignObject>section .hljs-tag{color:#333}div#p>svg>foreignObject>section .hljs-attr,div#p>svg>foreignObject>section .hljs-selector-attr,div#p>svg>foreignObject>section .hljs-selector-class,div#p>svg>foreignObject>section .hljs-selector-id,div#p>svg>foreignObject>section .hljs-selector-pseudo,div#p>svg>foreignObject>section .hljs-title{color:#6f42c1}div#p>svg>foreignObject>section .hljs-addition{color:#55a532;background-color:#eaffea}div#p>svg>foreignObject>section .hljs-deletion{color:#bd2c00;background-color:#ffecec}div#p>svg>foreignObject>section .hljs-link{text-decoration:underline}div#p>svg>foreignObject>section .hljs-number{color:#005cc5}div#p>svg>foreignObject>section .hljs-string{color:#032f62}div#p>svg>foreignObject>section svg[data-marp-fitting=svg]{max-height:563px}div#p>svg>foreignObject>section h1{color:#246;font-size:1.6em}div#p>svg>foreignObject>section h1,div#p>svg>foreignObject>section h2{border-bottom:none}div#p>svg>foreignObject>section h2{font-size:1.3em}div#p>svg>foreignObject>section h3{font-size:1.1em}div#p>svg>foreignObject>section h4{font-size:1.05em}div#p>svg>foreignObject>section h5{font-size:1em}div#p>svg>foreignObject>section h6{font-size:.9em}div#p>svg>foreignObject>section h1 strong,div#p>svg>foreignObject>section h2 strong,div#p>svg>foreignObject>section h3 strong,div#p>svg>foreignObject>section h4 strong,div#p>svg>foreignObject>section h5 strong,div#p>svg>foreignObject>section h6 strong{font-weight:inherit;color:#48c}div#p>svg>foreignObject>section hr{height:0;padding-top:.25em}div#p>svg>foreignObject>section pre{border:1px solid #999;line-height:1.15;overflow:visible}div#p>svg>foreignObject>section pre code svg[data-marp-fitting=svg]{max-height:529px}div#p>svg>foreignObject>section footer,div#p>svg>foreignObject>section header{margin:0;position:absolute;left:30px;color:hsla(0,0%,40%,.75);font-size:18px}div#p>svg>foreignObject>section header{top:21px}div#p>svg>foreignObject>section footer{bottom:21px}div#p>svg>foreignObject>section{align-items:stretch;background:#fff;display:flex;flex-direction:column;flex-wrap:nowrap;font-size:29px;height:720px;justify-content:center;padding:78.5px;width:1280px}div#p>svg>foreignObject>section>:last-child,div#p>svg>foreignObject>section[data-footer]>:nth-last-child(2){margin-bottom:0}div#p>svg>foreignObject>section>:first-child,div#p>svg>foreignObject>section>header:first-child+*{margin-top:0}div#p>svg>foreignObject>section:after{position:absolute;padding:0;right:30px;bottom:21px;font-size:24px;color:#777}div#p>svg>foreignObject>section.invert{background-color:#222;color:#e6eaf0}div#p>svg>foreignObject>section.invert:after{color:#999}div#p>svg>foreignObject>section.invert img{background-color:transparent}div#p>svg>foreignObject>section.invert a{color:#50b3ff}div#p>svg>foreignObject>section.invert h1{color:#a3c5e7}div#p>svg>foreignObject>section.invert h2,div#p>svg>foreignObject>section.invert h3,div#p>svg>foreignObject>section.invert h4,div#p>svg>foreignObject>section.invert h5{color:#ebeff5}div#p>svg>foreignObject>section.invert blockquote,div#p>svg>foreignObject>section.invert h6{border-color:#3d3f43;color:#939699}div#p>svg>foreignObject>section.invert h1 strong,div#p>svg>foreignObject>section.invert h2 strong,div#p>svg>foreignObject>section.invert h3 strong,div#p>svg>foreignObject>section.invert h4 strong,div#p>svg>foreignObject>section.invert h5 strong,div#p>svg>foreignObject>section.invert h6 strong{color:#7bf}div#p>svg>foreignObject>section.invert hr{background-color:#3d3f43}div#p>svg>foreignObject>section.invert footer,div#p>svg>foreignObject>section.invert header{color:hsla(0,0%,60%,.75)}div#p>svg>foreignObject>section.invert code,div#p>svg>foreignObject>section.invert kbd{background-color:#111}div#p>svg>foreignObject>section.invert kbd{border-color:#666;box-shadow:inset 0 -1px 0 #555;color:#e6eaf0}div#p>svg>foreignObject>section.invert table tr{background-color:#12181d;border-color:#60657b}div#p>svg>foreignObject>section.invert table tr:nth-child(2n){background-color:#1b2024}div#p>svg>foreignObject>section.invert table td,div#p>svg>foreignObject>section.invert table th{border-color:#5b5e61}div#p>svg>foreignObject>section.invert pre{background-color:#0a0e12;border-color:#777}div#p>svg>foreignObject>section.invert pre code{background-color:transparent}div#p>svg>foreignObject>section[data-color] h1,div#p>svg>foreignObject>section[data-color] h2,div#p>svg>foreignObject>section[data-color] h3,div#p>svg>foreignObject>section[data-color] h4,div#p>svg>foreignObject>section[data-color] h5,div#p>svg>foreignObject>section[data-color] h6{color:currentColor}div#p>svg>foreignObject>section[data-marpit-advanced-background=background]{display:block!important;padding:0!important}div#p>svg>foreignObject>section[data-marpit-advanced-background=background]:after,div#p>svg>foreignObject>section[data-marpit-advanced-background=background]:before,div#p>svg>foreignObject>section[data-marpit-advanced-background=content]:after,div#p>svg>foreignObject>section[data-marpit-advanced-background=content]:before{display:none!important}div#p>svg>foreignObject>section[data-marpit-advanced-background=background]>div[data-marpit-advanced-background-container]{all:initial;display:flex;flex-direction:row;height:100%;overflow:hidden;width:100%}div#p>svg>foreignObject>section[data-marpit-advanced-background=background]>div[data-marpit-advanced-background-container][data-marpit-advanced-background-direction=vertical]{flex-direction:column}div#p>svg>foreignObject>section[data-marpit-advanced-background=background][data-marpit-advanced-background-split]>div[data-marpit-advanced-background-container]{width:var(--marpit-advanced-background-split,50%)}div#p>svg>foreignObject>section[data-marpit-advanced-background=background][data-marpit-advanced-background-split=right]>div[data-marpit-advanced-background-container]{margin-left:calc(100% - var(--marpit-advanced-background-split, 50%))}div#p>svg>foreignObject>section[data-marpit-advanced-background=background]>div[data-marpit-advanced-background-container]>figure{all:initial;background-position:center;background-repeat:no-repeat;background-size:cover;flex:auto;margin:0}div#p>svg>foreignObject>section[data-marpit-advanced-background=content],div#p>svg>foreignObject>section[data-marpit-advanced-background=pseudo]{background:transparent!important}div#p>svg>foreignObject>section[data-marpit-advanced-background=pseudo],div#p>svg[data-marpit-svg]>foreignObject[data-marpit-advanced-background=pseudo]{pointer-events:none!important}div#p>svg>foreignObject>section[data-marpit-advanced-background-split]{width:100%;height:100%}</style></head><body><div class="bespoke-marp-osc"><button data-bespoke-marp-osc="prev" tabindex="-1" title="Previous slide">Previous slide</button><span data-bespoke-marp-osc="page"></span><button data-bespoke-marp-osc="next" tabindex="-1" title="Next slide">Next slide</button><button data-bespoke-marp-osc="fullscreen" tabindex="-1" title="Toggle fullscreen (f)">Toggle fullscreen</button><button data-bespoke-marp-osc="presenter" tabindex="-1" title="Open presenter view (p)">Open presenter view</button></div><div id="p"><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="1">
+<h1>Desplegament de Serveis. Docker</h1>
+<h4>TSR 2020, Juansa Sendra, Grup A</h4>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="2">
+<h2>Components i instàncies, dependències</h2>
+<ul>
+<li>Aplicació distribuïda = col·lecció de components heterogenis dispersos sobre una xarxa de computadors
+<ul>
+<li>Example.- 1 component client amb varies instàncies, 1 component broker amb una instància, 1 component workers amb varies instàncies</li>
+<li>Cada instància
+<ul>
+<li>pot iniciar-se/detenir-se/reiniciar-se de manera independent</li>
+<li>falla de forma independent a la resta</li>
+<li>té una ubicació pròpia (independent)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Els components cooperen <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> hi ha dependències
+<ul>
+<li>Example.- els clients han de tindre identitat única i coneixer el frontend, els workers han de tindre identitat única i coneixer el backend</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="3">
+<h2>Requisits execució</h2>
+<ul>
+<li>Els nodes poden ser heterogenis (diferents equips, SO, etc.)
+<ul>
+<li>Cada component tindrà certs requisits per a la seua execució</li>
+<li>Nota.- en el nostre cas utilitzem nodeJS i 0MQ per a tots els components, però podem desenvolupar cada component amb diferents llenguatges, SO, etc.</li>
+</ul>
+</li>
+<li>Podem tindre requisits addicionals de seguretat (privacitat, autenticació, etc.)</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4">
+<h2>Desplegament = preparació d'un programari per al seu ús</h2>
+<ul>
+<li>Execució del programari
+<ul>
+<li>Instalació.- resoldre dependències del programari (ex. biblioteques), configurar (ex versions compatibles), determinar nombre d'instàncies de cada component i la manera de repartirlos entre nodes</li>
+<li>Activació.- establir l'ordre en què arranquen els components</li>
+</ul>
+</li>
+<li>Desctivació.- detindre el sistema de forma ordenada</li>
+<li>Actualització.- reemplazar components (ex nova versió)</li>
+<li>Adaptació.- recuperació de fallades, canvis en la configuració dels agents, escalat (reacció davant canvis en la càrrega)</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5">
+<h2>Desplegament manual. Example</h2>
+<ul>
+<li>Garantir que cada node disposa de la instal.lació base
+<ul>
+<li>NodeJS, ZeroMQ (amb les versions correctes)</li>
+</ul>
+</li>
+<li>Copiar el codi font de cada component (client, broker, worker) al node adequat</li>
+<li>Llançar els components en el ordre correcte (args en linia comandament)
+<ul>
+<li><code>node broker frontend backend</code></li>
+<li>per cada worker: <code>node worker id backend</code></li>
+<li>per cada client: <code>node client id frontend</code></li>
+</ul>
+</li>
+<li>Qué passa si tenim 12 workers i 80 clients? i si modifiquem el codi client?
+<ul>
+<li>Necessitem automatitzar el desplegament</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6">
+<h2>Desplegament de serveis = instal·lació, activació, actualització i adaptació del servei</h2>
+<ul>
+<li>Desenvolupem aplicacions distribuïdes per a proporcionar <strong>serveis</strong> (funcionalitat, Ex. DropBox, Wikipedia, ...) a clients remots
+<ul>
+<li>Servei = Aplicació + desplegament (només resulta utilitzable una vegada desplegat)</li>
+</ul>
+</li>
+<li>Un servei extableix un SLA (Service Level Agreement)
+<ul>
+<li>Definició funcional (què fà)</li>
+<li>Rendiment (quantitat de clients que suporta, temps de resposta esperat)</li>
+<li>Disponibilitat (% del temps que garantim servei disponible)
+<ul>
+<li>Ens centrem en serveis persistents (disponibilitat continua)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7">
+<h2>Automatització del desplegament</h2>
+<ul>
+<li>Configuració per a cada component
+<ul>
+<li>Fitxer amb llista de paràmetres de configuració i descripcions de dependències</li>
+<li>L'eina genera una configuració específica per a cada instància del component</li>
+<li>Example
+<ul>
+<li>per a client: args id i frontend, dependència respecte a broker</li>
+<li>per a broker: args frontend i backend</li>
+<li>per a worker: args id i backend, dependència respecte a broker</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8">
+<h2>Automatització del desplegament</h2>
+<ul>
+<li>Pla de configuració global
+<ul>
+<li>Pla de connexió entre components (llista d’endpoints exposats, llista de dependències)
+<ul>
+<li>En el nostre example els endpoints son frontend i backend</li>
+<li>Podriem llegir les dades d'un fitxer, rebre dades en un socket, etc.</li>
+<li>Pero utilitzarem <strong>Injecció de dependències</strong>
+<ul>
+<li>El codi de l'aplicació exposa noms</li>
+<li>Una eina associa les variables amb instàncies d'objectes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Decideix on col·locar cada instància i l'ordre d'arrencada
+<ul>
+<li>En el nostre example ordre broker, workers, clients</li>
+</ul>
+</li>
+<li>Enllaç ('binding') de dependències (emparella els endpoints, incloent dependències amb serveis externs)
+<ul>
+<li>En el nostre example no hi haurà dependències externes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9">
+<h2>Desplegament en el núvol (IaaS)</h2>
+<ul>
+<li>Es basa en virtualització
+<ul>
+<li>Màquines virtuals de diferents grandàries</li>
+<li>Flexibilitat en l'assignació de recursos</li>
+</ul>
+</li>
+<li>Presenta limitacions en el desplegament
+<ul>
+<li>Decisions d'assignació no automàtiques (baix nivell)
+<ul>
+<li>Nombre d'instàncies per component, ubicació, tipus de MV</li>
+</ul>
+</li>
+<li>No permet triar característiques xarxa (retard, amplada de banda)</li>
+<li>Model de fallada insuficient
+<ul>
+<li>Les maneres de fallada no són realment independents</li>
+<li>Ajuda limitada a la recuperació</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10">
+<h2>Desplegament en el núvol (PaaS)</h2>
+<ul>
+<li>SLA com a element central <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> paràmetres del SLA per a tots els components
+<ul>
+<li>Es persegueix l'automatització del desplegament
+<ul>
+<li>Plans de desplegament a partir del SLA</li>
+<li>Plans per a actualització/configuració</li>
+</ul>
+</li>
+<li>Situació actual
+<ul>
+<li>El grau d’automatització ha millorat en els darrers anys
+<ul>
+<li>Inclou el desplegament inicial i l’autoescalat de serveis senzills</li>
+<li>Encara no garanteix que l’actualització dels serveis respecte el seuSLA</li>
+</ul>
+</li>
+<li>Microsoft Azure és un dels més evolucionats</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11">
+<h2>Automatització del desplegament.- contenidors</h2>
+<ul>
+<li>Aprovisionament = reservar la infraestructura necessària
+<ul>
+<li>recursos per a intercomunicació entre instàncies</li>
+<li>recursos per a cada instància (processador, memòria, ..). Alternatives:<br />
+<img src="container.png" alt="" /></li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12">
+<h2>Contenidor vs MV</h2>
+<ul>
+<li>Menor flexibilitat
+<ul>
+<li>El programari de la instància ha de ser compatible amb el SO amfitrió</li>
+<li>L'aïllament entre contenidors no és perfecte</li>
+</ul>
+</li>
+<li>Lleuger (utilitza molts menys recursos)
+<ul>
+<li>Ex.: despleguem 100 instàncies d'un component l'execució del qual requereix 900MB (SO) + 100MB (resta)
+<ul>
+<li>amb MV: 100*(900MB + 100MB) = 100GB</li>
+<li>amb contenidors: 900MB + 100*100MB = 10.9GB</li>
+<li>Estalviem espai i temps (ex. per a instal·lar la imatge)</li>
+</ul>
+</li>
+<li>Major facilitat de desplegament (fitxer de configuració)</li>
+<li>Aplicable en quasi tots els escenaris</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13">
+<h2>Contenidors.- Docker</h2>
+<ul>
+<li>El fitxer de configuració Dockerfile automatitza el desplegament de cada instància</li>
+<li>Suporta control de versions (Git)</li>
+<li>A més del sistema de fitxers natiu, defineix un sistema fitxers de només lectura per a compartició entre contenidors</li>
+<li>Permet cooperació en el desenvolupament mitjançant depòsits públics</li>
+</ul>
+<p>NOTA.-Assumim que el SO de l'hoste és Linux (encara que existeix Docker per a Windows)</p>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14">
+<h2>Components Docker</h2>
+<ul>
+<li><strong>Imatge</strong> = plantilla de només lectura amb les instruccions per a crear un contenidor (com arribar a un context d'execució determinat)
+<ul>
+<li>Ex.-podem crear una imatge per a proporcionar Linux+NodeJS+zmq, a la qual denominem centos-zmq</li>
+<li>Podem construir les imatges que necessitem. Al final hem de definir una imatge per component (ex. imatges per a client, broker, worker)</li>
+</ul>
+</li>
+<li><strong>Contenidor</strong> = Conjunt de recursos que necessita una instància per a executar-se. Es crea en executar una imatge
+<ul>
+<li>Ex.-per a provar el codi de la pràctica 2, executem cada instància sobre un contenidor creat a partir de centos-zmq</li>
+</ul>
+</li>
+<li><strong>Depòsit</strong> = lloc on podem deixar/obtindre imatges (espai per a compartir imatges)
+<ul>
+<li>Ex.-Podem pujar la imatge centos-zmq, i qualsevol pot baixar-la i usar-la per a crear contenidors</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15">
+<h2>Creació d'una imatge</h2>
+<ul>
+<li>En el depòsit tenim imatges predefinides per a les diferentes distribucions Linux
+<ul>
+<li>Ex. imatge centos:7.4.1708</li>
+</ul>
+</li>
+<li>Nova imatge = imatge base + instruccions
+<ul>
+<li>A partir de centos:7.4.1708 + instruccions per a instal.lar nodeJS <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> centos-nodejs</li>
+<li>A partir de centos-nodejs + instruccions per a instal.lar zmq <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> centos-zmq</li>
+<li>A partir de centos-zmq + ... <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> client</li>
+<li>A partir de centos-zmq + ... <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> broker</li>
+<li>A partir de centos-zmq + ... <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> imatge</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16">
+<h2>Creació d'una imatge (2 alternatives)</h2>
+<ol>
+<li>Manual</li>
+</ol>
+<ul>
+<li>carregar una imatge base existent i crear un contenidor interactiu (terminal) a partir d'eixa imatge</li>
+<li>introduïr instruccions a má desde consola (modificar contenidor)</li>
+<li>crear nova imatge a partir de l'estat actual del contenidor</li>
+</ul>
+<ol start="2">
+<li>Automàtica</li>
+</ol>
+<ul>
+<li>Crear fitxer de text amb instruccions <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> amb nom Dockerfile</li>
+<li>donar la ordre per a construir la imatge a partir del dockerfile</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17">
+<h2>Creació d'una imatge.- Example alternativa manual</h2>
+<ul>
+<li>carregar una imatge base existent i crear un contenidor interactiu (terminal) a partir d'eixa imatge</li>
+</ul>
+<p><code>$ docker run -i -t centos:7.4.1708 bash</code></p>
+<ul>
+<li>introduïr instruccions a má desde consola (modificar contenidor)</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>$ curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -
+$ yum install -y nodejs
+$ yum install -y epel-release
+$ yum install -y zero-devel
+$ yum install -y make python gcc-c++
+$ rpm install zeromq@5
+$ exit
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>crear nova imatge a partir de l'estat actual del contenidor</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>$ docker ps -a
+$ docker commit idContenidor centos-zmq
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18">
+<h2>Creació d'una imatge.- Example alternativa automàtica (Dockerfile)</h2>
+<ul>
+<li>Crear fitxer de text amb instruccions <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> amb nom <strong>Dockerfile</strong></li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM centos:7.4.1708
+RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -
+RUN yum install -y nodejs
+RUN yum install -y epel-release
+RUN yum install -y zeromq-devel make python gcc-c++
+RUN npm install zeromq@5
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>donar la ordre per a construir la imatge a partir del Dockerfile
+<ul>
+<li>asumint que estem en el directori on està el Dockerfile</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>$ docker build -t tsr1718/centos-zmq .
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19">
+<h2>Docker.- ordres (accions)</h2>
+<ul>
+<li>Docker utilitza ordres des de consola: <code>$ docker acció opcions arguments</code></li>
+<li>Podem agrupar les diferents accions en grups (NO estudiem totes les accions)
+<ul>
+<li>Operacions sobre contenidors (cicle de vida): <code>run, build, commit, start, stop</code></li>
+<li>Operaciones informatives: <code>ps, info, images, history</code></li>
+<li>Accés al depòsit: <code>pull, push</code></li>
+<li>Altres: <code>cp, export</code></li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20">
+<h2>Docker.- ordres principals (1)</h2>
+<ul>
+<li>docker run -i -t imatgeBase progInicial
+<ul>
+<li>crea un contenidor interactiu a partir de imatgeBase, arranca progInicial</li>
+</ul>
+</li>
+<li>docker commit idContenidor nomNovaImatge
+<ul>
+<li>guarda el estat actual del contenidor com a una nova imatge</li>
+</ul>
+</li>
+<li>docker build -t nomNovaImatge pathDockerfile
+<ul>
+<li>guarda el estat del contenidor con a una nova imatge</li>
+</ul>
+</li>
+<li>docker start idContenidor
+<ul>
+<li>arranca la execució del contenidor</li>
+</ul>
+</li>
+<li>docker stop idContenidor
+<ul>
+<li>para la execució del contenidor</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21">
+<h2>Docker.- ordres principals (2)</h2>
+<ul>
+<li>docker ps -a
+<ul>
+<li>llistat de tots el contenidors i el seu estat</li>
+</ul>
+</li>
+<li>docker images
+<ul>
+<li>llistat de totes les imatges a nivell local</li>
+</ul>
+</li>
+<li>docker history idImage
+<ul>
+<li>mostra la història d'una imatge</li>
+</ul>
+</li>
+<li>docker pull idImatge
+<ul>
+<li>obtiendre copia local d'una imatge que està al depòsit</li>
+</ul>
+</li>
+<li>docker push idImatge
+<ul>
+<li>deixar en el depòsit copia  d'una imatge local</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22">
+<h2>Docker.- Fitxer Dockerfile (per automatitzar la creació d'una imatge)</h2>
+<ul>
+<li>La primera linia ha de ser: <code>FROM imatgeBase</code></li>
+<li>Altres linies tenen la estructura: <code>acció arguments</code>
+<ul>
+<li><code>RUN ordre</code> executa la ordre en el shell</li>
+<li><code>ADD origen destinació</code> copia fitxers des de la màquina amfitrió al contenidor
+<ul>
+<li>Si l'origen és un directori, el copia complet. Si és un fitxer comprimit, l'expandeix al copiar</li>
+</ul>
+</li>
+<li><code>COPY origen destinació</code> idem ADD, però no expandeix els fitxers comprimits</li>
+<li><code>EXPOSE port</code> indica un port en el qual el contenidor atendrà peticions</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23">
+<h2>Docker.- Fitxer Dockerfile (cont)</h2>
+<ul>
+<li><code>WORKDIR path</code> indica directori de treball per a les ordres RUN, CMD, ENTRYPOINT</li>
+<li><code>ENV variable valor</code> assigna valor a una variable d'entorn (accessible pels programes dins del contenidor)</li>
+<li><code>CMD ordre args</code> proporciona valors per defecte per a l'execució del contenidor</li>
+<li><code>ENTRYPOINT ordre args</code> executa aquesta ordre en crear el contenidor
+<ul>
+<li>Si tenim varies ordres CMD o ENTRYPOINT, només executa l'última</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24">
+<h2>Example broker/workers.- Alternatives per a organitzar els components</h2>
+<p><img src="tsrT4.png" alt="" /></p>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25">
+<h2>Entorn de proves.- varios components en el mateix node</h2>
+<ul>
+<li>Interacció entre components en una mateixa màquina (com en el laboratori)</li>
+<li>Hem de definir una imatge per component, i crear un contenidor per instància</li>
+<li>Estudiem 2 alternatives (ens centrem en la primera)
+<ul>
+<li>tots els components (client, broker, worker) en la mateixa màquina</li>
+<li>broker i workers en un màquina, clients remots en altres màquines</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26">
+<h2>Example.- patró broker/worker</h2>
+<ul>
+<li>component broker (broker.js)
+<ul>
+<li><code>node broker portFront portBack</code> (per defecte 9998 9999)</li>
+</ul>
+</li>
+<li>component worker (worker.js)
+<ul>
+<li><code>node worker urlBack</code> (per defecte tcp://localhost:9999)</li>
+<li>normalment tindré varies intàncies</li>
+</ul>
+</li>
+<li>component client (client.js)
+<ul>
+<li><code>node client urlFront</code> (per defecte tcp://localhost:9998)</li>
+<li>normalment tindré varies intàncies</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27">
+<h2>Example amb tots els components en un node</h2>
+<ul>
+<li>Organitzem la següent estructura de directoris</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>patroBrokerWorkers/
+  docker-compose.yml
+  client/
+    client.js
+    Dockerfile
+  broker/
+    broker.js
+    Dockerfile
+  worker/
+    worker.js
+    Dockerfile
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>Els fitxers <code>Dockerfile</code> són per a crear les imatges que permeten llançar contenidors</li>
+<li>El fitxer <code>docker-compose.yml</code> es un plà global de desplegament</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28">
+<ul>
+<li>broker/Dockerfile</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>IP del broker = associada al contenidor del broker, desconeguda fins a executar-lo</li>
+<li>worker/Dockerfile. worker ha de coneixer la URL (IP i port) del backend</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker tcp://????:9999
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>client/Dockerfile. client ha de coneixer la URL (IP i port) del frontend</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./client.js client.js
+CMD node client tcp://????:9998
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29">
+<ul>
+<li>llancem el broker en el seu contenidor (des de el directori broker)
+<ul>
+<li><code>docker build -t broker .</code> crea la imatge</li>
+<li><code>docker run -d broker</code> llança el contenidor</li>
+</ul>
+</li>
+<li>obtenim la IP de eixe contenidor
+<ul>
+<li><code>docker ps -a</code> per a coneixer la ID del contenidor</li>
+<li><code>docker inspect IDcontenidor</code> per a llegir la IP (ex. 192.154.3.12)</li>
+</ul>
+</li>
+<li>modifiquem el valor de la IP en el Dockerfile de worker
+<ul>
+<li>linia <code>CMD node worker tcp://192.154.3.12:9999</code></li>
+<li><code>docker build -t worker .</code> crea la imatge</li>
+</ul>
+</li>
+<li>modifiquem el valor de la IP en el Dockerfile de worker
+<ul>
+<li>linia <code>CMD node client tcp://192.154.3.12:9998</code></li>
+<li><code>docker build -t client .</code> crea la imatge</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30">
+<ul>
+<li>llancem workers i clients
+<ul>
+<li><code>docker run -d worker</code> llança el contenidor
+<ul>
+<li>... (una vegada per instància)</li>
+</ul>
+</li>
+<li><code>docker run -d client</code> llança el contenidor
+<ul>
+<li>... (una vegada per instància)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31">
+<h2>Example amb tots els components en un node.- Automatització (variables i plà global)</h2>
+<ul>
+<li>broker/Dockerfile</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>worker/Dockerfile (variable <code>$BACKEND_URL</code>)</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker $BACKEND_URL
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>client/Dockerfile (variable <code>$FRONTEND_URL</code>)</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./client.js client.js
+CMD node client $FRONTEND_URL
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32">
+<ul>
+<li>plà global (descripció components, propietats i relacions): <code>docker-compose.yml</code></li>
+</ul>
+<pre><code class="language-yml"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-attr">version:</span> <span class="hljs-string">'2'</span>
+<span class="hljs-attr">services:</span>
+   <span class="hljs-attr">cli:</span>
+      <span class="hljs-attr">image:</span> <span class="hljs-string">client</span>
+      <span class="hljs-attr">build:</span> <span class="hljs-string">./client/</span>
+      <span class="hljs-attr">links:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">bro</span>
+      <span class="hljs-attr">environment:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">FRONTEND_URL=tcp://bro:9998</span>
+   <span class="hljs-attr">bro:</span>
+      <span class="hljs-attr">image:</span> <span class="hljs-string">broker</span>
+      <span class="hljs-attr">build:</span> <span class="hljs-string">./broker/</span>
+      <span class="hljs-attr">expose:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">"9998"</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">"9999"</span>
+   <span class="hljs-attr">wor:</span>
+      <span class="hljs-attr">image:</span> <span class="hljs-string">worker</span>
+      <span class="hljs-attr">build:</span> <span class="hljs-string">./worker/</span>
+      <span class="hljs-attr">links:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">bro</span>
+      <span class="hljs-attr">environment:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">BACKEND_URL=tcp://bro:9999</span>
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li><code>docker-compose up -d --scale worker=4 --scale client=7</code> (+opcions en la guia)</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33">
+<h2>Example amb clients remots</h2>
+<ul>
+<li>Organitzem la següent estructura de directoris</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>patroBrokerWorkers/
+  docker-compose.yml
+  broker/
+    broker.js
+    Dockerfile
+  worker/
+    worker.js
+    Dockerfile
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>Els fitxers <code>Dockerfile</code> són per a crear les imatges que permeten llançar contenidors</li>
+<li>El fitxer <code>docker-compose.yml</code> es un plà global de desplegament (per a la automatització)</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34">
+<h2>Clients remots.- manual</h2>
+<ul>
+<li>broker/Dockerfile</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+</span></span></foreignObject></svg></code></pre>
+<ul>
+<li>IP del broker = associada al contenidor del broker, desconeguda fins a executar-lo</li>
+<li>worker/Dockerfile. worker ha de coneixer la URL (IP i port) del backend</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker tcp://????:9999
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35">
+<h2>Clients remots.- manual</h2>
+<ul>
+<li>llancem el broker en el seu contenidor (des de el directori broker)
+<ul>
+<li><code>docker build -t broker .</code> crea la imatge</li>
+<li><code>docker run -p 8000:9998 -d broker</code> llança el contenidor
+<ul>
+<li>L'opció  -p portAmfitrió:portContenidor permet accés al frontend des de l'exterior (port 8000 de l'amfitrió)</li>
+<li>L'opció -d llança el contenidor en segón plà</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>obtenim la IP de eixe contenidor
+<ul>
+<li><code>docker ps -a</code> per a coneixer la ID del contenidor</li>
+<li><code>docker inspect IDcontenidor</code> per a llegir la IP (ex. 192.154.3.12)</li>
+</ul>
+</li>
+<li>modifiquem el valor de la IP en el Dockerfile de worker
+<ul>
+<li>linia <code>CMD node worker tcp://192.154.3.12:9999</code></li>
+<li><code>docker build -t worker .</code> crea la imatge</li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36">
+<h2>Clients remots.- manual</h2>
+<ul>
+<li>llancem workers
+<ul>
+<li><code>docker run -d worker</code> llança el contenidor
+<ul>
+<li>... (una vegada per instància)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>llancem clients (des de les màquines corresponents)
+<ul>
+<li>No és necessari gestionar els clients amb contenidors</li>
+<li>Han de connectar a <code>tcp://ipDelAmfitrió:8000</code></li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37">
+<h2>Clients remots.- automatització</h2>
+<ul>
+<li>Variable d'entorn en worker/Dockerfile</li>
+</ul>
+<pre><code class="language-txt"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap>FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker $BACKEND
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38">
+<h2>Clients remots.- automatització</h2>
+<ul>
+<li>pla global de desplegament</li>
+</ul>
+<pre><code class="language-yml"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-attr">version:</span> <span class="hljs-string">'2'</span>
+<span class="hljs-attr">services:</span>
+   <span class="hljs-attr">bro:</span>
+      <span class="hljs-attr">image:</span> <span class="hljs-string">broker</span>
+      <span class="hljs-attr">build:</span> <span class="hljs-string">./broker/</span>
+      <span class="hljs-attr">ports:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">"8000:9998"</span>
+      <span class="hljs-attr">expose:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">"9999"</span>
+   <span class="hljs-attr">wor:</span>
+      <span class="hljs-attr">image:</span> <span class="hljs-string">worker</span>
+      <span class="hljs-attr">build:</span> <span class="hljs-string">./worker/</span>
+      <span class="hljs-attr">links:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">bro</span>
+      <span class="hljs-attr">environment:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-string">BACKEND=tcp://bro:9999</span>
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39">
+<h2>Clients remots.- automatització</h2>
+<ul>
+<li>ordre (per a 3 workers) <code>docker-compose up --scale worker=3</code></li>
+<li>llancem clients (des de les màquines corresponents)
+<ul>
+<li>No és necessari gestionar els clients amb contenidors</li>
+<li>Han de connectar a <code>tcp://ipDelAmfitrió:8000</code></li>
+</ul>
+</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="40">
+<h2>Entorn de producció.- components repartits en diferents nodes</h2>
+<ul>
+<li>La proposta més coneguda es <strong>kubernetes</strong>
+<ul>
+<li>És un orquestador de contenidors, però no depèn de Docker</li>
+<li>la guía del tema proporciona una descripción general dels seus elements</li>
+</ul>
+</li>
+<li>Elements principals de kubernetes
+<ul>
+<li><strong>Cluster</strong> i node (físic o virtual)</li>
+<li><strong>Pod</strong>: unitat més xicoteta desplegable
+<ul>
+<li>inclou contenidors que comparteixen namespace i volums</li>
+</ul>
+</li>
+<li><strong>Controladors de replicació</strong>: encarregats del cicle de vida d'un grup de pods
+<ul>
+<li>escala, replica i recupera pods per assegurar N d'instàncies en execució</li>
+</ul>
+</li>
+<li><strong>Controladors de desplegament</strong>: actualitzen l'aplicació distribuïda</li>
+<li><strong>Servei</strong>: defineix un conjunt de pods i la forma d'accés</li>
+<li><strong>Secrets</strong> (gestió de credencials)</li>
+<li><strong>Volums</strong> (persistència)</li>
+</ul>
+</li>
+</ul>
+</section>
+<script>!function(){"use strict";function t(t){Array.from(document.getElementsByTagName("svg"),e=>{if(e.hasAttribute("data-marpit-svg")){const{clientHeight:r,clientWidth:a}=e;e.style.transform||(e.style.transform="translateZ(0)");const o=t||e.currentScale||1,i=e.viewBox.baseVal.width/o,n=e.viewBox.baseVal.height/o,s=Math.min(r/n,a/i);Array.from(e.querySelectorAll(":scope > foreignObject"),t=>{const e=t.x.baseVal.value,o=t.y.baseVal.value;Array.from(t.querySelectorAll(":scope > section"),t=>{t.style.transformOrigin||(t.style.transformOrigin="0 0");const l=(a-s*i)/2-e,c=(r-s*n)/2-o;t.style.transform=`translate3d(${l}px,${c}px,0) scale(${s}) translate(${e}px,${o}px)`})})}})}const e=(t,e,r)=>{if(t.getAttribute(e)!==r)return t.setAttribute(e,r),!0};function r(a=!0){for(const e of"Apple Computer, Inc."===navigator.vendor?[t]:[])e();Array.from(document.querySelectorAll('svg[data-marp-fitting="svg"]'),t=>{const r=t.firstChild,a=r.firstChild,{scrollWidth:o,scrollHeight:i}=a;let n,s=1;if(t.hasAttribute("data-marp-fitting-code")&&(n=t.parentElement.parentElement),t.hasAttribute("data-marp-fitting-math")&&(n=t.parentElement),n){const t=getComputedStyle(n),e=Math.ceil(n.clientWidth-parseFloat(t.paddingLeft)-parseFloat(t.paddingRight));e&&(s=e)}const l=Math.max(o,s),c=Math.max(i,1),p=`0 0 ${l} ${c}`;e(r,"width",`${l}`),e(r,"height",`${c}`),e(t,"preserveAspectRatio",getComputedStyle(t).getPropertyValue("--preserve-aspect-ratio")||"xMinYMin meet"),e(t,"viewBox",p)&&t.classList.toggle("__reflow__")}),a&&window.requestAnimationFrame(()=>r(a))}!function(){if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");window.marpCoreBrowserScript?console.warn("Marp Core's browser script has already executed."):(Object.defineProperty(window,"marpCoreBrowserScript",{value:!0}),r())}()}();
+</script></foreignObject></svg></div><script>!function(){"use strict";var e=function(e,t){var n,r=1===(e.parent||e).nodeType?e.parent||e:document.querySelector(e.parent||e),s=[].filter.call("string"==typeof e.slides?r.querySelectorAll(e.slides):e.slides||r.children,(function(e){return"SCRIPT"!==e.nodeName})),o={},a=function(e,t){return(t=t||{}).index=s.indexOf(e),t.slide=e,t},i=function(e,t){o[e]=(o[e]||[]).filter((function(e){return e!==t}))},l=function(e,t){return(o[e]||[]).reduce((function(e,n){return e&&!1!==n(t)}),!0)},c=function(e,t){s[e]&&(n&&l("deactivate",a(n,t)),n=s[e],l("activate",a(n,t)))},d=function(e,t){var r=s.indexOf(n)+e;l(e>0?"next":"prev",a(n,t))&&c(r,t)},u={off:i,on:function(e,t){return(o[e]||(o[e]=[])).push(t),i.bind(null,e,t)},fire:l,slide:function(e,t){if(!arguments.length)return s.indexOf(n);l("slide",a(s[e],t))&&c(e,t)},next:d.bind(null,1),prev:d.bind(null,-1),parent:r,slides:s,destroy:function(e){l("destroy",a(n,e)),o={}}};return(t||[]).forEach((function(e){e(u)})),n||c(0),u};function t(e){e.parent.classList.add("bespoke-marp-parent"),e.slides.map(e=>e.classList.add("bespoke-marp-slide")),e.on("activate",t=>{e.slides.map(e=>e.classList.remove("bespoke-marp-active")),t.slide.classList.add("bespoke-marp-active")})}function n(e=2e3){return t=>{let n;function r(){n&&clearTimeout(n),n=setTimeout(()=>{t.parent.classList.add("bespoke-marp-inactive")},e),t.parent.classList.remove("bespoke-marp-inactive")}document.addEventListener("mousedown",r),document.addEventListener("mousemove",r),document.addEventListener("touchend",r),setTimeout(r,0)}}const r=["AUDIO","BUTTON","INPUT","SELECT","TEXTAREA","VIDEO"];function s(e){e.parent.addEventListener("keydown",e=>{if(!e.target)return;const t=e.target;(r.includes(t.nodeName)||"true"===t.contentEditable)&&e.stopPropagation()})}function o(e){window.addEventListener("load",()=>{for(const t of e.slides){const e=t.querySelector("[data-marp-fitting]")?"":"hideable";t.setAttribute("data-bespoke-marp-load",e)}})}function a(e){let t=0,n=0;Object.defineProperty(e,"fragments",{enumerable:!0,value:e.slides.map(e=>[null,...e.querySelectorAll("[data-marpit-fragment]")])});const r=r=>void 0!==e.fragments[t][n+r],s=(r,s)=>{t=r,n=s,e.fragments.forEach((e,t)=>{e.forEach((e,n)=>{if(null==e)return;const o=t<r||t===r&&n<=s;e.setAttribute("data-bespoke-marp-fragment",o?"active":"inactive"),t===r&&n===s?e.setAttribute("data-bespoke-marp-current-fragment","current"):e.removeAttribute("data-bespoke-marp-current-fragment")})}),e.fragmentIndex=s;const o={slide:e.slides[r],index:r,fragments:e.fragments[r],fragmentIndex:s};e.fire("fragment",o)};e.on("next",()=>{if(r(1))return s(t,n+1),!1;const o=t+1;e.fragments[o]&&s(o,0)}),e.on("prev",()=>{if(r(-1))return s(t,n-1),!1;const o=t-1;e.fragments[o]&&s(o,e.fragments[o].length-1)}),e.on("slide",({index:t,fragment:n})=>{let r=0;if(void 0!==n){const s=e.fragments[t];if(s){const{length:e}=s;r=-1===n?e-1:Math.min(Math.max(n,0),e-1)}}s(t,r)}),s(0,0)}var i,l=function(e,t){return e(t={exports:{}},t.exports),t.exports}((function(e){
+/*!
+  * screenfull
+  * v5.0.2 - 2020-02-13
+  * (c) Sindre Sorhus; MIT License
+  */
+!function(){var t="undefined"!=typeof window&&void 0!==window.document?window.document:{},n=e.exports,r=function(){for(var e,n=[["requestFullscreen","exitFullscreen","fullscreenElement","fullscreenEnabled","fullscreenchange","fullscreenerror"],["webkitRequestFullscreen","webkitExitFullscreen","webkitFullscreenElement","webkitFullscreenEnabled","webkitfullscreenchange","webkitfullscreenerror"],["webkitRequestFullScreen","webkitCancelFullScreen","webkitCurrentFullScreenElement","webkitCancelFullScreen","webkitfullscreenchange","webkitfullscreenerror"],["mozRequestFullScreen","mozCancelFullScreen","mozFullScreenElement","mozFullScreenEnabled","mozfullscreenchange","mozfullscreenerror"],["msRequestFullscreen","msExitFullscreen","msFullscreenElement","msFullscreenEnabled","MSFullscreenChange","MSFullscreenError"]],r=0,s=n.length,o={};r<s;r++)if((e=n[r])&&e[1]in t){for(r=0;r<e.length;r++)o[n[0][r]]=e[r];return o}return!1}(),s={change:r.fullscreenchange,error:r.fullscreenerror},o={request:function(e){return new Promise(function(n,s){var o=function(){this.off("change",o),n()}.bind(this);this.on("change",o);var a=(e=e||t.documentElement)[r.requestFullscreen]();a instanceof Promise&&a.then(o).catch(s)}.bind(this))},exit:function(){return new Promise(function(e,n){if(this.isFullscreen){var s=function(){this.off("change",s),e()}.bind(this);this.on("change",s);var o=t[r.exitFullscreen]();o instanceof Promise&&o.then(s).catch(n)}else e()}.bind(this))},toggle:function(e){return this.isFullscreen?this.exit():this.request(e)},onchange:function(e){this.on("change",e)},onerror:function(e){this.on("error",e)},on:function(e,n){var r=s[e];r&&t.addEventListener(r,n,!1)},off:function(e,n){var r=s[e];r&&t.removeEventListener(r,n,!1)},raw:r};r?(Object.defineProperties(o,{isFullscreen:{get:function(){return Boolean(t[r.fullscreenElement])}},element:{enumerable:!0,get:function(){return t[r.fullscreenElement]}},isEnabled:{enumerable:!0,get:function(){return Boolean(t[r.fullscreenEnabled])}}}),n?e.exports=o:window.screenfull=o):n?e.exports={isEnabled:!1}:window.screenfull={isEnabled:!1}}()}));l.isEnabled;function c(e){e.fullscreen=()=>{l.isEnabled&&l.toggle(document.body)},document.addEventListener("keydown",t=>{70!==t.which&&122!==t.which||t.altKey||t.ctrlKey||t.metaKey||!l.isEnabled||(e.fullscreen(),t.preventDefault())})}function d(e={}){const t=Object.assign({interval:200},e);return e=>{document.addEventListener("keydown",t=>{(32===t.which&&t.shiftKey||33===t.which||37===t.which||38===t.which)&&e.prev(),(32===t.which&&!t.shiftKey||34===t.which||39===t.which||40===t.which)&&e.next(),35===t.which&&e.slide(e.slides.length-1,{fragment:-1}),36===t.which&&e.slide(0)});let n,r,s=0;e.parent.addEventListener("wheel",o=>{let a=!1;const l=(e,t)=>{e&&(a=a||function(e,t){return function(e,t){const n=t===i.X?"Width":"Height";return e[`client${n}`]<e[`scroll${n}`]}(e,t)&&function(e,t){const{overflow:n}=e,r=e[`overflow${t}`];return"auto"===n||"scroll"===n||"auto"===r||"scroll"===r}(getComputedStyle(e),t)}(e,t)),(null==e?void 0:e.parentElement)&&l(e.parentElement,t)};if(0!==o.deltaX&&l(o.target,i.X),0!==o.deltaY&&l(o.target,i.Y),a)return;o.preventDefault(),r&&clearTimeout(r),r=setTimeout(()=>{n=0},t.interval);const c=Date.now()-s<t.interval,d=Math.sqrt(Math.pow(o.deltaX,2)+Math.pow(o.deltaY,2)),u=d<=n;if(n=d,c||u)return;let f;(o.deltaX>0||o.deltaY>0)&&(f="next"),(o.deltaX<0||o.deltaY<0)&&(f="prev"),f&&(e[f](),s=Date.now())})}}!function(e){e.X="X",e.Y="Y"}(i||(i={}));const u=(...e)=>history.replaceState(...e);var f;!function(e){e.Normal="",e.Presenter="presenter",e.Next="next"}(f||(f={}));const p=(e,{protocol:t,host:n,pathname:r,hash:s}=location)=>{const o=e.toString();return`${t}//${n}${r}${o?"?":""}${o}${s}`},m=()=>{switch(document.body.getAttribute("data-bespoke-view")){case f.Normal:return f.Normal;case f.Presenter:return f.Presenter;case f.Next:return f.Next;default:throw new Error("View mode is not assigned.")}},h=e=>new URLSearchParams(location.search).get(e),g=(e,t={})=>{const n=Object.assign({location:location,setter:u},t),r=new URLSearchParams(n.location.search);for(const t of Object.keys(e)){const n=e[t];"string"==typeof n?r.set(t,n):r.delete(t)}try{n.setter(null,document.title,p(r,n.location))}catch(e){console.error(e)}},b={available:(()=>{try{return localStorage.setItem("bespoke-marp","bespoke-marp"),localStorage.removeItem("bespoke-marp"),!0}catch(e){return console.warn("Warning: Using localStorage is restricted in the current host so some features may not work."),!1}})(),get:e=>{try{return localStorage.getItem(e)}catch(e){return null}},set:(e,t)=>{try{return localStorage.setItem(e,t),!0}catch(e){return!1}},remove:e=>{try{return localStorage.removeItem(e),!0}catch(e){return!1}}};function v(e=".bespoke-marp-osc"){const t=document.querySelector(e);if(!t)return()=>{};const n=(e,n)=>{t.querySelectorAll(`[data-bespoke-marp-osc=${JSON.stringify(e)}]`).forEach(n)};return l.isEnabled||n("fullscreen",e=>e.style.display="none"),b.available||n("presenter",e=>{e.disabled=!0,e.title="Presenter view is disabled due to restricted localStorage."}),e=>{t.addEventListener("click",t=>{if(t.target instanceof HTMLElement){const{bespokeMarpOsc:n}=t.target.dataset;switch(n&&t.target.blur(),n){case"next":e.next();break;case"prev":e.prev();break;case"fullscreen":"function"==typeof e.fullscreen&&l.isEnabled&&e.fullscreen();break;case"presenter":e.openPresenterView()}}}),e.parent.appendChild(t),e.on("activate",({index:t})=>{n("page",n=>n.textContent=`Page ${t+1} of ${e.slides.length}`)}),e.on("fragment",({index:t,fragments:r,fragmentIndex:s})=>{n("prev",e=>e.disabled=0===t&&0===s),n("next",n=>n.disabled=t===e.slides.length-1&&s===r.length-1)}),l.isEnabled&&l.onchange(()=>n("fullscreen",e=>e.classList.toggle("exit",l.isEnabled&&l.isFullscreen)))}}function w(){const e=Math.max(Math.floor(.85*window.innerWidth),640),t=Math.max(Math.floor(.85*window.innerHeight),360);return window.open(this.presenterUrl,`bespoke-marp-presenter-${this.syncKey}`,`width=${e},height=${t},menubar=no,toolbar=no`)}function y(){const e=new URLSearchParams(location.search);return e.set("view","presenter"),e.set("sync",this.syncKey),p(e)}var x=["area","base","br","col","command","embed","hr","img","input","keygen","link","meta","param","source","track","wbr"];let E=e=>String(e).replace(/[&<>"']/g,e=>`&${k[e]};`),k={"&":"amp","<":"lt",">":"gt",'"':"quot","'":"apos"},S="dangerouslySetInnerHTML",L={className:"class",htmlFor:"for"},I={};function P(e,t){let n=[],r="";t=t||{};for(let e=arguments.length;e-- >2;)n.push(arguments[e]);if("function"==typeof e)return t.children=n.reverse(),e(t);if(e){if(r+="<"+e,t)for(let e in t)!1!==t[e]&&null!=t[e]&&e!==S&&(r+=` ${L[e]?L[e]:E(e)}="${E(t[e])}"`);r+=">"}if(-1===x.indexOf(e)){if(t[S])r+=t[S].__html;else for(;n.length;){let e=n.pop();if(e)if(e.pop)for(let t=e.length;t--;)n.push(e[t]);else r+=!0===I[e]?e:E(e)}r+=e?`</${e}>`:""}return I[r]=!0,r}const M=({children:e})=>P(null,null,...e),N="bespoke-marp-presenter-container",$="bespoke-marp-presenter-next",F="bespoke-marp-presenter-next-container",O="bespoke-marp-presenter-note-container",T="bespoke-marp-presenter-info-container",q="bespoke-marp-presenter-info-page",C="bespoke-marp-presenter-info-page-text",j="bespoke-marp-presenter-info-page-prev",A="bespoke-marp-presenter-info-page-next",K="bespoke-marp-presenter-info-time",R="bespoke-marp-presenter-info-timer";function U(e){const{title:t}=document;document.title=`[Presenter view]${t?` - ${t}`:""}`;const n={},r=e=>(n[e]=n[e]||document.querySelector(`.${e}`),n[e]);document.body.appendChild((e=>{const t=document.createElement("div");return t.className=N,t.appendChild(e),t.insertAdjacentHTML("beforeend",P(M,null,P("div",{class:F},P("iframe",{class:$,src:"?view=next"})),P("div",{class:O}),P("div",{class:T},P("div",{class:q},P("button",{class:j,tabindex:"-1",title:"Previous"},"Previous"),P("span",{class:C}),P("button",{class:A,tabindex:"-1",title:"Next"},"Next")),P("time",{class:K,title:"Current time"}),P("div",{class:R})))),t})(e.parent)),(e=>{r(F).addEventListener("click",()=>e.next());const t=r($),n=(s=t,(e,t)=>s.contentWindow.postMessage(`navigate:${e},${t}`,"null"===window.origin?"*":window.origin));var s;t.addEventListener("load",()=>{r(F).classList.add("active"),n(e.slide(),e.fragmentIndex),e.on("fragment",({index:e,fragmentIndex:t})=>n(e,t))});const o=document.querySelectorAll(".bespoke-marp-note");o.forEach(e=>{e.addEventListener("keydown",e=>e.stopPropagation()),r(O).appendChild(e)}),e.on("activate",()=>o.forEach(t=>t.classList.toggle("active",t.dataset.index==e.slide()))),e.on("activate",({index:t})=>{r(C).textContent=`${t+1} / ${e.slides.length}`});const a=r(j),i=r(A);a.addEventListener("click",()=>{a.blur(),e.prev()}),i.addEventListener("click",()=>{i.blur(),e.next()}),e.on("fragment",({index:t,fragments:n,fragmentIndex:r})=>{a.disabled=0===t&&0===r,i.disabled=t===e.slides.length-1&&r===n.length-1});const l=()=>r(K).textContent=(new Date).toLocaleTimeString();l(),setInterval(l,250)})(e)}function V(e){const t=m();return t===f.Next&&e.appendChild(document.createElement("span")),e=>{t===f.Normal&&function(e){if(!(e=>e.syncKey&&"string"==typeof e.syncKey)(e))throw new Error("The current instance of Bespoke.js is invalid for Marp bespoke presenter plugin.");Object.defineProperties(e,{openPresenterView:{enumerable:!0,value:w},presenterUrl:{enumerable:!0,get:y}}),b.available&&document.addEventListener("keydown",t=>{80!==t.which||t.altKey||t.ctrlKey||t.metaKey||(t.preventDefault(),e.openPresenterView())})}(e),t===f.Presenter&&U(e),t===f.Next&&function(e){const t=t=>{if(t.origin!==window.origin)return;const[n,r]=t.data.split(":");if("navigate"===n){const[t,n]=r.split(",");e.slide(Number.parseInt(t,10),{fragment:Number.parseInt(n,10)}),e.next()}};window.addEventListener("message",t),e.on("destroy",()=>window.removeEventListener("message",t))}(e)}}function X(e){e.on("activate",t=>{document.querySelectorAll(".bespoke-progress-bar").forEach(n=>{n.style.flexBasis=`${100*t.index/(e.slides.length-1)}%`})})}const D=e=>{const t=Number.parseInt(e,10);return Number.isNaN(t)?null:t};function Y(e={}){const t=Object.assign({history:!0},e);return e=>{let n=!0;const r=e=>{const t=n;try{return n=!0,e()}finally{n=t}},s=(t={fragment:!0})=>{((t,n)=>{const{fragments:r,slides:s}=e,o=Math.max(0,Math.min(t,s.length-1)),a=Math.max(0,Math.min(n||0,r[o].length-1));o===e.slide()&&a===e.fragmentIndex||e.slide(o,{fragment:a})})((D(location.hash.slice(1))||1)-1,t.fragment?D(h("f")||""):null)};e.on("fragment",({index:e,fragmentIndex:r})=>{n||g({f:0===r||r.toString()},{location:Object.assign(Object.assign({},location),{hash:`#${e+1}`}),setter:(...e)=>t.history?history.pushState(...e):history.replaceState(...e)})}),setTimeout(()=>{s(),window.addEventListener("hashchange",()=>r(()=>{s({fragment:!1}),g({f:void 0})})),window.addEventListener("popstate",()=>{n||r(()=>s())}),n=!1},0)}}for(var B=self.crypto||self.msCrypto,z="-_",H=36;H--;)z+=H.toString(36);for(H=36;H---10;)z+=H.toString(36).toUpperCase();function J(e={}){const t=e.key||function(e){var t="",n=B.getRandomValues(new Uint8Array(e||21));for(H=e||21;H--;)t+=z[63&n[H]];return t}(),n=`bespoke-marp-sync-${t}`,r=()=>{const e=b.get(n);return e?JSON.parse(e):Object.create(null)},s=e=>{const t=r(),s=Object.assign(Object.assign({},t),e(t));return b.set(n,JSON.stringify(s)),s};return s(e=>({reference:(e.reference||0)+1})),e=>{Object.defineProperty(e,"syncKey",{value:t,enumerable:!0});let o=!0;setTimeout(()=>{e.on("fragment",e=>{o&&s(()=>({index:e.index,fragmentIndex:e.fragmentIndex}))})},0),window.addEventListener("storage",t=>{if(t.key===n&&t.oldValue&&t.newValue){const n=JSON.parse(t.oldValue),r=JSON.parse(t.newValue);if(n.index!==r.index||n.fragmentIndex!==r.fragmentIndex)try{o=!1,e.slide(r.index,{fragment:r.fragmentIndex})}finally{o=!0}}}),e.on("destroy",()=>{const{reference:e}=r();void 0===e||e<=1?b.remove(n):s(()=>({reference:e-1}))})}}function W(e={}){const t=Object.assign({slope:Math.tan(-35*Math.PI/180),swipeThreshold:30},e);return e=>{let n;const r=e.parent,s=e=>{const t=r.getBoundingClientRect();return{x:e.pageX-(t.left+t.right)/2,y:e.pageY-(t.top+t.bottom)/2}};r.addEventListener("touchstart",e=>{n=1===e.touches.length?s(e.touches[0]):void 0},{passive:!0}),r.addEventListener("touchmove",e=>{if(n)if(1===e.touches.length){e.preventDefault();const t=s(e.touches[0]),r=t.x-n.x,o=t.y-n.y;n.delta=Math.sqrt(Math.pow(Math.abs(r),2)+Math.pow(Math.abs(o),2)),n.radian=Math.atan2(r,o)}else n=void 0}),r.addEventListener("touchend",r=>{if(n){if(n.delta&&n.delta>=t.swipeThreshold){let s=n.radian-t.slope;s=(s+Math.PI)%(2*Math.PI)-Math.PI,e[s<0?"next":"prev"](),r.stopPropagation()}n=void 0}},{passive:!0})}}const _=[f.Normal,f.Presenter,f.Next];!function(r=document.getElementById("p")){document.body.setAttribute("data-bespoke-view",(()=>{switch(h("view")){case"next":return f.Next;case"presenter":return f.Presenter;default:return f.Normal}})());const i=(e=>{const t=h(e);return g({[e]:void 0}),t})("sync")||void 0,l=!1,u=!0,p=e(r,((...e)=>{const t=_.findIndex(e=>m()===e);if(t<0)throw new Error("Invalid view");return e.map(([e,n])=>e[t]&&n).filter(e=>e)})([[u,u,l],J({key:i})],[[u,u,u],V(r)],[[u,u,l],s],[[u,u,u],t],[[u,l,l],n()],[[u,u,u],o],[[u,u,u],Y({history:!1})],[[u,u,l],d()],[[u,u,l],c],[[u,l,l],X],[[u,u,l],W()],[[u,l,l],v()],[[u,u,u],a]));window.addEventListener("beforeunload",()=>g({sync:p.syncKey})),window.addEventListener("unload",()=>p.destroy())}()}();
+</script></body></html>

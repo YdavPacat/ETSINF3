@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+	  <html>
+	   <head>
+		<meta charset="utf-8" />
+		<title>
+repl
+</title>
+	<style>
+	  @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+	  @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+	  @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+	  body {
+		font-family: 'Droid Serif';
+	  }
+	  h1, h2, h3 {
+		font-family: 'Yanone Kaffeesatz';
+		font-weight: 400;
+		margin-bottom: 0;
+	  }
+	  .remark-slide-content h1 { font-size: 3em; }
+	  .remark-slide-content h2 { font-size: 2em; }
+	  .remark-slide-content h3 { font-size: 1.6em; }
+	  .footnote {
+		position: absolute;
+		bottom: 3em;
+	  }
+	  li p { line-height: 1.25em; margin-bottom: 20px; }
+	  ul p { line-height: 1.25em; margin-bottom: 20px; }
+	  .red { color: #fa0000; }
+	  .large { font-size: 2em; }
+	  a, a > code {
+		color: rgb(249, 38, 114);
+		text-decoration: none;
+	  }
+	  code {
+		background: #e7e8e2;
+		border-radius: 5px;
+	  }
+	  .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+	  .remark-code-line-highlighted     { background-color: #373832; }
+	  .pull-left {
+		float: left;
+		width: 47%;
+	  }
+	  .pull-right {
+		float: right;
+		width: 47%;
+	  }
+	  .pull-right ~ p {
+		clear: both;
+	  }
+	  #slideshow .slide .content code {
+		font-size: 0.8em;
+	  }
+	  #slideshow .slide .content pre code {
+		font-size: 0.9em;
+		padding: 15px;
+	  }
+	  .inverse {
+		background: #272822;
+		color: #777872;
+		text-shadow: 0 0 20px #333;
+	  }
+	  .inverse h1, .inverse h2 {
+		color: #f3f3f3;
+		line-height: 0.8em;
+	  }
+
+	  /* Slide-specific styling */
+	  #slide-inverse .footnote {
+		bottom: 12px;
+		left: 20px;
+	  }
+	  #slide-how .slides {
+		font-size: 0.9em;
+		position: absolute;
+		top:  151px;
+		right: 140px;
+	  }
+	  #slide-how .slides h3 {
+		margin-top: 0.2em;
+	  }
+	  #slide-how .slides .first, #slide-how .slides .second {
+		padding: 1px 20px;
+		height: 90px;
+		width: 120px;
+		-moz-box-shadow: 0 0 10px #777;
+		-webkit-box-shadow: 0 0 10px #777;
+		box-shadow: 0 0 10px #777;
+	  }
+	  #slide-how .slides .first {
+		background: #fff;
+		position: absolute;
+		top: 20%;
+		left: 20%;
+		z-index: 1;
+	  }
+	  #slide-how .slides .second {
+		position: relative;
+		background: #fff;
+		z-index: 0;
+	  }
+
+	  /* Two-column layout */
+	  .left-column {
+		color: #777;
+		width: 20%;
+		height: 92%;
+		float: left;
+	  }
+		.left-column h2:last-of-type, .left-column h3:last-child {
+		  color: #000;
+		}
+	  .right-column {
+		width: 75%;
+		float: right;
+	  }
+	.footer { position: absolute; bottom: 12px; left: 0px, font-size: 0.1em; }
+	}
+	</style>
+  </head>
+  <body>
+	<textarea id='source'>
+class: center, middle, inverse
+
+#Declaració i àmbit de les variables en JavaScript
+.center[## TSR 2020, Grup A, Juansa sendra]
+
+
+---
+layout: none
+.left-column[
+__ÀMBIT__
+
+- bloc
+- funció
+- global
+
+Anidables
+- nom,àmbit
+
+__HOISTING__
+
+__REASSIGNABLE__
+   
+__INICIALITZACIÓ__
+
+__REDECLARACIÓ__
+
+__UTILITZAR?__
+
+.footer[TSR 2020]
+]
+.right-column[
+Des-de quins punts del codi la variable és visible
+- Des-de definició fins acabar bloc({..})/instrucció
+- Cos de la funció
+- Tot el fitxer
+
+Els àmbits són anidables, i busca de dins a fora
+- Vars del mateix nom en àmbits diferents són diferents
+
+Equival a declarar (però no inic.) al principi de l'àmbit
+	
+Podem modificar el valor assignat?
+
+Obliga a assignar valor al declarar?
+
+Permet redeclarar la maitexa var en el mateix àmbit?
+
+Recomanem l'ús? (per a millorar legibilitat)
+
+declaració      |àmbit    		|hoisting |reasig |inic	|redecl |USAR?
+---         	|---	  		|--- 	  |---	 |---	|---	|---
+__const x=..__ 	|bloc/global    |no       |no     |si	|no	    |SI
+__let   x   __ 	|bloc/global    |no       |si     |no	|no	    |SI
+__var   x   __ 	|funció/global 	|si       |si     |no	|si	    |no
+__      x=..__ 	|global   		|no       |si     |si	|no	    |NO
+]
+
+---
+.left-column[## Example 1
+.footer[TSR 2020]
+]
+.right-column[
+- Partim d'aquest example, i anem creant-ne d'altres en base a modificacions menors. 
+- Tracta de esbrinar el resultat en cada example. La solució al final
+
+```js 
+longFunc()
+
+function longFunc() {
+	console.log(x)
+	var x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+- Les declaracions `function x()` són globals i apliquen hoisting
+- l'àmbit de __x__ és funció (pot utilitzar-se en qualsevol lloc de la funció), però no s'ini ialitza fins a `var x = ..`
+- l'àmbit de __i__ és global (declaració implícita)
+]
+---
+
+.left-column[## Example 2
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	console.log(x)
+*   x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+- l'àmbit de __x__ és global (declaració implícita), però NO hoisting
+- l'àmbit de __i__ és global (declaració implícita)
+]
+
+---
+
+.left-column[## Example 3
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+*   var x=0
+	console.log(x)
+	x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és global (declaració implícita)
+]
+
+---
+
+.left-column[## Example 4
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+	x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+*console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és global (declaració implícita)
+]
+---
+
+.left-column[## Example 5
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+	x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+*console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és global (declaració implícita)
+]
+
+---
+
+.left-column[## Example 6
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+*   var x=0
+	console.log(x)
+*   let x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ és funció (`var x=0`) i bloc (`let x=..`)
+- l'àmbit de __i__ és global (declaració implícita)
+]
+---
+
+.left-column[## Example 7
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+*   x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és global (declaració implícita)
+]
+---
+
+.left-column[## Example 8
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+	x = 'A short text ' + x
+	for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+*console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és global (declaració implícita)
+]
+---
+
+.left-column[## Example 9
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+	let x = 'A short text ' + x		
+*   for (var i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+console.log(i)
+```
+- l'àmbit de __x__ és funció
+- l'àmbit de __i__ és funció
+]
+---
+
+.left-column[## Example 10
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+	console.log(x)
+	let x = 'A short text ' + x
+*   for (let i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ és bloc
+- l'àmbit de __i__ és bloc (instrucció for)
+]
+---
+
+.left-column[## Example 11
+.footer[TSR 2020]
+]
+.right-column[
+```js
+longFunc()
+
+function longFunc() {
+	var x=0
+*   let i
+	console.log(x)
+	x = 'A short text ' + x
+*   for (i=1; i<=10; i++) {
+		console.log('10 x '+i +' = '+ i*10)
+	}
+	console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+- l'àmbit de __x__ es funció
+- l'àmbit de __i__ es bloc
+]
+
+---
+.left-column[## Resultats
+.footer[TSR 2020]
+]
+.right-column[
+- Example 1.- No error, però console.log(x) dins de LongFunc mostra 'undefined'
+- Example 2.- Error. Linia 4, x not defined
+- Example 3.- ok
+- Example 4.- Error. Linia 13, x not defined
+- Example 5.- ok
+- Example 6.- Error. Linia 6, x has already been declared
+- Example 7.- ok
+- Example 8.- ok
+- Example 9.- Error. Linia 14, i not defined
+- Example 10.- Error. Linia 10, i is not defined
+- Example 11.- ok
+]
+
+	</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="https://remarkjs.com/remark.language.js"></script>
+    <script>
+      var slideshow = remark.create({
+          highlightStyle: 'monokai',
+          highlightLanguage: 'javascript',
+          highlightLines: true
+        }) ;
+    </script>
+  </body>
+</html>"

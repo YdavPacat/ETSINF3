@@ -1,0 +1,98 @@
+<pre><!-- 
+$theme: gaia
+_paginate: false 
+-->
+# Ciclo de vida de un servicio
+#### TSR 2021. Grupo B, Juansa Sendra
+
+---
+
+<!-- paginate: true -->
+## Evolución histórica de los sistemas informáticos (desde el principio ...)
+- mainframes (equipos caros, compartidos, propiedad de una institución -ej. universidad-)
+	- Compartido $\rightarrow$ buena utilización
+	- Pocos usuarios (baja utilización). Matemáticos, ingenieros, etc.
+		- Interfaz poco amigable
+		- Muchos usuarios piden la instalación de los programas que necesitan, o desarrollan sus propios programas
+	- Bajo coste para el usuario
+	- Gestión, configuración administración y mantenimiento por personal especilizado
+- PCs (equipos baratos, interfaz amigable)
+	- Cada usuario su equipo -> no hay contención, baja utilización
+	- El coste de adquisición, configuracio, mantenimiento, etc. corresponde al usuario
+	- El usuario no actúa como desarrollador, pero tiene que administrar el sistema.
+
+---
+## Evolución històrica de los sistemas informáticos (... a la actualidad)
+- Centro de cómputo empresarial (cluster de alta disponibilidad)
+	- Requiere personal especializado (proveedor, administrador) $\rightarrow$ eleva el coste
+	- El coste de adquisición se carga a la empresa
+	- En algunos casos la empresa desarrolla parte de los programas
+- CC (Cloud Computing) = externalización del cluster
+	- Evita coste adquisición, acota coste administración y mantenimiento $\rightarrow$ coste por uso (flexible, previsible)
+	- Acceso a través de la red (desde navegador web) gracias a:
+		- mejoras en redes ($\uparrow$ ancho de banda, $\downarrow$ latencia)
+		- mejoras en los navegadores (mejora interfaz, reducción carga en el servidor)
+	- Compartición eficiente de recusos, adaptación a cantidades de usuarios variable
+
+---
+## Ciclo de vida de un servicio.- __Roles__
+- __desarrollador__: implanta los componentes
+- __proveedor__: decide las caracteristicas del servicio, los componentes que lo forman, y la forma en que debe configurarse y administrarse
+- __administrador__: se preocupa de que cada componente soft y hard esté en su sitio y correctamente configurado
+- __usuario__: utiliza el (accede al) servicio
+	
+---
+## Evolución histórica.- __Roles__
+|				|desarrollador	|proveedor		|administrador	|usuario
+|--             |---			|---			|---			|---
+|mainframes		|usuario		|usuario		|especialistas	|pocos (baja contención)
+|PCs			|empresasSoft	|propietario	|propietario	|único (propietario)
+|Centro còmputo	|empresasSoft	|especialistas	|especialistas	|molts (empleats empresa)
+|Cloud Computing|proveedorServicio|proveedorServicio|especialistas  |muchísimos
+	
+---
+## Cloud Computing (CC).- __Niveles__
+Cuando hablamos de CC pensamos en la utilización de aplicaciones (servicios), pero podemos diferenciar 3 niveles:
+
+- __SaaS__ facilita el uso de una aplicación como un servicio robusto
+- __PaaS__ automatiza la gestión de recursos, facilita la creación y despliegue de servicios
+- __IaaS__ proporciona elasticidad
+
+Grosso modo corresponde a los niveles que encontramos en cualquier sistema
+	- SaaS = Aplicaciones
+	- PaaS = Sistema Operativo
+	- IaaS = Hardware
+	
+---
+## Cloud Computing.- SaaS (Software as a Service)
+- Contención limitada: se reservan recursos para la demanda esperada
+	- Inicialmente, inflexible: el proveedor limita la cantidad de recursos, compartición de recursos dificil
+	- Posteriormente, elasticidad (flexibilidad)
+	- Mercado competitivo de servicios
+- El proveedor debe utilizar los recursos de forma eficiente
+
+---
+## Cloud Computing.- PaaS (Platform as a Service)
+- Todavía en sus inicios
+- Facilita el desarrollo y puesta en marcha de servicios
+- Especifica (equivale a SO)
+	- Un modelo de servicios
+	- Un modelo de desarrollo de sus componentes soft
+	- Un modelo de configuración i gestión del ciclo de vida (composición, configuración, despliegue, actualización)
+	- Un modelo de rendimento (monitorización de parámetros relevantes, expresión de puntos de elasticidad, reconfiguración en función de la carga)
+
+---
+## Cloud Computing.- IaaS (Infraestructure as a Service)			
+- Asigna/redistribuye recusos de cómputo bajo petición (peticiones via API)
+	- Podemos pedir capacidades concretas para los ordinadores y red (ej. adaptándose a la carga)-> elasticidad
+	- Podemos cargar las imágenes de SO que nos interesen
+- Posible gracias a la tecnologia de virtualización
+	- Fàcil assignar/configurar recursos de cómputo virtuales, instalar imagen de sistema sobre una máquina virtual
+
+---
+### Cicle de vida de un servei.- __Qüestions__
+Plantéate las siguientes preguntas
+- Los roles de proveedor y administrador pueden llegar a confundirse. ¿Puedes pponer ejemplos que ilustren las diferencias?
+- Mainframes i Cloud Computing se parecen en algunos aspectos. Indica similitudes y diferencias
+- Cuando utilizass dropBox, ¿Cuál de los tres niveles CC estas utilizando?. 
+- Si desarrollo un juego cooperativo y necesito un cluster externalizado para implantar el servidor, ¿qué nivel de CC he de utilizar?</pre>

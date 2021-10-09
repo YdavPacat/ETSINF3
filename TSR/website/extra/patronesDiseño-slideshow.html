@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Patrones de diseño en Sist Distribuidos (S.D.)</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				# Patrones de diseño en Sist Distribuidos (S.D.)
+##### TSR 2018-19 Juansa Sendra
+[adaptado de &#39;10 common software architecture patterns ...&#39;](https://towardsdatascience.com/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013)
+
+
+---
+#HSLIDE
+
+# Introdución
+
+- Los objetivos al diseñar un S.D. son mejorar **escalabilidad** y **disponibilidad**
+ - Para conseguirlos recurrimos a aplicar replicación y técnicas de tolerancia a fallos
+- **Patrón de diseño** = Solución sofware reutilizable útil para resolver un problema frecuente
+ - Muchas propuestas, nos centramos en las indispensables
+
+
+---
+#VSLIDE
+
+### Patrones de diseño para S.D.
+
+- Layered pattern (descomposición por niveles)
+- **Client/server pattern**
+- **Master/Slave pattern**
+- **Pipe/Filter pattern**
+- **Broker pattern**
+- Peer-to-Peer pattern
+- **Event-Bus pattern**
+- MVC pattern (modelo/vista/controlador)
+- Blackboard pattern
+- Interpreter pattern```
+Los patrones en negrita se desarrollan en la asignatura
+```
+
+
+---
+#HSLIDE
+
+## Layered pattern
+
+- Descomposición en subtareas, de forma que:
+ - Cada subtarea (nivel) a $\neq$ nivel de abstracción
+ - El nivel n proporciona servicios al n+1
+- Son frecuentes 4 niveles:
+ - Presentación (interfaz usuario)
+ - Aplicación (servicio)
+ - Lógica del negocio (dominio)
+ - Acceso a datos (persistencia)
+- Útil para aplicaciones de escritorio, e-commerce, ..
+
+
+---
+![layered pattern](imagPatt/layered.png)
+
+
+---
+#HSLIDE
+
+## Cliente/Servidor
+
+- Un Servidor, que proporciona servicios bajo demanda a múltiples clientes
+- N Clientes, que solicitan servicios al servidor
+- Sigue un modelo de petición/respuesta sincrónico
+- Tras responder a un cliente, un servidor atiende (escucha) nuevas peticiones de otros clientes
+ - El servidor puede utilizar concurrencia interna para atender de forma simultánea a N clientes&lt;p
+- Útil para aplicaciones online (e-mail, compartición de documentos, aplicaciones bancarias, ...)
+
+
+---
+![client/server pattern.- req/resp](imagPatt/cs2.png)
+![client/server pattern.- N:1](imagPatt/cs3.jpg)
+
+
+---
+#HSLIDE
+
+## Cliente/Servidor.- ventajas/inconvenientes
+
+- ventajas
+ - Bueno para modelar un conjunto de servicios accesibles a los clientes
+ - Simple si operaciones idempotentes (servidores stateless)
+ - Amplia difusión
+- inconvenientes
+ - Complejo si se necesitan servicios con estado
+ - Los servidores pueden convertirse en puntos de fallo único
+
+
+---
+#HSLIDE
+
+## Maestro/Esclavo
+
+- El maestro distribuye trabajo entre distintos componentes esclavo equivalentes entre sí
+- Cada esclavo completa su parte y devuelve el resultado al maestro
+- El maestro computa la respuesta final a partir de los resultados parciales devueltos por los esclavos
+- Útil para:
+ - escalar tareas que pueden dividirse en fragmentos equivalentes (ej. aplicar una misma tarea sobre fragmentos distintos de los datos)
+ - replicación pasiva
+
+
+---
+![master/slave pattern](imagPatt/maestro2.png)
+
+
+---
+#HSLIDE
+
+## Maestro/esclavo.- ventajas/inconvenientes
+
+- ventajas
+ - simple
+ - escalable
+- inconvenientes
+ - Sólo aplicable a problemas con posibilidad de descomposición en fragmentos equivalentes e independientes entre sí
+ - Los esclavos están aislados (no comparten estado)
+ - La comunicación maestro/esclavos/maestro puede introducir lantencias
+
+
+---
+#HSLIDE
+
+## Pipe/Filter
+
+- Sistemas que producen/procesan un flujo de datos
+- Cada etapa de procesamiento corresponde a un componente Filter
+- Filter conectados entre sí mediante tuberías (Pipe)
+ - los datos a procesar atraviesan las tuberías
+ - las tuberías pueden usarse para buffering y/o sincronización
+- Útil para compilación distribuida (análisis léxico, parsing, análisis semántico, generación código), workflow en biotecnología, ...
+
+
+---
+![pipe/filter pattern](imagPatt/pipe2.png)
+
+
+---
+#HSLIDE
+
+## Pipe/Filter.- ventajas/inconvenientes
+
+- ventajas
+ - muy flexible. Es fácil añadir/modificar filtros
+ - Filtros reutilizables, y combinables en distintas configuraciones
+ - refleja la concurrencia implícita en los problemas basados en flujos
+- inconvenientes
+ - El filtro más lento limita el rendimiento global
+ - sobrecarga por el desplazmiento de los datos entre filtros
+
+
+---
+#HSLIDE
+
+## Broker
+
+- Patrón usado para estructurar SD con componentes desacoplados
+ - Los componentes interactúan entre sí mediante invocación de servicios remotos
+- El componente broker (intermediario) se ocupa de la coordinación/comunicación entre componentes
+ - Los servidores comunican al broker sus características
+ - El cliente solicita los servicios al broker
+ - El broker redirecciona cada solicitud al servidor adecuado (ej. equilibrando la carga)
+
+
+---
+![broker pattern](imagPatt/broker2.png)
+
+![broker pattern](imagPatt/broker3.gif)
+
+
+---
+#HSLIDE
+
+## Broker.- ventajas/inconvenientes
+
+- ventajas
+ - distribución transparente al cliente y al desarrollador
+ - permite transparencia de fallos
+ - facilita la contabilidad asociada al uso que hacen los clientes del sistema, proporciona un nivel de aislamiento (seguridad), permite transformar las peticiones según las necesidades del sistema, etc.
+- inconvenientes
+ - requiere estandarización de las descripciones de servicios
+ - si se añaden políticas de equilibrado de carga y de reconfiguración ante fallos, el broker se complica bastante
+ - requiere broker de respaldo para evitar punto de fallo único
+
+
+---
+#HSLIDE
+
+## Peer-to-Peer
+
+- Los componentes (Peers) pueden actuar como:
+ - clientes (solicitan servicios a otros peers)
+ - servidores (proporcionan servicios a otros peers)
+- Un Peer puede actuar como cliente, como servidor, o como ambos
+ - y puede cambiar su rol de forma dinámica
+- Suele ser una red no estructurada, con nodos heterogéneos y volátiles (se conectan/desconectan en momentos impredecibles) 
+- Útil para aplicaciones no críticas que requieren replicación masiva (redes de compartición de ficheros, protocolos multimedia como P2PTV, ..) 
+
+
+---
+![p2p pattern](imagPatt/peer2.png)
+
+
+---
+#HSLIDE
+
+## Event-Bus
+
+- Trata con eventos
+- Componentes principales
+ - fuente (emisor) de eventos.- publica mensajes a canales concretos o a un bus de eventos
+ - oyente (listener) de eventos.- se suscribe a canales concretos (reciben notificaciones ante la llegada de mensajes a esos canales)
+ - canales y/o bus de eventos
+- Útil para servicios de notificación, desarrollo Android, ...
+
+
+---
+![event-bus pattern](imagPatt/event.png)
+
+![event-bus pattern](imagPatt/event2.png)
+
+
+---
+#HSLIDE
+
+## Event-bus.- ventajas/inconvenientes
+
+- ventajas
+ - Flexible.- es fácil añadir publicadores, suscriptores y conexiones
+ - Adecuado para aplicaciones masivamente distribuidas
+- inconvenientes
+ - El bus puede convertirse en un cuello de botella
+
+
+---
+#HSLIDE
+
+## MVC (modelo/vista/controlador)
+
+- Útil para aplicaciones interactivas. Las divide en:
+ - modelo.- contiene la funcionalidad y datos básicos
+ - vista.- muestra la información al usuario (puede definir N vistas sobre un mismo modelo, posiblemente presentando los datos de forma distinta)
+ - controlador.- Gestiona los enventos de entrada del usuario
+- Esta división separa la representación de la información de la forma en que se presenta al usuario
+- Mayor desacoplamiento $\rightarrow$ mejor reutilización
+
+
+---
+![mvc pattern](imagPatt/MVC.png)
+
+![mvc pattern](imagPatt/MVC2.png)
+
+
+---
+#HSLIDE
+
+## Blackboard (pizarra)
+
+- Resulta útil para problemas en los que no se conoce una estrategia de solución determinista
+ - reconocimiento de formas, identificación y seguimiento de vehículos, identificación de la estructura de proteínas, ...
+- Componentes:
+ - pizarra.- Representa una memoria global estructurada que contiene objetos del espacio de solución
+ - fuente de conocimiento.- módulos especializados, con su propia representación
+ - Control.- selecciona, configura y ejecuta módulos
+- Todos los componentes tienen acceso al blackboard
+ - Pueden producir nuevos objetos y añadirlos a la pizarra
+ - O buscar datos en la pizarra utilizando pattern-matching con la fuente de conocimiento existente
+
+
+---
+![blackboard pattern](imagPatt/pizarra.png)
+
+![blackboard pattern](imagPatt/blackboard2.png)
+
+
+---
+#HSLIDE
+
+## Interpreter pattern
+
+- Se utiliza para diseñar un componente qeu interpreta programas escritos en un lenguaje dedicado
+ - especifica cómo evaluar las expresiones y sentencias de dicho programa
+ - la idea básica es disponer de una clase por cada símbolo del lenguaje
+- Se utiliza en lenguajes de interrogación (ej SQL) y lenguajes utilizados para describir protocolos de comunicación 
+
+
+---
+![interpreter pattern](imagPatt/interprete.png)
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

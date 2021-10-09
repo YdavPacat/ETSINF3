@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Ciclo de vida de un servicio</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: gaia
+_paginate: false 
+-->
+#HSLIDE
+
+# Ciclo de vida de un servicio
+#### TSR 2021. Grupo B, Juansa Sendra
+
+---
+<!-- paginate: true -->
+#HSLIDE
+
+## Evolución histórica de los sistemas informáticos (desde el principio ...)
+
+- mainframes (equipos caros, compartidos, propiedad de una institución -ej. universidad-)
+ - Compartido $\rightarrow$ buena utilización
+ - Pocos usuarios (baja utilización). Matemáticos, ingenieros, etc.
+  - Interfaz poco amigable
+  - Muchos usuarios piden la instalación de los programas que necesitan, o desarrollan sus propios programas
+ - Bajo coste para el usuario
+ - Gestión, configuración administración y mantenimiento por personal especilizado
+- PCs (equipos baratos, interfaz amigable)
+ - Cada usuario su equipo -&gt; no hay contención, baja utilización
+ - El coste de adquisición, configuracio, mantenimiento, etc. corresponde al usuario
+ - El usuario no actúa como desarrollador, pero tiene que administrar el sistema.
+
+
+---
+#HSLIDE
+
+## Evolución històrica de los sistemas informáticos (... a la actualidad)
+
+- Centro de cómputo empresarial (cluster de alta disponibilidad)
+ - Requiere personal especializado (proveedor, administrador) $\rightarrow$ eleva el coste
+ - El coste de adquisición se carga a la empresa
+ - En algunos casos la empresa desarrolla parte de los programas
+- CC (Cloud Computing) = externalización del cluster
+ - Evita coste adquisición, acota coste administración y mantenimiento $\rightarrow$ coste por uso (flexible, previsible)
+ - Acceso a través de la red (desde navegador web) gracias a:
+  - mejoras en redes ($\uparrow$ ancho de banda, $\downarrow$ latencia)
+  - mejoras en los navegadores (mejora interfaz, reducción carga en el servidor)
+ - Compartición eficiente de recusos, adaptación a cantidades de usuarios variable
+
+
+---
+#HSLIDE
+
+## Ciclo de vida de un servicio.- Roles
+
+- **desarrollador**: implanta los componentes
+- **proveedor**: decide las caracteristicas del servicio, los componentes que lo forman, y la forma en que debe configurarse y administrarse
+- **administrador**: se preocupa de que cada componente soft y hard esté en su sitio y correctamente configurado
+- **usuario**: utiliza el (accede al) servicio
+
+
+---
+#HSLIDE
+
+## Evolución histórica.- Roles
+|   |  desarrollador |  proveedor |  administrador |  usuario | 
+|--|--|--|--|--|
+|  mainframes |  usuario |  usuario |  especialistas |  pocos (baja contención) | 
+|  PCs |  empresasSoft |  propietario |  propietario |  único (propietario) | 
+|  Centro còmputo |  empresasSoft |  especialistas |  especialistas |  molts (empleats empresa) | 
+|  Cloud Computing |  proveedorServicio |  proveedorServicio |  especialistas |  muchísimos | 
+
+
+---
+#HSLIDE
+
+## Cloud Computing (CC).- Niveles
+Cuando hablamos de CC pensamos en la utilización de aplicaciones (servicios), pero podemos diferenciar 3 niveles:
+
+
+- **SaaS** facilita el uso de una aplicación como un servicio robusto
+- **PaaS** automatiza la gestión de recursos, facilita la creación y despliegue de servicios
+- **IaaS** proporciona elasticidad
+
+Grosso modo corresponde a los niveles que encontramos en cualquier sistema
+
+```
+- SaaS = Aplicaciones
+- PaaS = Sistema Operativo
+- IaaS = Hardware
+```
+
+---
+#HSLIDE
+
+## Cloud Computing.- SaaS (Software as a Service)
+
+- Contención limitada: se reservan recursos para la demanda esperada
+ - Inicialmente, inflexible: el proveedor limita la cantidad de recursos, compartición de recursos dificil
+ - Posteriormente, elasticidad (flexibilidad)
+ - Mercado competitivo de servicios
+- El proveedor debe utilizar los recursos de forma eficiente
+
+
+---
+#HSLIDE
+
+## Cloud Computing.- PaaS (Platform as a Service)
+
+- Todavía en sus inicios
+- Facilita el desarrollo y puesta en marcha de servicios
+- Especifica (equivale a SO)
+ - Un modelo de servicios
+ - Un modelo de desarrollo de sus componentes soft
+ - Un modelo de configuración i gestión del ciclo de vida (composición, configuración, despliegue, actualización)
+ - Un modelo de rendimento (monitorización de parámetros relevantes, expresión de puntos de elasticidad, reconfiguración en función de la carga)
+
+
+---
+#HSLIDE
+
+## Cloud Computing.- IaaS (Infraestructure as a Service)
+
+- Asigna/redistribuye recusos de cómputo bajo petición (peticiones via API)
+ - Podemos pedir capacidades concretas para los ordinadores y red (ej. adaptándose a la carga)-&gt; elasticidad
+ - Podemos cargar las imágenes de SO que nos interesen
+- Posible gracias a la tecnologia de virtualización
+ - Fàcil assignar/configurar recursos de cómputo virtuales, instalar imagen de sistema sobre una máquina virtual
+
+
+---
+#VSLIDE
+
+### Cicle de vida de un servei.- Qüestions
+Plantéate las siguientes preguntas
+
+
+- Los roles de proveedor y administrador pueden llegar a confundirse. ¿Puedes pponer ejemplos que ilustren las diferencias?
+- Mainframes i Cloud Computing se parecen en algunos aspectos. Indica similitudes y diferencias
+- Cuando utilizass dropBox, ¿Cuál de los tres niveles CC estas utilizando?. 
+- Si desarrollo un juego cooperativo y necesito un cluster externalizado para implantar el servidor, ¿qué nivel de CC he de utilizar?
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

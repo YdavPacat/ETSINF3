@@ -1,0 +1,183 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Laboratorios TSR - TSR 2021-22</title>
+		<link rel="stylesheet" href="../assets/css/highlight.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/css/tipuesearch.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
+	</head>
+	<body>
+		<header class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../">TSR 2021-22</a> <p class="navbar-text hidden-xs">Laboratorios TSR</p>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse-1">
+					<form action="../search.html" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" name="q" id="tipue_search_input" autocomplete="off" required class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../lab/labTSR-slideshow.html" target="_blank">View as slideshow</a></li>
+						<!--li><a href="../lab/labTSR-raw.html">View Markdown</a></li-->
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!--
+<div class="toc">
+<p class="lead">Table of contents:</p>
+<p class="toc-1">
+<a href="#laboratorios-tsr">Laboratorios TSR</a>
+</p>
+<p class="toc-2">
+<a href="#virtualizaci-n">Virtualización</a>
+</p>
+<p class="toc-2">
+<a href="#tipos-de-mv">Tipos de MV</a>
+</p>
+<p class="toc-2">
+<a href="#tsr">TSR</a>
+</p>
+<p class="toc-2">
+<a href="#bibliograf-a">Bibliografía</a>
+</p>
+</div>
+-->
+
+		<div class="container">
+			<div class="row">
+				<nav id="sidebar" class="col-lg-2 col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation" class=""><a href="../index.html">Home</a></li>
+						<li role="presentation" class=""><a href="../presentacion.html">Presentación</a></li>
+						<li role="presentation" class=""><a href="../avaluacio.html">Evaluación</a></li>
+						<li role="presentation" class=""><a href="../docenciainversa.html">Metodología: docencia inversa</a></li>
+						<li role="presentation" class=""><a href="../tasques.html">Calendario (plan de trabajo)</a></li>
+						<li role="presentation" class=""><a href="../teoria.html">Teoría</a></li>
+						<li role="presentation" class=""><a href="../practicas.html">Laboratorio</a></li>
+						<li role="presentation" class=""><a href="../extra.html">Material extra</a></li>
+					</ul>
+					<!--
+Available versions:<br>
+raw<br>
+->lab/labTSR-raw.html<br>
+slideshow<br>
+->lab/labTSR-slideshow.html<br>
+default<br>
+->lab/labTSR.html<br>
+<br>
+Document informations:<br>
+lab/labTSR.md<br><br>
+active
+-->
+				</nav>
+				<header>
+					<div class="entry-meta text-right">
+
+					</div>
+				</header>
+				<article id="content" class="col-lg-10 col-sm-9">
+					<h1 id="laboratorios-tsr">Laboratorios TSR</h1>
+<p>Este documento</p>
+<ul>
+<li>Proporciona instrucciones para que el alumno puede utilizar la infraestructura de los laboratorios DSIC</li>
+<li>Indica aspectos concretos relativos a la asignatura TSR</li>
+</ul>
+<h2 id="virtualizaci-n">Virtualización</h2>
+<p>Para facilitar la flexibilidad y mantenimiento de los laboratorios, se usan técnicas de virtualización (MV):</p>
+<ul>
+<li>El funcionamiento habitual de los laboratorios se basa en la virtualización de equipos, almacenamiento y redes -&gt; Los alumnos utilizan máquinas virtuales para el desarrollo de sus actividades</li>
+<li>Acceso a las máquinas virtuales<ul>
+<li>desde los equipos alojados en las salas de laboratorio</li>
+<li>mediante conexión remota (sin soporte ni garantia de funcionamiento fuera del horario y calendario docente de los laboratorios)</li>
+</ul>
+</li>
+</ul>
+<h2 id="tipos-de-mv">Tipos de MV</h2>
+<p>a) Compartida (no necesitamos almacenamiento persistente) -&gt; escritorios virtuales</p>
+<pre><code>- Sesiones sobre equipos virtuales compartidos. Ningún usuario puede modificar características compartidas ni asumir uso exclusivo (ej. uso exclusivo de puertos de comunicación)
+    - Ej sesiones sobre los equipos ubicados en el lab y las sesiones remotas en los servidores &#39;linuxdesktop&#39; y &#39;windesktop&#39;
+- Se complementa con una unidad persistente propia de cada usuario (carpeta DsicoW en Linux, unidad w: en Windows) 
+- No mantiene las modificaciones fuera del DiscoW -&gt; el alumno copia manualmente la información que quiera mantener entre el directorio $HOME y DiscoW
+    - excepción.- la carpeta $HOME/myconfig se copia automáticamente a $HOME al inicial sesión
+</code></pre><p>b) No compartida (equipo individual por alumno -&gt; ej cada alumno puede instalar software específico y configurar del sistema) -&gt; uso exclusivo, estado persistente -&gt; servidores virtuales de portal</p>
+<pre><code>- Las modificaciones se mantienen entre sesiones (estado persistente)
+- Los servidores virtuales con MV individuales, que pueden encontrarse detenidas
+- Para reducir riesgos, estas MV estan separadas de otros recursos (DiscoW, impresoras, directorios de asignaturas, identificación de usuarios, automatización de copias de seguridad, ..) mediante una VPN (red privada virtual) denominada portal
+    - los equipos de portal pertenecen al dominio cloud
+    - para activar una MV detenida existe un servidor portal-ng.dsic.cloud, visible por https desde los equipos con acceso a la VPN del portal
+        - todas las sesiones de escritorio tienen ya establecidad una conexión con la VPN portal (portal es visible desde linuxdesktop y windesktop)
+</code></pre><h2 id="tsr">TSR</h2>
+<p>Utiliza MV no compartida (una por alumno) TSR-xx</p>
+<ul>
+<li><p>Arrancar MV (desde equipo con acceso a la VPN del portal):
+  1) abrir en un navegador <a href="https://portal-ng.dsic.cloud">https://portal-ng.dsic.cloud</a>
+  2) Se muestra un aviso del navegador &#39;conexion no segura&#39; -&gt; admitir el certificado no oficial
+  3) Muestra diálogo solicitando nombre de usuario y contraseña -&gt; usar el identificador y password de los labs del DSIC
+  4) Se muestra la lista de nuestras máquinas virtuales. Seleccionamos la que interese (TSR-xx) y si está detenida pulsamos iniciar</p>
+<pre><code>  - NOTA.- pulsando sobre el nombre de la MV nos muestra algunos detalles (ej nombre e IP)
+</code></pre></li>
+<li><p>Iniciar sesión interactiva remota en modo gráfico</p>
+<ul>
+<li>conectar mediante un cliente de escritorio remoto (ej &#39;conexión a escritorio remoto&#39; desde Windows, o &#39;Remmina&#39; en Linux</li>
+</ul>
+</li>
+<li><p>Detener MV.- ejecutar en la MV la orden shutdown -h now</p>
+</li>
+<li><p>Otros aspectos importantes
+a) Contraseña. todas las MV tiene una contraseña inicial para el usuario root. Dicha contraseña se comunicará en su momento, pero debe modificarse cuanto antes (para evitar acceso desde terceros)</p>
+</li>
+</ul>
+<p>b) Ports. con la configuración inicial de la MV el cortafuegos impide el acceso desde el exterior a la mayor parte de puertos. Para habilitar un rango de puertos (ej 8000 a 8100) ejecutamos 
+   firewall-cms --permanent --add-port=8000-8100/tcp
+   firewall-cmd --reload
+Por economía de recursos, es posible que en una sesión dos estudiantes compartan el mismo equipo (ej una misma máquina virtual remota) -&gt; pueden aparecer interferencias al usar ports. Se recomienda comprobar si hay otros usuarios conectados y pactar las responsabilidades de cada usuario</p>
+<p>c) copia de ficheros</p>
+<ul>
+<li>modo texto (Linux). Usamos shell remoto seguro (ssh)</li>
+<li>modo texto (Windows). scp archivos <a href="mailto:root@TSR-xx.dsic.cloud">root@TSR-xx.dsic.cloud</a></li>
+<li>modo grafico (Linux)
+   Lanzar Sistema/conectar con el servidor
+   Ajustar para TSR-xx.dsic.cloud, usuario root, port 22, protocolo ssh
+   Usar ventana de explorador de archivos para trabajar con el sistema de ficheros remoto</li>
+</ul>
+<h2 id="bibliograf-a">Bibliografía</h2>
+<p>...</p>
+
+				</article>
+			</div>
+		</div>
+
+		<footer><a href="../site-index.html">Pages index</a>
+</footer>
+
+		<script src="../assets/js/jquery.js"></script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/highlight.min.js"></script>
+		<script src="../assets/js/tipuesearch_set.js"></script>
+		<script src="../assets/js/tipuesearch.min.js"></script>
+		<script>
+			$(function() {
+				hljs.initHighlightingOnLoad();
+				$('#tipue_search_input').tipuesearch({
+					mode: 'json',
+					contentLocation: '../index.json'
+				});
+			});
+		</script>
+		
+		<!-- Generated by Vegetables from 'lab/labTSR.md' with format 'default' - '2021-9-30 8:42:52 AM' -->
+	</body>
+</html>

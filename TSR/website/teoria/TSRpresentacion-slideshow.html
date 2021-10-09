@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Presentación</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Presentación
+###### Tecnologías de los Sistemas de Información en la Red
+
+---
+<!-- page_number: true -->
+<!-- footer: TSR 2018-19  Presentación -->
+#HSLIDE
+
+## Índice
+
+- Me presento
+- Objetivos asignatura
+- Estructura docencia
+- Teoría
+- Laboratorio
+- Evaluación
+- Bibliografía
+
+
+---
+#HSLIDE
+
+## Mis datos
+
+- nombre
+- despacho
+- correo
+- consultas y tutorías
+
+#HSLIDE
+
+## Horario grupo
+
+- ...
+
+
+---
+#HSLIDE
+
+## Objetivos Asignatura
+
+- General
+ - Aproximación prágmática al diseño y construcción de Sistemas Distribuidos
+- Específicos
+ - Entender las propiedades de los SD
+ - Conocer las principales tecnologías y aproximaciones
+ - Capacitar para el diseño de la arquitectura adecuada para cada tipo de problema
+
+
+---
+#HSLIDE
+
+## Estructura docencia
+
+- Asignatura con 6 créditos
+- Teoría (1.5 cr)
+ - Principios y propiedades generales
+- Seminarios (3 cr)
+ - Tecnologías básicas, ejemplos, resolución de problemas
+- Laboratorio (1.5 cr)
+ - Implantación de soluciones a problemas tipo
+
+
+---
+<!-- *footer: -->
+#HSLIDE
+
+## Teoría
+|  Tema |  contenido |  herramienta | 
+|--|--|--|
+|  Introducción |  intro SD, motivación |   | 
+|  NodeJS |  javascript y NodeJS |  NodeJS | 
+|  Middleware |  Middleware de mensajería |  0MQ | 
+|  Despliegue |  Despliegue |  Docker | 
+|  Robustez y fallos |  Consistencia |   | 
+|  Escalabilidad |   |  cluster, MongoDB | 
+|  Epílogo |   |   | 
+
+
+---
+#HSLIDE
+
+## Laboratorio
+
+-  10 sesiones, a partir de la última semana de septiembre
+ - Detalle del día de cada sesión en [calendario lab](../teoria.html)
+-  3 proyectos
+ 1. Proxy inverso TCP/IP (3 sesiones). Usa javaScript (JS) y NodeJS (Node)
+ 1. Aplicaciones en NodeJS con 0MQ (4 sesiones) Usa JS, Node, 0MQ
+ 1. Despliegue (3 sesiones). Usa JS, Node, Docker
+
+
+---
+#HSLIDE
+
+## Laboratorio: conocimientos previos
+
+- javaScript es distinto a Java
+ - distinto modelo de tipos, soporte en ejecución, etc.
+ - Desarrollamos servidores asincrónicos (en CSD eran concurrentes)
+- Damos material de autoaprendizaje para prepararse antes de la primera sesión [enlace](../teoria.html)
+
+
+---
+#HSLIDE
+
+## Evaluación
+|  fecha |  prueba |  temario |  formato |  peso |  recup | 
+|--|--|--|--|--|--|
+|  xx |  Primer parcial |  temas 1..4, lab 1 |  test + resp abierta |  40% |  si | 
+|  xx |  Lab 2 |  lab 2 |  resp abierta |  20% |  si  | 
+|  xx |  Segundo parcial |  temas 5..8, lab 3 |  test + resp abierta |  40% |  si | 
+
+
+---
+#HSLIDE
+
+## Evaluación: recuperación
+
+- Queda la última nota
+
+|  fecha |  recuperación |  temario |  formato |  peso | 
+|--|--|--|--|--|
+|  xx |  Primer parcial |  temas 1..4, lab 1 |  test + resp abierta |  40% | 
+|  xx |  Lab 2 |  lab 2 |  resp abierta |  20%  | 
+|  xx |  Segundo parcial |  temas 5..8, lab 3 |  test + resp abierta |  40% | 
+
+
+---
+#HSLIDE
+
+## Bibliografía
+
+- No existe un texto que se corresponda exactamente a los contenidos del curso
+- Guías de alumno para cada tema
+- Pueden suministrarse referencias adicionales en cada tema
+
+
+---
+#HSLIDE
+
+## Bibliografía ...
+
+- Material disperso: artículos, libros, sitios web (mayoritariamente en inglés)
+- textos generales de consulta (ambos traducidos)
+ - Distributed Systems: Principles and Paradigms (2nd Ed). Andrew S. Tanenbaum, Maarten van Steen. Prentice Hall 2006
+ - Distributed Systems: Concepts and Design (5th Ed). George Coulouris, Jean Dollimore, ... Addison-Wesley 2011 
+
+
+---
+#HSLIDE
+
+## Bibliografía ...
+
+- Documentación concreta de tecnologías usadas
+ 1. nodeJS.org
+ 1.  0MQ.org
+ 1. docker.com 
+ 1. mongodb.org
+
+
+---
+#HSLIDE
+
+## ¿Preguntas?
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<pre># Tarea.- definir una familia de funciones relacionadas
+### TSR 2021, Grupo B
+
+- Sumas parciales de los valores de un vector `sums([2,3,4,1]) // [2, 5, 9, 10]`
+- Productos parciales de los valores de un vector `prods([2,3,4,1]) //[2, 6, 24, 24]`
+- Máximos parciales de los valores de un vector `maxs([2,3,4,1]) // [2, 3, 4, 4]`
+- Mínimos parciales de los valores de un vector `mins([2,3,4,1]) // [2, 2, 2, 1]`
+
+---
+## Primer intento: funciones independientes
+La estructura es muy similar en todas (hablamos de una familia de funciones). 
+- Recibimos como argumento el vector `a`
+- definimos un vector local `b` sobre el que vamos calculando resultados
+- recorremos `a` en un bucle (y en cada iteración añadimos un elemento a `b`)
+- finalmente devolvemos el vector `b`
+```js
+function x (a) {
+  let b = []
+  for .. {
+	... // accede al siguiente elemento de a
+	b.push(..) // añade valor a b
+  }
+  return b
+}
+```
+
+---
+```js
+function sums (a) {                                 function mins (a) {
+   let b = []                                          let b = []
+   let acc = a[0]                                      let acc = a[0]
+   b.push(acc)                                         b.push(acc)
+   for (i=1; i<a.length; i++){                         for (i=1; i<a.length; i++){
+      acc = a[i]+acc                                      acc = a[i]<acc? a[i]:acc
+      b.push(acc)                                         b.push(acc)
+   }                                                   }
+   return b                                            return b
+}                                                   }
+
+function prods (a) {                                function maxs (a) {
+   let b = []                                          let b = []
+   let acc = a[0]                                      let acc = a[0]
+   b.push(acc)                                         b.push(acc)
+   for (i=1; i<a.length; i++){                         for (i=1; i<a.length; i++){
+      acc = a[i]*acc                                      acc = a[i]>acc? a[i]:acc
+      b.push(acc)                                         b.push(acc)
+   }                                                   }
+   return b                                            return b
+}                                                   }
+
+let v = [2,3,4,1]
+console.log(sums(v), prods(v), mins(v), maxs(v))
+```
+- Pero la solución NO es correcta: funciona mal si el vector está vacio
+```js
+v = []; console.log(sums(v), prods(v), mins(v), maxs(v))
+```
+
+---
+### Corrigiendo el error
+- Debe corregirse igual en todos para evitar inconsistencias
+```js
+function sums (a) {                                 function mins (a) {
+   let b = []                                          let b = []
+   if (a.length==0) return b                            if (a.length==0) return b
+   let acc = a[0]                                      let acc = a[0]
+   b.push(acc)                                         b.push(acc)
+   for (i=1; i<a.length; i++){                         for (i=1; i<a.length; i++){
+      acc = a[i]+acc                                      acc = a[i]<acc? a[i]:acc
+      b.push(acc)                                         b.push(acc)
+   }                                                   }
+   return b                                            return b
+}                                                   }
+
+function prods (a) {                                function maxs (a) {
+   let b = []                                          let b = []
+   if (a.length==0) return b                            if (a.length==0) return b
+   let acc = a[0]                                      let acc = a[0]
+   b.push(acc)                                         b.push(acc)
+   for (i=1; i<a.length; i++){                         for (i=1; i<a.length; i++){
+      acc = a[i]*acc                                      acc = a[i]>acc? a[i]:acc
+      b.push(acc)                                         b.push(acc)
+   }                                                   }
+   return b                                            return b
+}                                                   }
+
+let va = [2,3,4,1], vb = []
+console.log(sums(va), prods(va), mins(va), maxs(va))
+console.log(sums(vb), prods(vb), mins(vb), maxs(vb))
+```
+
+---
+## Segundo intento: función única parametrizable. 
+Podemos aprovechar el hecho de que son funciones muy parecidas para definir únicamente una función y parametrizarla con la operación a aplicar sobre cada par de valores. 
+- NOTA.- es más general, porque puede usarse como arg cualquier función de dos parámetros
+```js
+function fs (a,f) { // a=array, f=funcion a aplicar
+   let b = []
+   let acc = a[0]
+   b.push(acc)
+   for (i=1; i<a.length; i++){ //cada elem de a
+      acc = f(acc,a[i])
+      b.push(acc)
+   }
+   return b
+}
+```
+- Hemos introducido el mismo error que en la solución original. Lo corregimos
+
+---
+```js
+function fs (a,f) {
+   let b = []
+   if (a.length==0) return b
+   let acc = a[0]
+   b.push(acc)
+   for (i=1; i<a.length; i++){ //cada elem de a
+      acc = f(acc,a[i])
+      b.push(acc)
+   }
+   return b
+}
+let va = [2,3,4,1], vb=[]
+```
+
+Podemos invocar usando funciones anónimas o usar funciones auxiliares
+```js
+console.log(fs(va,(a,b)=>a+b), fs(va,(a,b)=>a*b), fs(va,(a,b)=>a<b?a:b), fs(va,(a,b)=>a>b?a:b))
+console.log(fs(vb,(a,b)=>a+b), fs(vb,(a,b)=>a*b), fs(vb,(a,b)=>a<b?a:b), fs(vb,(a,b)=>a>b?a:b))
+```
+
+```js
+const sum  = (a,b)=>a+b
+const prod = (a,b)=>a*b
+const min  = (a,b)=>a<b?a:b
+const max  = (a,b)=>a>b?a:b 
+console.log(fs(va,sum), fs(va,prod), fs(va,min), fs(va,max))
+console.log(fs(vb,sum), fs(vb,prod), fs(vb,min), fs(vb,max))
+```
+
+---
+## Tercer intento: función que devuelve a otra (fija arg funcion)
+```js
+function fs(f) {
+	return a => {
+   	   let b=[]
+	   if (a.length==0) return b
+	   let x=a[0]
+	   b.push(x)
+	   for (let i=1; i<a.length; i++) {
+		   x = f(x,a[i])
+		   b.push(x)
+	   }
+	   return b
+	}
+}
+const sums  = fs((a,b)=>a+b)
+const prods = fs((a,b)=>a*b)
+const mins  = fs((a,b)=>a<b?a:b)
+const maxs  = fs((a,b)=>a>b?a:b) 
+let va = [2,3,4,1], vb = []
+console.log(sums(va), prods(va), mins(va), maxs(va))
+console.log(sums(vb), prods(vb), mins(vb), maxs(vb))
+```</pre>

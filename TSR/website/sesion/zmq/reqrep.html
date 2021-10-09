@@ -1,0 +1,304 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Patró client/servidor - TSR 2021-22</title>
+		<link rel="stylesheet" href="../../assets/css/highlight.min.css">
+		<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../assets/css/tipuesearch.css">
+		<link rel="stylesheet" href="../../assets/css/main.css">
+	</head>
+	<body>
+		<header class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../../">TSR 2021-22</a> <p class="navbar-text hidden-xs">Patró client/servidor</p>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse-1">
+					<form action="../../search.html" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" name="q" id="tipue_search_input" autocomplete="off" required class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../../sesion/zmq/reqrep-slideshow.html" target="_blank">View as slideshow</a></li>
+						<!--li><a href="../../sesion/zmq/reqrep-raw.html">View Markdown</a></li-->
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!--
+<div class="toc">
+<p class="lead">Table of contents:</p>
+<p class="toc-1">
+<a href="#patr-client-servidor">Patró client/servidor</a>
+</p>
+<p class="toc-2">
+<a href="#patr-client-servidor">Patró client/servidor</a>
+</p>
+<p class="toc-2">
+<a href="#cues">Cues</a>
+</p>
+<p class="toc-2">
+<a href="#funcionament-sincr-nic">Funcionament sincrònic</a>
+</p>
+<p class="toc-2">
+<a href="#ejemple-1-1">Ejemple 1:1</a>
+</p>
+<p class="toc-2">
+<a href="#example-1-n">Example 1:n</a>
+</p>
+<p class="toc-2">
+<a href="#example-n-1">Example n:1</a>
+</p>
+<p class="toc-2">
+<a href="#cronograma-i-fallades">Cronograma i fallades</a>
+</p>
+<p class="toc-2">
+<a href="#modificaci-del-missatge-format-missatges-">Modificació del missatge (format missatges)</a>
+</p>
+</div>
+-->
+
+		<div class="container">
+			<div class="row">
+				<nav id="sidebar" class="col-lg-2 col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation" class=""><a href="../../index.html">Home</a></li>
+						<li role="presentation" class=""><a href="../../presentacion.html">Presentación</a></li>
+						<li role="presentation" class=""><a href="../../avaluacio.html">Evaluación</a></li>
+						<li role="presentation" class=""><a href="../../docenciainversa.html">Metodología: docencia inversa</a></li>
+						<li role="presentation" class=""><a href="../../tasques.html">Calendario (plan de trabajo)</a></li>
+						<li role="presentation" class=""><a href="../../teoria.html">Teoría</a></li>
+						<li role="presentation" class=""><a href="../../practicas.html">Laboratorio</a></li>
+						<li role="presentation" class=""><a href="../../extra.html">Material extra</a></li>
+					</ul>
+					<!--
+Available versions:<br>
+raw<br>
+->sesion/zmq/reqrep-raw.html<br>
+slideshow<br>
+->sesion/zmq/reqrep-slideshow.html<br>
+default<br>
+->sesion/zmq/reqrep.html<br>
+<br>
+Document informations:<br>
+sesion/zmq/reqrep.md<br><br>
+active
+-->
+				</nav>
+				<header>
+					<div class="entry-meta text-right">
+
+					</div>
+				</header>
+				<article id="content" class="col-lg-10 col-sm-9">
+					<h1 id="patr-client-servidor">Patró client/servidor</h1>
+<h4 id="tsr-2020-juansa-sendra-grup-a">TSR 2020, Juansa Sendra, Grup A</h4>
+<hr>
+<h2 id="patr-client-servidor">Patró client/servidor</h2>
+<ul>
+<li>Socket tipus <strong>req</strong> en el client<ul>
+<li>Supose definit <code>var cs = zmq.socket(&#39;req&#39;) // cs = client Socket</code></li>
+<li><code>cs.connect(URL)</code> (URL = <code>&#39;ftp://IPserver:PortServer&#39;</code>)</li>
+<li>Enviament: <code>cs.send(msg) // msg pot ser multisegment</code></li>
+<li>Per a rebre <code>cs.on(&#39;message&#39;, callback)</code></li>
+</ul>
+</li>
+<li>Socket tipus <strong>rep</strong> en el servidor <ul>
+<li>supose definit <code>var ss = zmq.socket(&#39;rep&#39;) // ss = server Socket</code></li>
+<li><code>ss.bind(tcp://*:portServer)</code></li>
+<li>Enviament: <code>ss.send(msg) // msg pot ser multisegment</code></li>
+<li>per a rebre <code>ss.on(&#39;message&#39;, callback)</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="cues">Cues</h2>
+<ul>
+<li>entrada (recepció)<ul>
+<li>manté els missatges que han arribat fins passar-los a la aplicació</li>
+<li>la arribada d&#39;un missatge genera el esdeveniment &#39;message&#39;</li>
+</ul>
+</li>
+<li><p>eixida (envíament)</p>
+<ul>
+<li>manté els missatges a enviar a altres agents</li>
+<li><p>guarda els missatges enviats per la aplicació</p>
+<p>|entrada|salida
+---|-------|------
+req|1 cua  |1 cua
+rep|1 cua  |1 cua</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="funcionament-sincr-nic">Funcionament sincrònic</h2>
+<ul>
+<li>El enviament i recepció NO són bloquejants<ul>
+<li>emisor i receptor continuen funcionant de forma asincrónica</li>
+</ul>
+</li>
+<li>Però tots els parells petició/resposta està totalment ordenat</li>
+<li>Part client<ul>
+<li>Cuant el client envia petició a través de <strong>req</strong>, eixe missatge arriba al socket rep del servidor</li>
+<li>Si el client envia altra solicitud, es queda en la cua d&#39;eixida de req (no es completa l&#39;envíament), perque NO podems tindre més d&#39;una solicitud pendent per els clients.</li>
+<li>Cuant arriba la resposta a la primera solicitud, s&#39;envia la segona petició desde la cua d&#39;eixida de req</li>
+</ul>
+</li>
+<li>Parte servidor<ul>
+<li>Cuant el servidor rep la primera solicitud (cua d&#39;entrada del socket rep) la aplicació recull i procesa eixe missatge</li>
+<li>Si arriba altra petició (de altre client), es manté en la cua d&#39;entrada del socket rep</li>
+<li>Cuant s&#39;envía la resposta a la primera solicitud, es trau de la cua la segunda solicitud.</li>
+<li>Només pot enviar una resposta a través de rep si hem rebut previament una solicitud por eixee mateix socket (el envíament es bloqueja fins a rebre la petició corresponent)</li>
+</ul>
+</li>
+<li>Si un client envia n peticions per un socket, la segona, tercera, .. queden en cua local fins rebre resposta de la primera
+  figura</li>
+</ul>
+<hr>
+<h2 id="ejemple-1-1">Ejemple 1:1</h2>
+<pre><code class="lang-js">// server.js
+const zmq = require(&#39;zeromq&#39;)
+const rp= zmq.socket(&#39;rep&#39;)
+rp.bind(&#39;tcp://*:8888&#39;,function(err) {if(err) throw err})
+rp.on(&#39;message&#39;, (msg)=&gt;{console.log(’Request: &#39;+msg); rp.send(’World&#39;)})
+</code></pre>
+<pre><code class="lang-js">// client.js
+const zmq = require(&#39;zeromq&#39;)
+const rq= zmq.socket(&#39;req&#39;)
+rq.connect(&#39;tcp://127.0.0.1:8888&#39;)
+rq.send(’Hello&#39;)
+rq.on(&#39;message&#39;, (msg)=&gt;{console.log(&#39;Response: &#39;+msg)})
+</code></pre>
+<hr>
+<h2 id="example-1-n">Example 1:n</h2>
+<ul>
+<li>Cada petició va a un rep diferent<ul>
+<li>seguint política RR (Round Robin)</li>
+</ul>
+</li>
+<li>IMPORTANT.- No podem mantiendre varies peticions pendents<ul>
+<li>NO envia noves peticiones fins rebre la resposta a la actual</li>
+<li>No hi ha paralelització de peticions</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-js">// server1.js
+const zmq = require(&#39;zeromq&#39;)
+const rp= zmq.socket(&#39;rep&#39;)
+rp.bind(&#39;tcp://*:8889&#39;,function(err) {if(err) throw err})
+rp.on(&#39;message&#39;, (msg)=&gt;{console.log(’Request: &#39;+msg); rp.send(’World2&#39;)})
+</code></pre>
+<pre><code class="lang-js">// server2.js
+const zmq = require(&#39;zeromq&#39;)
+const rp= zmq.socket(&#39;rep&#39;)
+rp.bind(&#39;tcp://*:8888&#39;,function(err) {if(err) throw err})
+rp.on(&#39;message&#39;, (msg)=&gt;{console.log(’Request: &#39;+msg); rp.send(’World1&#39;)})
+</code></pre>
+<pre><code class="lang-js">// client.js
+const zmq = require(&#39;zeromq&#39;)
+const rq= zmq.socket(&#39;req&#39;)
+rq.connect(&#39;tcp://127.0.0.1:8888&#39;)
+rq.connect(&#39;tcp://127.0.0.1:8889&#39;)
+rq.send(’Hello1&#39;); rq.send(’Hello2&#39;); rq.send(’Hello3&#39;)
+rq.on(&#39;message&#39;, (msg)=&gt;{console.log(&#39;Response: &#39;+msg)})
+</code></pre>
+<hr>
+<h2 id="example-n-1">Example n:1</h2>
+<ul>
+<li>Configuració típica per a un servidor</li>
+<li>El socket rep gestiona els missatges d&#39;entrada amb una cua FIFO<ul>
+<li>atén a tots els clients de manera equitativa (no hi ha inanició)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-js">// server.js
+const zmq = require(&#39;zeromq&#39;)
+const rp= zmq.socket(&#39;rep&#39;)
+rp.bind(&#39;tcp://*:8888&#39;,function(err) {if(err) throw err})
+rp.on(&#39;message&#39;, (msg)=&gt;{console.log(’Request: &#39;+msg); rp.send(’World&#39;)})
+</code></pre>
+<pre><code class="lang-js">// client1.js
+const zmq = require(&#39;zeromq&#39;)
+const rq= zmq.socket(&#39;req&#39;)
+rq.connect(&#39;tcp://127.0.0.1:8888&#39;)
+rq.send(’Hello1&#39;)
+rq.on(&#39;message&#39;, (msg)=&gt;{console.log(&#39;Response: &#39;+msg)})
+</code></pre>
+<pre><code class="lang-js">// client2.js
+const zmq = require(&#39;zeromq&#39;)
+const rq= zmq.socket(&#39;req&#39;)
+rq.connect(&#39;tcp://127.0.0.1:8888&#39;)
+rq.send(’Hello2&#39;)
+rq.on(&#39;message&#39;, (msg)=&gt;{console.log(&#39;Response: &#39;+msg)})
+</code></pre>
+<hr>
+<h2 id="cronograma-i-fallades">Cronograma i fallades</h2>
+<ul>
+<li><p>Cronograma 1:n sense fallades
+figura</p>
+</li>
+<li><p>Cronograma 1:n amb fallades</p>
+<ul>
+<li>Si falla rep#2 el req que havia llanzat eixa sol.licitud no es recupera</li>
+<li>cal tancar la conexió y establir una nova
+figura</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="modificaci-del-missatge-format-missatges-">Modificació del missatge (format missatges)</h2>
+<ul>
+<li><p>Estructura missatge típic <code>[envoltorio delimitador cos]</code></p>
+<ul>
+<li><p>envolcall  = indica metadades associades al missatge</p>
+<ul>
+<li>1 o més segments
+-delimitador = segment buit que separa envolcall y cos (en la figura es representa usant una ,)</li>
+<li>1 o mas segmentos</li>
+</ul>
+<p>|envío                            |recepción
+----|-------------------------------|----------------
+req |afig delimitador com a primer segment     |elimina primer seg (delimitador)
+rep |guarda envolcall, pasa cos a la aplic. |afig envolcall guardat</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>figura</p>
+
+				</article>
+			</div>
+		</div>
+
+		<footer><a href="../../site-index.html">Pages index</a>
+</footer>
+
+		<script src="../../assets/js/jquery.js"></script>
+		<script src="../../assets/js/bootstrap.min.js"></script>
+		<script src="../../assets/js/highlight.min.js"></script>
+		<script src="../../assets/js/tipuesearch_set.js"></script>
+		<script src="../../assets/js/tipuesearch.min.js"></script>
+		<script>
+			$(function() {
+				hljs.initHighlightingOnLoad();
+				$('#tipue_search_input').tipuesearch({
+					mode: 'json',
+					contentLocation: '../../index.json'
+				});
+			});
+		</script>
+		
+		<!-- Generated by Vegetables from 'sesion/zmq/reqrep.md' with format 'default' - '2021-9-30 8:42:52 AM' -->
+	</body>
+</html>

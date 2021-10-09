@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Eventos en NodeJS</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Eventos en NodeJS
+##### TSR 2021 Juansa Sendra, Grupo B
+
+---
+#HSLIDE
+
+## Eventos
+
+- La práctica totalidad del API de nodeJS utiliza una arquitectura asincrónica dirigida por eventos
+ - Un emisor puede generar distintos tipos de eventos, identificados mediante un nombre (string)
+  - Ej: un stream emite &#39;close&#39;, &#39;drain&#39;, &#39;error&#39;, &#39;finish&#39;, &#39;pipe&#39;, &#39;unpipe&#39;
+  - Ej: un socket emite &#39;close&#39;, &#39;connection&#39;, &#39;error&#39;, &#39;listening&#39;
+ - Podemos asociar una o más acciones a cada evento
+  - cada acción es un callback y representa actividades pendientes
+  - establece un orden: mantiene un vector de acciones por evento, y se activan por orden 
+- En nuestros programas podemos tratar esos eventos, pero también declarar emisores de nuevos eventos
+ - Para poder definir emisores de eventos necesitamos el módulo `events`
+
+
+---
+#HSLIDE
+
+## Eventos.- Estructura aplicación
+
+- Si todos los eventos son externos (API)
+ - Ej.- eventos de teclado, a través de sockets, etc.
+ - asociar accions a los eventos
+- Si creamos eventos internos (desde el propio programa)
+ - importar la biblioteca `events`
+ - crear un emisor (o varios)
+ - asociar acciones a los eventos
+ - emitir eventos
+  - Es habitual utilizar `setTimeout` o `setInterval`
+  - `setTimeout(f,ms) // programa f para ejecutarse tras ms milisegundos`
+  - `setInterval(f,ms) // repite la ejecución de f cada ms milisegundos`
+
+
+---
+#HSLIDE
+
+## Eventos.- Emisor
+
+- Todos los emisores son instancias de la clase events.EventEmitter
+- Para emitir un evento utiliza `emisor.emit(&#39;nombreEvento&#39;, arg, arg,..)`
+ - tantos argumentos como necessitemos (posiblemente ninguno)
+- En caso de error interno el emisor genera el evento &#39;error&#39;
+
+
+---
+#HSLIDE
+
+## Eventos.- Acciones
+
+- `emisor.on(&#39;nombreEvento&#39;, callback)` asocia el callback al evento
+ - Los argumentos de `emisor.emit(&#39;..&#39;, args) son los parámetros del callback
+ - Cada vez que llega el evento activa la acción
+- `emisor.once(&#39;nombreEvento&#39;, callback)` asocia el callback al evento     
+ - activa sólo una vez, y dá de baja la acción
+- podemos asociar varios callbacks al mismo evento, y ante la llegada del evento se activan en el orden en que se han registrado
+- Si no tenemos ninguna acción asociada al evento `emisor.on(&#39;error&#39;,..)` y llega ese evento, el programa aborta
+- Una acción activada se ejecuta inmediatamente (si no estemos ejecutando otra cosa), o se anota en la lista de eventos
+
+
+---
+#HSLIDE
+
+## Eventos.- Example
+```js
+    const ev = require('events')
+    const emisor = new ev.EventEmitter
+    emisor.on('event', (i)=>{
+        console.log('Llega el evento '+i)
+    })
+    emisor.emit('event',1)
+    emisor.emit('event',2)
+```
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

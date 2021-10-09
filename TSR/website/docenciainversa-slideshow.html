@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Metodologia: docencia inversa</title>
+	<link rel="stylesheet" href="assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				## Metodologia: docencia inversa
+Se propone la utilización de la metodología de docencia inversa (flip-teaching)
+
+La UPV dispone de un Blog del Proyecto de Docencia Inversa (https://docenciainversa.blogs.upv.es/proyecto-clase-inversa-upv-2/), en el que encontrarás todos los detalles. 
+
+Se basa en la cooperación entre el docente y el alumno, y por tanto requiere el compromiso de ambos:
+
+El docente: 
+
+
+- Orienta el trabajo del alumno e indica los pasos a seguir 
+- Ofrece explicaciones, aclaraciones, y resuelve dudas 
+- Ayuda a obtener los resultados de aprendizaje planteados, encaminados a la mejora del perfil profesional y la adquisición de unas competencies básicas necesarias en la titulación. 
+
+El alumno: 
+
+
+- Realiza el trabajo continuo que plantea el docente. Requiere trabajo diario, pero planteado de forma progresiva y adaptada al nivel exigido en esta materia. 
+- Entrega el trabajo realizado dentro del calendario publicado. 
+- Consulta y requeriere ajuda al docent cuando lo necesita. 
+
+El objetivo es: 
+
+
+- Conseguir mejores resultados académicos 
+- Mejorar el aprendizaje, no sólo en cuanto a conocimientos adquiridos en ese momento, sino también mas perdurables en el tiempo. 
+- Desarrollar competencias transversales, como pueden ser: trabajo en equipo, comunicación oral, gestión del tiempo ... (mejora de tu currículum profesional). 
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="assets/js/reveal/reveal.js"></script>
+<script src="assets/js/reveal/lib/head.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

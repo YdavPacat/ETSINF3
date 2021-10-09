@@ -1,0 +1,194 @@
+<pre><!-- $theme: gaia -->
+<!-- page_number: true-->
+<!-- footer: TSR -->
+## Modelo de Sistema Distribuido
+- Modelo = visión abstracta del sistema
+  - Oculta detalles irrelevantes
+  - Simplifica el razonamiento sobre el sistema
+- Distintas perspectivas (Modelos) 
+  - Modelos fundamentales: soluciones a aspectos concretos del SD
+  - Modelo Físico.- componentes (hard+soft) y su interacción
+  - Modelo de Arquitectura.- roles de los componentes y cómo cooperan entre sí
+
+---
+## Modelos fundamentales
+#### Modelo de Interacción
+  - Procesos que se comunican mediante el intercambio de mensajes 
+  - Canales de comunicación que introducen retardos 
+  - Coordinación inexacta (no existe reloj global) 
+
+#### Modelo de Fallos
+- Especifica los tipos de fallos que pueden exhibir los procesos y canales de comunicación
+- Define comunicación fiable y procesos correctos
+
+---
+## Modelos fundamentales ...
+#### Modelo de Seguridad
+- Define los posibles ataques a procesos y canales de comunicación, y estrategias para resolverlos
+
+---
+## Modelo Físico
+- Detalla los componentes y su interacción
+
+característica Nodos |Si la cumplen| Si no
+---|---|---
+ubicación fija, siempre conectados | Estáticos | No estáticos (mobile computing)
+no incluidos en otra entidad | Discretos | Empotrados (internet of things)
+|indepedientes entre sí  | Autónomos | No autónomos (cluster)
+
+  - Discretos (no incluidos en otra entidad física) vs. no discretos (empotrados en otros componentes $\rightarrow$ Internet of Things – IoT)
+  - Autónomos (básicamente independientes entre sí) vs. no autónomos (pools de nodos que cooperan para proporcionar un servicio $\rightarrow$  cloud computing)
+
+---
+## Modelo Físico.- Generaciones
+- 3 generaciones de SD, con distinta escala, uso y características
+  1. años 70-80, escala decenas (LAN)
+  3. años 90, escala miles (inernet)
+  4. actualidad, escala millones (internet of things, bigData, cloud-computing, ubiquiotus-computing)
+
+---
+## Modelo Físico.- Generaciones ...
+Gen  | Uso
+--- |---
+1 | Compartición de recursos
+2 | compartición recursos, servidores escalables y de alta disponibilidad
+3 | compartición recursos, servidores escalables y de alta disponibilidad, elasticidad
+
+---
+## Modelo Físico.- Generaciones ...
+Gen  | Características
+--- |---
+1 | sist. no estardard, uso interno, nodos homogéneos
+2 | sist. estandard, servicios globales (clientes externos), nodos heterogéneos, QoS (quality of Service)
+3 | $\uparrow$ estandards, $\uparrow$ nodos, $\uparrow$ técnicas de interconexión, $\uparrow$ variedad de servicios, $\uparrow$ clientes, $\uparrow$ heterogeneidad, QoS
+
+---
+## Modelo de Arquitectura
+- Detalla los roles de los componentes, y su mecanismo de interacción
+  - Componentes = entidades que se comunican (procesos)
+- Acoplamiento fuerte (componentes diseñados para trabajar juntos)
+  - Objetos distribuidos (ej RMI, CORBA) 
+- Acoplamiento débil ($\uparrow$ autonomía, $\uparrow$ reutilización)
+  - Servicios Web (ej. SOAP, REST)
+  - Middleware de mensajería (ej. JMS, 0MQ)
+
+---
+#### Modelo de Arquitectura: comunicación
+- Directa.- Comunicación directa emisor/receptor
+  - Direccionamiento explícito del receptor
+  - Primitivas de paso de mensajes, sockets, RMI
+- Indirecta.- elemento intermedio entre emisor y receptor
+  - Emisor y receptor desacoplados en espacio y tiempo
+  - Comunicación a grupo (multicast), sistemas de publicación/suscripción o basados en eventos, colas de mensajes, ... 
+
+---
+#### Modelo de Arquitectura: Roles y responsabilidades
+- Cliente/servidor (CS).- solicitud/respuesta, asimétrico
+  - Tradicional, habitual, simple, poco escalable
+- Peer to Peer (P2P).- todos los procesos cooperan como iguales
+  - Complejo (nodos poco fiables), escalable, inseguro 
+
+---
+## Modelo de Arquitectura: niveles
+
+---
+## Ejemplo.- Wikipedia
+- ¿Qué es?
+  - Enciclopedia digital escrita de forma cooperativa
+  - Basada en tecnología wiki
+    - Lenguale de wikitexto editado en el navegador
+    - Permite enlaces entre páginas (hipervínculos)
+
+---
+### Wikipedia.- Modelo de arquitectura
+- CS
+- 3 niveles
+  - interfaz usuario.- documentos servidos por servidor Apache, y mostrados en el navegador del cliente
+  - aplicación.- logica escrita en PHP
+  - datos (persistencia).- usa MySQL
+
+---
+## Wikipedia.- escalable en tamaño
+- Inicio en 2001
+  - Pocos usuarios
+- En 2005 ya soporta mucha carga
+- En 2010 la carga es enorme
+  - 5 millones de artículos en inglés, 288 idiomas, 73000 editores, 500 millones de visitantes/mes
+  - Picos de 24500 accesos/seg, 200GB/s
+
+---
+## Wikipedia: evolución arquitectura
+año | solución
+---|---
+2001 | 1 nodo (LAMP = Linux Apache MySQL PHP)
+2003 | Separa lógica/datos en nodos distintos (SD)
+2005 | Introduce proxies inversos (equilibrado de carga, caché de págs frecuentes) y workers $\rightarrow$ 39 nodos
+2010 | Mantiene la arquitectura, aumenta la cantidad de instancias de cada componente ($>$ 300 nodos). Especializa los servidores Apache según el tipo de aplicación (consultas, gestión de sesión, modif págs)
+
+---
+## Wikipedia: Arquitectura ... LAMP
+1. El cliente envía la petición al servidor Apache
+2. Apache redirige la petición al módulo PHP interno
+3. El programa PHP envía múltiples peticiones al servidor MySQL
+4. Apache construye un documento web con los resultados y lo remite al cliente
+5. El cliente muestra el resultado en el navegador
+
+---
+## Wikipedia: Arquitectura ... LAMP
+![figuraLAMP]()
+
+---
+#### Wikipedia: Arquitectura ... Reverse Proxy
+Es un componente de la parte servidor, ubicado entre internet y los servidores web
+
+Acepta peticiones http, proporciona servicios, y redirige la petición a $\geq1$ servidores |
+---|---
+Punto de entrada único para los clientes (usan el sist sin conocer detalles de los servidores)|
+Equilibrado de carga (ej. dirige cada petición al servidor con menos carga)|
+Seguridad (autenticación, finalización SSL)|
+Servidor de contenido estático (caché)|
+Otras: ocultación de fallos, compresion, auditoría|
+
+---
+#### Wikipedia: Arquitectura ... Reverse Proxy
+![figuraReverseProxy]()
+
+---
+## Wikipedia: Arquitectura 2005
+![figuraArq2005]()
+
+---
+## Wikipedia: Arquitectura 2010
+![figuraArq2010]()
+
+---
+
+## Ejemplo.- MongoDB
+- ¿Qué es?
+  - IoT genera gran $\uparrow\uparrow$ información (BigData)
+    - $\approx$ 40000 millones de sensores generan datos
+  - ¿Dónde almacenamos los datos?
+    - Una BD tradicional (relacional) no escala bien
+    - Se usan alternativas escalables (noSQL)
+      - Una de ellas es MongoDB
+- Ej.- Bosh usa MongoBD para su modelo de IoT
+
+---
+## MongoDB.- Implementación
+- División horizontal de los datos (sharding)
+  - Ej.- queremos guardar datos sobre todos los estudiantes universitarios
+    - Cada entrada es un objeto con el DNI como identificador, y otros atributos
+    - Dividimos en grupo por tangos de DNI (ej. 00000001 .. 10000000, 10000001 .. 20000000, etc)
+
+---
+## MongoDB.- Implementación ...
+- 3 componentes, con varias instancias de cada uno
+  - Mongos, Servidores de Configuración, Mongod
+
+---
+### P2P
+
+---
+## Cloud Computing
+
+</pre>

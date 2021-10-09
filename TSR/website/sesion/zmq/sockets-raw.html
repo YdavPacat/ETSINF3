@@ -1,0 +1,13 @@
+<pre>|Socket  | cua entrada 	 | cua eixida 		| send | receive
+|----    |---            |---               |---   |---
+|req SYNC| 1           	 | 1		  		| +,   | -,
+|rep SYNC| 1           	 | 1		  		|+ xxx,| - xxx, (guarda)
+|push    | -           	 | 1          		|      |
+|pull    | 1           	 | -		  		|      |
+|pub     | -           	 | 1          		|      |
+|sub     | 1           	 | -           		|      |
+|dealer  | 1           	 | 1          		|      |
+|router  | N (1 per connex)|N (1 per connex)|-id   | +id 
+
+socket.identity('..')
+sub.subscribe('...')</pre>

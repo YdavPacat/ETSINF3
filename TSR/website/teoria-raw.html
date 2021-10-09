@@ -1,0 +1,58 @@
+<pre>## Teoria
+Cada Unitat Temàtica conté:
+- un joc de transparències
+- una guia de l'alumne, que descriu amb detall el contingut de les transparències, facilitant el seu estudi
+- Possiblement un conjunt de activitats proposades
+- Possiblement referències externes o material complementari
+
+Tema | transparències   | guia alumne | activitats  | videos | transpa
+---- | -------------    | ---         | --			|---     |---
+tema 0 (Presentación)    | [html](presentacion.html), [pdf](teoria/tema0.pdf) ||
+tema 1 (intro SD)       | [pdf](teoria/tema1.pdf) | [pdf](teoria/guia1.pdf)		|							|[wikipedia](screencast/wikipedia.mp4), [escalabilitat](screencast/servidorsEsc.mp4), [arees aplic.](screencast/areesaplicaciosd.mp4), [ciclo vida servicios](screencast/ciclevidaserveis.mp4) | [introAlternativa](teoria/intro.html), [áreas aplic](sesion/areasaplicsd/aaplic.html), [roles](sesion/roles/cc.html), [servidores escalables](sesion/servidoresEscalables/servidorsEscalables.html)
+tema 2 (nodeJS)         | [pdf](teoria/tema2.pdf) | [pdf](teoria/guia2.pdf) | [pdf](teoria/acti2.pdf)| [ámbito vars (A)](screencast/ambitVarsA.mp4), [ámbito vars (B)](screencast/ambitVarsB.mp4), [invocación funciones](screencast/invocacioFuncions.mp4), [node JS (A)](screencast/nodeJS-part1.mp4), [node JS (B)](screencast/nodeJS-part2.mp4), [extra JavaScript (A)](screencast/extraJSa.mp4), [extra JavaScript (B)](screencast/extraJSb.mp4) | [ámbito vars](sesion/ambitVars/ambitVars.html), [ámbito vars (alt)](sesion/ambitVars/ambit.html)
+tema 3 (zmq)            | [pdf](teoria/tema3.pdf) | [pdf](teoria/guia3.pdf) | [pdf](teoria/acti3.pdf)| [zmq (A)](screencast/zmq1.mp4), [zmq (B)](screencast/zmq2.mp4), [zmq (C)](screencast/zmq3.mp4), [pipeline](screencast/pushpull.mp4), [difussión](screencast/pubsub.mp4), [router y dealer](screencast/routerDealer.mp4), [broker/workers (A)](screencast/broker1.mp4), [broker/workers (B)](screencast/broker2.mp4) | [req/rep](sesion/zmq/treqrep.html), [pipeline i difusión](sesion/zmq/pipelineDifu.html), [router y dealer](sesion/zmq/routerDealer.html), [zmq](sesion/zmq/transpaVideosZmq1-2-3.pdf), [sockets zmq](sesion/zmq/sockets.html)
+tema 4 (despliegue)   | [pdf](teoria/tema4.pdf) | [pdf](teoria/guia4.pdf) | [pdf](teoria/acti4.pdf) | [despliegue 1](screencast/desplegament1.mp4), [despliegue 2](screencast/desplegament2.mp4), [despliegue 3](screencast/desplegament3.mp4), [desplegament 4](screencast/desplegament4.mp4), [desplegament 5](screencast/desplegament5.mp4)| [html](sesion/desplegament/desplegament.html)
+tema 5 (gestión fallos)| [pdf](teoria/tema5.pdf) | [pdf](teoria/guia5.pdf) | [pdf](teoria/acti5.pdf) | [fallos1](screencast/fallades1.mp4), [fallos2](screencast/fallades2.mp4), [fallos3](screencast/fallades3.mp4), [fallos4](screencast/fallades4.mp4) | [html](sesion/fallades/fallades.html)
+tema 6 (escalabilidad)  | [pdf](teoria/tema6.pdf) | [pdf](teoria/guia6.pdf) | [pdf](teoria/acti6.pdf) | [escalab1](screencast/escalabilitat1.mp4), [escalab2](screencast/escalabilitat2.mp4), [escalab3](screencast/escalabilitat3.mp4), [escalab4](screencast/escalabilitat4.mp4), [escalab5](screencast/escalabilitat5.mp4) | [html](sesion/escalabilitat/escalabilitat.html)
+
+----
+
+0. Presentación
+	- Objectivos de la assignatura, y su contenido teórico y práctico
+	- Detalla la organización docente y el calendario de trabajo
+	- Establece la normativa de evaluación
+	- Proporciona referencias al material de consulta
+	
+1. Introducción a los Sistemas Distribuidos
+	- Repasa el concepto de Sistema Distribuido (SD) (estudiado en la asignatura CSD)
+	- Describe algunos ejemplos y áreas de aplicación
+	- Repasa la evolución històrica, hasta Cloud COmputing (CC)
+	- Compara las dos posibles alternativas para implantar servidores escalables:
+		- Servidores concurrentes
+		- Servidores asincrónicos
+2. NodeJS
+	- Introduce el uso de JavaScript y NodeJS para implantar servidores asincrónicos
+		- únicamente estudiamos la parte de JS necesaria para esta assignatura
+	- Proporciona los contenidos previos necesarios para el desarrollo de les prácticas de laboratorio
+3. 0MQ
+	- Repasa el concepto de middleware, especialmente el middleware orientado a comunicaciones
+	- Introduce 0MQ como un ejemplo de middleware orientado a comunicaciones
+		- Posteriormente se utilitza en las prácticas de laboratorio
+		- La combinación de NodeJS y 0MQ permite construir servidores escalables y tolerantes a fallos con relativamente poco código
+4. Despliegue
+	- La configuración y arranque de un SD requiere el despliegue de diversos components software en nodos distintos. Cada nodo debe coneixer algunos aspectos básicos del sistema para poder interactuar con otros componentes
+	- Esta unidad temática presenta mecanismos para automatizar esas tareas (configurar la cantidad de instancias de cada componente, su ubicación, y la forma en que los distintos componentes interactuan entre sí
+	- Introduce la herramienta Docker, que posteriormente utilizamos en el laboratorio
+5. Gestión de fallos
+	- Caracteriza las situaciones de fallo en un SD
+	- Estudia los modelos de replicación
+	- Identifica los modelos de consistencia
+6. Escalabilidad
+	- Identifica
+		- Los mecanismos básicos para mejorar la escalabilidad
+		- Los aspectos que pueden comprometer la escalabilidad (puntos de contención)
+	- Trata la escalabilidad a nivel de datos (almacenes escalables $\rightarrow$ noSQL)
+	- Presenta ejemplos de escalabilidad a distintos niveles
+
+----
+</pre>

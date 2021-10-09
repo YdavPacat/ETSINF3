@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Concepto de clausura</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Concepto de clausura
+##### TSR 2018-19 Juansa Sendra
+
+---
+#HSLIDE
+
+# Lo que ya sabemos
+
+- función $\rightarrow$ computación pendiente
+- Se utiliza en (casi) todos los leng. de progr.
+- La declaración indica:
+ - parámetros formales
+ - cuerpo = expresión o grupo de sentencias```js
+function min (x, y) {
+if (x<y) 
+   return x
+else 
+   return y
+}
+```
+
+
+---
+#HSLIDE
+
+## Lo que ya sabemos
+
+- Puede aplicarse (invocarse) N veces, indicando en cada aplicación la lista de argumentos
+ - Evalúa los argumentos, y con esos valores inicializa los parámetros formales
+ - Crea un entorno local con los parámetros y las vars. locales definidas en la función
+ - Ejecuta el cuerpo y devuelve un valor
+ - Destruye el entorno local
+
+```js
+console.log(min(4,87))  // x=4, y=87
+console.log(min(2,4))   // x=2, y=4
+console.log(min(2+2, min(3,27)) // x=4, y=(x=3, y=27)->3
+```
+
+---
+#HSLIDE
+
+## ¿Qué aporta la Prog. funcional?
+**first-class functions**: La función es un tipo de datos
+
+
+- Funciones anónimas (literal función) `(x) =&gt; x*2`
+- Podemos asignar una función a una variable `const doble = (x) =&gt; x*2`
+- Podemos pasar una función como argumento `[1,3,5,7].map(doble) // [2,6,10,14]`
+- Podemos devolver una función como resultado```js
+const prod = (a) => (b) => a*b
+const doble = prod(2), triple = prod(3)
+console.log(doble(5), triple(4)) // escribe 10 y 12
+```
+
+
+---
+#HSLIDE
+
+## First-class functions
+
+- A las variables locales de una función les podemos asignar otras funciones
+ - **anidación** = definir una función dentro de otra
+- **lexical scoping**: una función accede a:
+ - su entorno local
+ - el entorno de cada función en la que está contenida, hasta llegar al entorno global
+  - variable libre: variable usada por una función pero definida fuera de su entorno local
+  - **clausura** = función que accede a vars libres
+
+
+---
+#HSLIDE
+
+# First-class functions
+```js
+const hipotenusa = (a,b) {
+   const sqr = (x) => x*x  // anidacion
+   const sqrt = (x) => .... // anidacion
+   return sqrt( sqr(a) + sqr(b) )
+}
+
+const prod = (a) => (b) => a*b
+/* en la función (b) => a*b
+   la variable a es libre
+   (corresponde al contexto de su función 'padre')
+   Dicha funcion es una clausura
+*/
+```
+
+---
+#HSLIDE
+
+## Higher-order functions
+Son aquellas funciones que reciben como argumento o devuelven como resultado otra función
+
+
+- Puede estar predefinida (o definida en biblioteca)
+ - `Array.map(f)` genera un nuevo array resultado de aplicar la función `f` sobre cada item del array
+ - `setTimeout(f,ms)` programa la invocación de la función `f` para dentro de `ms` milisegundos
+ - `emisor.on(&#39;ev&#39;, f)` asocia la invocación de la función `f` a la llegada del evento `ev` generado por `emisor`
+
+
+---
+#HSLIDE
+
+## Higher-order functions
+
+- Y también puede definirlas el programador
+```js
+const compose   = (a,b) =&gt; (c) =&gt; a(b(c)) // higher-order
+const siguiente = (x) =&gt; x+1
+const anterior  = (x) =&gt; x-1
+const doble     = (x) =&gt; x*2
+const mitad     = (x) =&gt; x/2
+
+let a = [1,3,5,7]
+a.map( compose(doble,anterior) )  // [0,4,8,12]
+a.map( compose(mitad,siguiente) ) // [1,2,3,4]
+
+```
+---
+#### Clausura (función que accede a vars libres)
+- Implementación compleja :cry:
+  - Una clausura puede invocarse en distintos momentos
+  - Debe garantizarse la existencia de los contextos anidados necesarios
+    - Una función **no** destruye su contexto local cuando termina si puede requerirse para la futura activación de una clausura
+    - La función inspecciona su entorno y clausura (cierra) los contextos anidados necesarios
+
+---
+#### Clausura (función que accede a vars libres)
+
+- La complejidad de la implementación es transparente para el programador :smile:
+  - La resuelve el soporte para ejecución
+
+- .. y además resulta útil para implementar :smile:
+
+    - callbacks
+    - timeouts
+    - proyección de argumentos
+    - familias de funciones relacionadas
+    - E/S asincrónica
+    - Gestión de eventos
+
+---
+## Comprobemos si ha quedado claro
+
+- razona cuál debería ser el resultado de evaluar esta expresión `((x) => (y) => x)(1)(2)`
+- razona porqué esta función siempre devuelve true con independencia del argumento que se le pase `(x) => ((r1,r2) => r1 === r2)(x,x)`
+- Compara los dos fragmentos de código de la transparencia siguiente, e intenta establecer el resultado final en ambos
+
+---
+
+```js
+const f = function () {
+   for (var i=0; i<3; i++) {
+      setTimeout( 
+          () => console.log(i), 
+          1000)
+   }
+}
+f()
+```
+```js
+const f = function () {
+   for (var i=0; i<3; i++) {
+      ((c) => {setTimeout( 
+                () => console.log(c), 
+                1000)
+      })(i)
+   }
+}
+f()
+```
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

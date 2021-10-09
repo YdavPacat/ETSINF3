@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Servidores Escalables</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: gaia
+_paginate: false 
+-->
+#HSLIDE
+
+# Servidores Escalables
+#### TSR 2021. Grupo B, Juansa Sendra
+
+---
+<!-- paginate: true -->
+#HSLIDE
+
+## Servidores Escalables
+
+- Para implantar servicios distribuidos utilizamos el modelo cliente/servidor
+ - La parte servidor
+  - Recibe peticiones, las procesa, devuelve respuestas
+  - Puede solicitar servicios a otros servidores
+  - Es escalable si puede aceptar otras peticiones antes de completar la petición en curso
+- Para implementar un servidor escalable son posibles dos paradigmas:
+ - Servidor concurrente
+ - Servidor asincrónico
+
+
+---
+#HSLIDE
+
+## Servidor concurrente
+
+- Múltiples hilos que se ejecutan de forma solapada en el tiempo
+ - Cada petición se atendida por un hilo diferente
+- Estado compartido. Todos los hilos comparten un estado global $\rightarrow$ requiere mecanismos de control de concurrencia para garantizar atomicidad
+- Es el modelo habitual (Java, .NET) $\rightarrow$ estudiado en CSD
+
+
+---
+#HSLIDE
+
+## Servidor asincrónico
+
+- Dirigido por eventos. (nodeJS, Async .NET)
+- Programa = conjunto de acciones preparadas para responder a diferentes tipos de eventos (guarda $\rightarrow$ acción, ..., guarda $\rightarrow$ acción)
+- Si la llegada de un evento hace cierta una guarda, la acción asociada se activa
+ - Si no estamos ejecutando otra cosa, ejecutamos la acción
+ - Si estamos ejecutando otra cosa, guardamos la acción en una cola
+  - Cola de eventos (guarda las acciones activadas pero pendientes de ejecución)
+
+
+---
+#HSLIDE
+
+## Servidor asincrónico.- ejemplo (broker asincrónico)
+```js
+const zmq = require('zeromq') // utilizara el middleware 0MQ bajo el nombre zmq
+let sc = zmq.socket('router') // socket para conexión con clientes (frontend)
+let sw = zmq.socket('dealer') // socket para conexión con workers  (backend)
+sc.bind('tcp://*:9998') // punto de conexión de clientes
+sw.bind('tcp://*:9999') // punto de conexión de workers
+sc.on('message', // guarda (si llega solicitud de un cliente)
+    (...m) => {sw.send(m)}) // acción (la reenvia a un worker)
+sw.on('message', // guarda (si llega respuesta de un worker)
+    (...m) => {sc.send(m)}) // acción (la reenvia al cliente)
+```
+
+---
+#HSLIDE
+
+## Comparamos ventajas/inconvenientes de los dos modelos
+
+- Servidor concurrente
+ - $\uparrow$ Cada hilo se puede suspender por separado
+ - $\downarrow$ Gestionar el estado compartido requiere control concurrencia $\rightarrow$ suspensión
+ - $\downarrow$ Complejidad: difícil implantar sin errores, difícil razonar/justificar corrección
+- Servidor asincrónico
+ - $\uparrow$ Evita la complejidad de gestionar estado compartido $\rightarrow$ escala mejor
+ - $\uparrow$ Modelo más próximo a la forma real de trabajo $\rightarrow$ dirigido por eventos
+  - facilita el razonamiento sobre la corrección del código
+ - $\downarrow$ Tiene que considerarse el orden de activación (orden en la cola de eventos)
+  - Necesita una gestión adecuada del estado al implantar las acciones
+ - $\downarrow$ Todo el entorno tiene que ser asincrónico (ej. también los servicios del S.O.)
+
+
+---
+#HSLIDE
+
+## Servidores escalables.- Cuestiones
+Plantéate las siguientes cuestiones
+
+
+- El ejemplo de servidor asincrónico (broker asincrónico) no parece tener ningún bucle. ¿Cuando acaba el programa?
+- El servidor asincrónico dispone solo de un hilo. ¿Qué pasa si mientras ejecuta código llega un evento?
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

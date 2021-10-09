@@ -1,0 +1,506 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Modelo de Sistema Distribuido - TSR 2021-22</title>
+		<link rel="stylesheet" href="../assets/css/highlight.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/css/tipuesearch.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
+	</head>
+	<body>
+		<header class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../">TSR 2021-22</a> <p class="navbar-text hidden-xs">Modelo de Sistema Distribuido</p>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse-1">
+					<form action="../search.html" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" name="q" id="tipue_search_input" autocomplete="off" required class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../extra/tema10csd-slideshow.html" target="_blank">View as slideshow</a></li>
+						<!--li><a href="../extra/tema10csd-raw.html">View Markdown</a></li-->
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!--
+<div class="toc">
+<p class="lead">Table of contents:</p>
+<p class="toc-2">
+<a href="#modelo-de-sistema-distribuido">Modelo de Sistema Distribuido</a>
+</p>
+<p class="toc-2">
+<a href="#modelos-fundamentales">Modelos fundamentales</a>
+</p>
+<p class="toc-2">
+<a href="#modelos-fundamentales-">Modelos fundamentales ...</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-f-sico">Modelo Físico</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-f-sico-generaciones">Modelo Físico.- Generaciones</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-f-sico-generaciones-">Modelo Físico.- Generaciones ...</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-f-sico-generaciones-">Modelo Físico.- Generaciones ...</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-de-arquitectura">Modelo de Arquitectura</a>
+</p>
+<p class="toc-2">
+<a href="#modelo-de-arquitectura-niveles">Modelo de Arquitectura: niveles</a>
+</p>
+<p class="toc-2">
+<a href="#ejemplo-wikipedia">Ejemplo.- Wikipedia</a>
+</p>
+<p class="toc-3">
+<a href="#wikipedia-modelo-de-arquitectura">Wikipedia.- Modelo de arquitectura</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-escalable-en-tama-o">Wikipedia.- escalable en tamaño</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-evoluci-n-arquitectura">Wikipedia: evolución arquitectura</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-arquitectura-lamp">Wikipedia: Arquitectura ... LAMP</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-arquitectura-lamp">Wikipedia: Arquitectura ... LAMP</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-arquitectura-2005">Wikipedia: Arquitectura 2005</a>
+</p>
+<p class="toc-2">
+<a href="#wikipedia-arquitectura-2010">Wikipedia: Arquitectura 2010</a>
+</p>
+<p class="toc-2">
+<a href="#ejemplo-mongodb">Ejemplo.- MongoDB</a>
+</p>
+<p class="toc-2">
+<a href="#mongodb-implementaci-n">MongoDB.- Implementación</a>
+</p>
+<p class="toc-2">
+<a href="#mongodb-implementaci-n-">MongoDB.- Implementación ...</a>
+</p>
+<p class="toc-3">
+<a href="#p2p">P2P</a>
+</p>
+<p class="toc-2">
+<a href="#cloud-computing">Cloud Computing</a>
+</p>
+</div>
+-->
+
+		<div class="container">
+			<div class="row">
+				<nav id="sidebar" class="col-lg-2 col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation" class=""><a href="../index.html">Home</a></li>
+						<li role="presentation" class=""><a href="../presentacion.html">Presentación</a></li>
+						<li role="presentation" class=""><a href="../avaluacio.html">Evaluación</a></li>
+						<li role="presentation" class=""><a href="../docenciainversa.html">Metodología: docencia inversa</a></li>
+						<li role="presentation" class=""><a href="../tasques.html">Calendario (plan de trabajo)</a></li>
+						<li role="presentation" class=""><a href="../teoria.html">Teoría</a></li>
+						<li role="presentation" class=""><a href="../practicas.html">Laboratorio</a></li>
+						<li role="presentation" class=""><a href="../extra.html">Material extra</a></li>
+					</ul>
+					<!--
+Available versions:<br>
+raw<br>
+->extra/tema10csd-raw.html<br>
+slideshow<br>
+->extra/tema10csd-slideshow.html<br>
+default<br>
+->extra/tema10csd.html<br>
+<br>
+Document informations:<br>
+extra/tema10csd.md<br><br>
+active
+-->
+				</nav>
+				<header>
+					<div class="entry-meta text-right">
+
+					</div>
+				</header>
+				<article id="content" class="col-lg-10 col-sm-9">
+					<!-- $theme: gaia -->
+<!-- page_number: true-->
+<!-- footer: TSR -->
+<h2 id="modelo-de-sistema-distribuido">Modelo de Sistema Distribuido</h2>
+<ul>
+<li>Modelo = visión abstracta del sistema<ul>
+<li>Oculta detalles irrelevantes</li>
+<li>Simplifica el razonamiento sobre el sistema</li>
+</ul>
+</li>
+<li>Distintas perspectivas (Modelos) <ul>
+<li>Modelos fundamentales: soluciones a aspectos concretos del SD</li>
+<li>Modelo Físico.- componentes (hard+soft) y su interacción</li>
+<li>Modelo de Arquitectura.- roles de los componentes y cómo cooperan entre sí</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="modelos-fundamentales">Modelos fundamentales</h2>
+<h4 id="modelo-de-interacci-n">Modelo de Interacción</h4>
+<ul>
+<li>Procesos que se comunican mediante el intercambio de mensajes </li>
+<li>Canales de comunicación que introducen retardos </li>
+<li>Coordinación inexacta (no existe reloj global) </li>
+</ul>
+<h4 id="modelo-de-fallos">Modelo de Fallos</h4>
+<ul>
+<li>Especifica los tipos de fallos que pueden exhibir los procesos y canales de comunicación</li>
+<li>Define comunicación fiable y procesos correctos</li>
+</ul>
+<hr>
+<h2 id="modelos-fundamentales-">Modelos fundamentales ...</h2>
+<h4 id="modelo-de-seguridad">Modelo de Seguridad</h4>
+<ul>
+<li>Define los posibles ataques a procesos y canales de comunicación, y estrategias para resolverlos</li>
+</ul>
+<hr>
+<h2 id="modelo-f-sico">Modelo Físico</h2>
+<ul>
+<li>Detalla los componentes y su interacción</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>característica Nodos</th>
+<th>Si la cumplen</th>
+<th>Si no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ubicación fija, siempre conectados</td>
+<td>Estáticos</td>
+<td>No estáticos (mobile computing)</td>
+</tr>
+<tr>
+<td>no incluidos en otra entidad</td>
+<td>Discretos</td>
+<td>Empotrados (internet of things)</td>
+</tr>
+<tr>
+<td></td>
+<td>indepedientes entre sí</td>
+<td>Autónomos</td>
+<td>No autónomos (cluster)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Discretos (no incluidos en otra entidad física) vs. no discretos (empotrados en otros componentes $\rightarrow$ Internet of Things – IoT)</li>
+<li>Autónomos (básicamente independientes entre sí) vs. no autónomos (pools de nodos que cooperan para proporcionar un servicio $\rightarrow$  cloud computing)</li>
+</ul>
+<hr>
+<h2 id="modelo-f-sico-generaciones">Modelo Físico.- Generaciones</h2>
+<ul>
+<li>3 generaciones de SD, con distinta escala, uso y características<ol>
+<li>años 70-80, escala decenas (LAN)</li>
+<li>años 90, escala miles (inernet)</li>
+<li>actualidad, escala millones (internet of things, bigData, cloud-computing, ubiquiotus-computing)</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="modelo-f-sico-generaciones-">Modelo Físico.- Generaciones ...</h2>
+<table>
+<thead>
+<tr>
+<th>Gen</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Compartición de recursos</td>
+</tr>
+<tr>
+<td>2</td>
+<td>compartición recursos, servidores escalables y de alta disponibilidad</td>
+</tr>
+<tr>
+<td>3</td>
+<td>compartición recursos, servidores escalables y de alta disponibilidad, elasticidad</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="modelo-f-sico-generaciones-">Modelo Físico.- Generaciones ...</h2>
+<table>
+<thead>
+<tr>
+<th>Gen</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>sist. no estardard, uso interno, nodos homogéneos</td>
+</tr>
+<tr>
+<td>2</td>
+<td>sist. estandard, servicios globales (clientes externos), nodos heterogéneos, QoS (quality of Service)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\uparrow$ estandards, $\uparrow$ nodos, $\uparrow$ técnicas de interconexión, $\uparrow$ variedad de servicios, $\uparrow$ clientes, $\uparrow$ heterogeneidad, QoS</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="modelo-de-arquitectura">Modelo de Arquitectura</h2>
+<ul>
+<li>Detalla los roles de los componentes, y su mecanismo de interacción<ul>
+<li>Componentes = entidades que se comunican (procesos)</li>
+</ul>
+</li>
+<li>Acoplamiento fuerte (componentes diseñados para trabajar juntos)<ul>
+<li>Objetos distribuidos (ej RMI, CORBA) </li>
+</ul>
+</li>
+<li>Acoplamiento débil ($\uparrow$ autonomía, $\uparrow$ reutilización)<ul>
+<li>Servicios Web (ej. SOAP, REST)</li>
+<li>Middleware de mensajería (ej. JMS, 0MQ)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="modelo-de-arquitectura-comunicaci-n">Modelo de Arquitectura: comunicación</h4>
+<ul>
+<li>Directa.- Comunicación directa emisor/receptor<ul>
+<li>Direccionamiento explícito del receptor</li>
+<li>Primitivas de paso de mensajes, sockets, RMI</li>
+</ul>
+</li>
+<li>Indirecta.- elemento intermedio entre emisor y receptor<ul>
+<li>Emisor y receptor desacoplados en espacio y tiempo</li>
+<li>Comunicación a grupo (multicast), sistemas de publicación/suscripción o basados en eventos, colas de mensajes, ... </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="modelo-de-arquitectura-roles-y-responsabilidades">Modelo de Arquitectura: Roles y responsabilidades</h4>
+<ul>
+<li>Cliente/servidor (CS).- solicitud/respuesta, asimétrico<ul>
+<li>Tradicional, habitual, simple, poco escalable</li>
+</ul>
+</li>
+<li>Peer to Peer (P2P).- todos los procesos cooperan como iguales<ul>
+<li>Complejo (nodos poco fiables), escalable, inseguro </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="modelo-de-arquitectura-niveles">Modelo de Arquitectura: niveles</h2>
+<hr>
+<h2 id="ejemplo-wikipedia">Ejemplo.- Wikipedia</h2>
+<ul>
+<li>¿Qué es?<ul>
+<li>Enciclopedia digital escrita de forma cooperativa</li>
+<li>Basada en tecnología wiki<ul>
+<li>Lenguale de wikitexto editado en el navegador</li>
+<li>Permite enlaces entre páginas (hipervínculos)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="wikipedia-modelo-de-arquitectura">Wikipedia.- Modelo de arquitectura</h3>
+<ul>
+<li>CS</li>
+<li>3 niveles<ul>
+<li>interfaz usuario.- documentos servidos por servidor Apache, y mostrados en el navegador del cliente</li>
+<li>aplicación.- logica escrita en PHP</li>
+<li>datos (persistencia).- usa MySQL</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="wikipedia-escalable-en-tama-o">Wikipedia.- escalable en tamaño</h2>
+<ul>
+<li>Inicio en 2001<ul>
+<li>Pocos usuarios</li>
+</ul>
+</li>
+<li>En 2005 ya soporta mucha carga</li>
+<li>En 2010 la carga es enorme<ul>
+<li>5 millones de artículos en inglés, 288 idiomas, 73000 editores, 500 millones de visitantes/mes</li>
+<li>Picos de 24500 accesos/seg, 200GB/s</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="wikipedia-evoluci-n-arquitectura">Wikipedia: evolución arquitectura</h2>
+<table>
+<thead>
+<tr>
+<th>año</th>
+<th>solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2001</td>
+<td>1 nodo (LAMP = Linux Apache MySQL PHP)</td>
+</tr>
+<tr>
+<td>2003</td>
+<td>Separa lógica/datos en nodos distintos (SD)</td>
+</tr>
+<tr>
+<td>2005</td>
+<td>Introduce proxies inversos (equilibrado de carga, caché de págs frecuentes) y workers $\rightarrow$ 39 nodos</td>
+</tr>
+<tr>
+<td>2010</td>
+<td>Mantiene la arquitectura, aumenta la cantidad de instancias de cada componente ($&gt;$ 300 nodos). Especializa los servidores Apache según el tipo de aplicación (consultas, gestión de sesión, modif págs)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="wikipedia-arquitectura-lamp">Wikipedia: Arquitectura ... LAMP</h2>
+<ol>
+<li>El cliente envía la petición al servidor Apache</li>
+<li>Apache redirige la petición al módulo PHP interno</li>
+<li>El programa PHP envía múltiples peticiones al servidor MySQL</li>
+<li>Apache construye un documento web con los resultados y lo remite al cliente</li>
+<li>El cliente muestra el resultado en el navegador</li>
+</ol>
+<hr>
+<h2 id="wikipedia-arquitectura-lamp">Wikipedia: Arquitectura ... LAMP</h2>
+<p><img src="" alt="figuraLAMP"></p>
+<hr>
+<h4 id="wikipedia-arquitectura-reverse-proxy">Wikipedia: Arquitectura ... Reverse Proxy</h4>
+<p>Es un componente de la parte servidor, ubicado entre internet y los servidores web</p>
+<table>
+<thead>
+<tr>
+<th>Acepta peticiones http, proporciona servicios, y redirige la petición a $\geq1$ servidores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Punto de entrada único para los clientes (usan el sist sin conocer detalles de los servidores)</td>
+<td></td>
+</tr>
+<tr>
+<td>Equilibrado de carga (ej. dirige cada petición al servidor con menos carga)</td>
+<td></td>
+</tr>
+<tr>
+<td>Seguridad (autenticación, finalización SSL)</td>
+<td></td>
+</tr>
+<tr>
+<td>Servidor de contenido estático (caché)</td>
+<td></td>
+</tr>
+<tr>
+<td>Otras: ocultación de fallos, compresion, auditoría</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="wikipedia-arquitectura-reverse-proxy">Wikipedia: Arquitectura ... Reverse Proxy</h4>
+<p><img src="" alt="figuraReverseProxy"></p>
+<hr>
+<h2 id="wikipedia-arquitectura-2005">Wikipedia: Arquitectura 2005</h2>
+<p><img src="" alt="figuraArq2005"></p>
+<hr>
+<h2 id="wikipedia-arquitectura-2010">Wikipedia: Arquitectura 2010</h2>
+<p><img src="" alt="figuraArq2010"></p>
+<hr>
+<h2 id="ejemplo-mongodb">Ejemplo.- MongoDB</h2>
+<ul>
+<li>¿Qué es?<ul>
+<li>IoT genera gran $\uparrow\uparrow$ información (BigData)<ul>
+<li>$\approx$ 40000 millones de sensores generan datos</li>
+</ul>
+</li>
+<li>¿Dónde almacenamos los datos?<ul>
+<li>Una BD tradicional (relacional) no escala bien</li>
+<li>Se usan alternativas escalables (noSQL)<ul>
+<li>Una de ellas es MongoDB</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ej.- Bosh usa MongoBD para su modelo de IoT</li>
+</ul>
+<hr>
+<h2 id="mongodb-implementaci-n">MongoDB.- Implementación</h2>
+<ul>
+<li>División horizontal de los datos (sharding)<ul>
+<li>Ej.- queremos guardar datos sobre todos los estudiantes universitarios<ul>
+<li>Cada entrada es un objeto con el DNI como identificador, y otros atributos</li>
+<li>Dividimos en grupo por tangos de DNI (ej. 00000001 .. 10000000, 10000001 .. 20000000, etc)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="mongodb-implementaci-n-">MongoDB.- Implementación ...</h2>
+<ul>
+<li>3 componentes, con varias instancias de cada uno<ul>
+<li>Mongos, Servidores de Configuración, Mongod</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="p2p">P2P</h3>
+<hr>
+<h2 id="cloud-computing">Cloud Computing</h2>
+
+				</article>
+			</div>
+		</div>
+
+		<footer><a href="../site-index.html">Pages index</a>
+</footer>
+
+		<script src="../assets/js/jquery.js"></script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/highlight.min.js"></script>
+		<script src="../assets/js/tipuesearch_set.js"></script>
+		<script src="../assets/js/tipuesearch.min.js"></script>
+		<script>
+			$(function() {
+				hljs.initHighlightingOnLoad();
+				$('#tipue_search_input').tipuesearch({
+					mode: 'json',
+					contentLocation: '../index.json'
+				});
+			});
+		</script>
+		
+		<!-- Generated by Vegetables from 'extra/tema10csd.md' with format 'default' - '2021-9-30 8:42:52 AM' -->
+	</body>
+</html>

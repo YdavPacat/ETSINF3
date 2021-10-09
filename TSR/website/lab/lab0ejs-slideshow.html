@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Ejemples JavaScript</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: base-theme
+_paginate: false 
+-->
+#HSLIDE
+
+# Ejemples JavaScript
+##### Tecnologia dels Sistemas d'Informació en la Xarxa, Juansa Sendra, Grup A
+
+---
+<!-- footer: TSR 2020-21 -->
+<!-- paginate: true -->
+#HSLIDE
+
+## 0.- Us de funcions, objectes, cláusula this i funció bind()
+```js
+console.log("\n");
+
+function g(){return this.valor;}
+
+var obj01={ valor:-5*2,
+   fun:function(){
+      var gg=g.bind(this);
+      return gg;
+   }
+}
+
+console.log("obj01.valor:  ",obj01.valor);
+console.log("obj01.fun()():  ",obj01.fun()());
+
+console.log("__________________________________________________________\n");
+
+fx1=obj01.fun();
+console.log("fx1():  ",fx1());
+
+var obj02={ valor:"fun no me referencia", fun:fx1, fan:g }
+
+console.log("obj02.valor:  ",obj02.valor);        
+console.log("obj02.fun():  ",obj02.fun());
+console.log("obj02.fan():  ",obj02.fan());
+
+console.log("__________________________________________________________\n");
+
+obj01.valor="nuevo valor";
+console.log("obj01.valor:  ",obj01.valor);
+console.log("obj02.fun():  ",obj02.fun());
+console.log("obj02.fan():  ",obj02.fan());
+```
+
+---
+#HSLIDE
+
+## 1.- Declaració de variables. Ús de funciones y clausuras
+```js
+//Variables
+var x;
+var w, ww;
+var u = Infinity;
+
+//Funciones
+function f(y,z){
+   x = function(){ console.log("función x:      ",y,"     ",z,"    ",u);};
+   w = function(u){ 
+         console.log("función w:      ",y,"     ",z,"   ",u);
+         ww = function(){ console.log("función ww:     ",y,"     ",z,"   ",u); return y+z+u;};
+       };
+   console.log(`argumentos de f: ${y}  ---  ${z}`);
+}
+
+//Ejecución del código
+f(0,100);
+x();
+w(-1000);
+
+console.log("ww(): " + ww());
+
+//¿Cuál es el resultado de la ejecución de la sentencia console.log("u= ",u);
+```
+
+---
+#HSLIDE
+
+## 2.- Clausuras de variables y funciones
+```js
+function f(y){
+   var x=100;
+   function g(){
+      x++;
+      console.log("incremento de x:  "+x);
+      return x;
+   }
+   return function(){
+            y++;
+            console.log("y: " + y);
+            console.log("y+g(): ",y+g());
+            return y;
+   }
+}
+
+var z=f(-100);
+z();
+z();
+z();
+```
+
+---
+#HSLIDE
+
+## 3.- Clausuras de variables y funciones
+```js
+var gety;
+
+function main(y){
+   var traza="inicio";
+   gety=getY;
+   return f(y);
+
+//   - - - - - - - - - - - - - - - - - - - - - - - - - -
+   function getY(){return y;}
+
+   function f(y){
+      var x=100+y;
+      console.log("\ttraza: ", traza);
+
+      if(x%2)return g0; else return g1;
+
+      function g0(){
+         traza += "-g0"; x++;
+         console.log("g0: incremento de x:  "+x);
+         return f(++y);
+      }
+
+      function g1(){
+         traza += "-g1"; y++;
+         console.log("g1: incremento de y:  "+y);
+         return f(y);    
+      }
+   }
+}
+
+var z=main(-100);
+for(var i=0; i<10;i++) z=z();
+
+//¿Cuál es el resultado de la ejecución de la sentencia console.log(gety())?
+```
+
+---
+#HSLIDE
+
+## 4.- Uso de operaciones asíncronas
+```js
+//operadores asincronas modeladas con la función setTimeout.
+//Note el valor de i asociado a las ejecuciones de las temporizaciones.
+
+
+for(var i=0; i<10; i++) 
+   setTimeout(function(){console.log(i)}, i*1000);
+
+
+console.log("Terminado codigo script  valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 5.- Uso de operaciones asíncronas
+```js
+for(var i=0; i<10; i++) 
+  setTimeout(function(índice){
+                return function(){console.log("índice: ",índice)}}(i),
+             i*1000);
+
+console.log("Terminado codigo script  valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 6.- Uso de operaciones asíncronas
+```js
+let i = 0;
+
+do {
+   setTimeout(function(){console.log(i)},i*1000);
+   i++;  
+} while (i<10);
+
+console.log("Terminado codigo script  valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 7.- Uso de operaciones asíncronas
+```js
+var i = 0;
+
+do {
+   let k = i;
+   setTimeout(function(){console.log(k)},k*1000);
+   i++;
+} while (i<10);
+
+console.log("Terminado codigo script","   valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 8.- Uso de operaciones asíncronas
+```js
+for(let i=0; i<10; i++) 
+   setTimeout(function(x){return function(){console.log(x)}}(i),
+              i*1000);
+
+//¿Cuál es el resultado de la ejecución de la sentencia console.log("i= ",i)?
+
+console.log("Terminado codigo script");
+```
+
+---
+#HSLIDE
+
+## 9.- Uso de operaciones asíncronas
+```js
+for(var i=0; i<10; i++) 
+  setTimeout(function(índice){return function(){
+                   console.log("índice:  ",índice,"  i:  ",i)}
+             }(i),
+             i*1000);
+
+console.log("Terminado codigo script","   valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 10.- Uso de operaciones asíncronas
+```js
+for(var i=0; i<10; i++) 
+   setTimeout( function(índice){
+                   console.log("índice:  ",índice,"  i:  ",i);
+               },
+               i*1000,i)
+
+console.log("Terminado codigo script","   valor actual de i: ",i);
+```
+
+---
+#HSLIDE
+
+## 11.- Uso de operaciones asíncronas
+```js
+for(var i=0; i<10; i++) 
+   tempo(i);
+
+console.log("Terminado codigo script","   valor actual de i: ",i);
+
+function tempo(índice){
+   setTimeout( function(){
+                   console.log("índice:  ",índice,"  i:  ",i);
+               },
+               índice*1000);
+}
+```
+
+---
+#HSLIDE
+
+## 12.- Ejercicio (operaciones asíncronas y clausuras)
+
+- ¿Cuál es el resultado de la ejecución de este código?
+
+```js
+for (var i=0;i<5;i++) 
+   (function(){
+       setTimeout( function(){console.log("---> ",i);}, i*1000 );})();
+
+for (var k=0;k<3;k++) 
+   (function(k){
+       setTimeout( 
+         function(){console.log("==========> ",k);}, k*4010);})(k);
+
+for (var x=0;x<3;x++){ 
+   (function(){
+       var mm=x;
+       setTimeout( function(){
+           var m=x;
+           console.log("::::::::::::::> ",m,"   ",mm);}, x*8030);
+    })();
+}
+```
+
+---
+#HSLIDE
+
+## 13.- Operaciones asíncronas paralelizadas (estilo fork-join)
+```js
+console.log("Inicio de la operación: ",
+forkJoinAsinc(10,function(){console.log("\n\n\tFIN de forkJoinAsin");}),"\n\n");
+
+function forkJoinAsinc(numeroInstancias,callback){
+  var continuar=parseInt(numeroInstancias) || -1; if (continuar<0) return false;
+  const num = numeroInstancias; var join = num;
+//FORK -----------------------------
+  for(var i=0; i<num; i++) {
+    let retardo=intRandom(0,10000);
+    setTimeout(function(indice){
+      return function(retardo){
+        console.log("                   retardo:  "+retardo);
+        if(--join == 0) {
+          console.log("soy el:  "+indice + "  - - - ->> Y SOY EL ÚLTIMO");
+//JOIN -----------------------------
+          callback();
+        }
+        else console.log("soy el:  "+indice + " quedan: " + join + "  - ->> y no soy el último");
+      }
+    }(i),retardo,retardo);
+  }
+  return true;
+  function intRandom(min, max) {return Math.floor(Math.random() * (max - min)) + min;}
+}
+```
+
+---
+#HSLIDE
+
+## 14.- Ejecución de varias operaciones asíncronas serializadas
+```js
+console.log("Inicio de la operación: ",
+serieAsinc(10,function(){console.log("\n\n\tFIN de secuenciaAsin");}),"\n\n");
+
+function serieAsinc(numeroInstancias,callback){
+  var continuar=parseInt(numeroInstancias) || -1; if (continuar<0) return false;
+  const num = numeroInstancias; var contador = num;
+//INICIO PROCESAMIENTO SERIE---------------------
+  principal(); return true;  
+//             - - - - - - - - - -
+  function principal(){
+    var xx=num-contador, retardo=intRandom(0,10000);
+    setTimeout(g,retardo);
+
+    function g(){
+      console.log("---------------->  retardo:  "+retardo);
+      if(--contador == 0) {
+        console.log("soy el:  "+xx + "  - - - - - -  - - - ->> Y SOY EL ÚLTIMO");
+//FINAL PROCESAMIENTO SERIE-------------------------------
+        callback();         
+      } else { 
+        console.log("soy el:  "+xx + " quedan: " + contador + "  - ->> y no soy el último");
+        principal();
+      }
+    }
+  }
+  function intRandom(min,max) {return Math.floor(Math.random() * (max - min)) + min;}
+}
+```
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

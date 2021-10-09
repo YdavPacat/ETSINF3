@@ -1,0 +1,420 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Patrones de diseño en Sist Distribuidos (S.D.) - TSR 2021-22</title>
+		<link rel="stylesheet" href="../assets/css/highlight.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/css/tipuesearch.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
+	</head>
+	<body>
+		<header class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../">TSR 2021-22</a> <p class="navbar-text hidden-xs">Patrones de diseño en Sist Distribuidos (S.D.)</p>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse-1">
+					<form action="../search.html" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" name="q" id="tipue_search_input" autocomplete="off" required class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../extra/patronesDiseño-slideshow.html" target="_blank">View as slideshow</a></li>
+						<!--li><a href="../extra/patronesDiseño-raw.html">View Markdown</a></li-->
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!--
+<div class="toc">
+<p class="lead">Table of contents:</p>
+<p class="toc-1">
+<a href="#patrones-de-dise-o-en-sist-distribuidos-s-d-">Patrones de diseño en Sist Distribuidos (S.D.)</a>
+</p>
+<p class="toc-1">
+<a href="#introduci-n">Introdución</a>
+</p>
+<p class="toc-3">
+<a href="#patrones-de-dise-o-para-s-d-">Patrones de diseño para S.D.</a>
+</p>
+<p class="toc-2">
+<a href="#layered-pattern">Layered pattern</a>
+</p>
+<p class="toc-2">
+<a href="#cliente-servidor">Cliente/Servidor</a>
+</p>
+<p class="toc-2">
+<a href="#cliente-servidor-ventajas-inconvenientes">Cliente/Servidor.- ventajas/inconvenientes</a>
+</p>
+<p class="toc-2">
+<a href="#maestro-esclavo">Maestro/Esclavo</a>
+</p>
+<p class="toc-2">
+<a href="#maestro-esclavo-ventajas-inconvenientes">Maestro/esclavo.- ventajas/inconvenientes</a>
+</p>
+<p class="toc-2">
+<a href="#pipe-filter">Pipe/Filter</a>
+</p>
+<p class="toc-2">
+<a href="#pipe-filter-ventajas-inconvenientes">Pipe/Filter.- ventajas/inconvenientes</a>
+</p>
+<p class="toc-2">
+<a href="#broker">Broker</a>
+</p>
+<p class="toc-2">
+<a href="#broker-ventajas-inconvenientes">Broker.- ventajas/inconvenientes</a>
+</p>
+<p class="toc-2">
+<a href="#peer-to-peer">Peer-to-Peer</a>
+</p>
+<p class="toc-2">
+<a href="#event-bus">Event-Bus</a>
+</p>
+<p class="toc-2">
+<a href="#event-bus-ventajas-inconvenientes">Event-bus.- ventajas/inconvenientes</a>
+</p>
+<p class="toc-2">
+<a href="#mvc-modelo-vista-controlador-">MVC (modelo/vista/controlador)</a>
+</p>
+<p class="toc-2">
+<a href="#blackboard-pizarra-">Blackboard (pizarra)</a>
+</p>
+<p class="toc-2">
+<a href="#interpreter-pattern">Interpreter pattern</a>
+</p>
+</div>
+-->
+
+		<div class="container">
+			<div class="row">
+				<nav id="sidebar" class="col-lg-2 col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation" class=""><a href="../index.html">Home</a></li>
+						<li role="presentation" class=""><a href="../presentacion.html">Presentación</a></li>
+						<li role="presentation" class=""><a href="../avaluacio.html">Evaluación</a></li>
+						<li role="presentation" class=""><a href="../docenciainversa.html">Metodología: docencia inversa</a></li>
+						<li role="presentation" class=""><a href="../tasques.html">Calendario (plan de trabajo)</a></li>
+						<li role="presentation" class=""><a href="../teoria.html">Teoría</a></li>
+						<li role="presentation" class=""><a href="../practicas.html">Laboratorio</a></li>
+						<li role="presentation" class=""><a href="../extra.html">Material extra</a></li>
+					</ul>
+					<!--
+Available versions:<br>
+raw<br>
+->extra/patronesDiseño-raw.html<br>
+slideshow<br>
+->extra/patronesDiseño-slideshow.html<br>
+default<br>
+->extra/patronesDiseño.html<br>
+<br>
+Document informations:<br>
+extra/patronesDiseño.md<br><br>
+active
+-->
+				</nav>
+				<header>
+					<div class="entry-meta text-right">
+
+					</div>
+				</header>
+				<article id="content" class="col-lg-10 col-sm-9">
+					<h1 id="patrones-de-dise-o-en-sist-distribuidos-s-d-">Patrones de diseño en Sist Distribuidos (S.D.)</h1>
+<h5 id="tsr-2018-19-juansa-sendra">TSR 2018-19 Juansa Sendra</h5>
+<p><a href="https://towardsdatascience.com/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013">adaptado de &#39;10 common software architecture patterns ...&#39;</a></p>
+<hr>
+<h1 id="introduci-n">Introdución</h1>
+<ul>
+<li>Los objetivos al diseñar un S.D. son mejorar <strong>escalabilidad</strong> y <strong>disponibilidad</strong><ul>
+<li>Para conseguirlos recurrimos a aplicar replicación y técnicas de tolerancia a fallos</li>
+</ul>
+</li>
+<li><strong>Patrón de diseño</strong> = Solución sofware reutilizable útil para resolver un problema frecuente<ul>
+<li>Muchas propuestas, nos centramos en las indispensables</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="patrones-de-dise-o-para-s-d-">Patrones de diseño para S.D.</h3>
+<ul>
+<li>Layered pattern (descomposición por niveles)</li>
+<li><strong>Client/server pattern</strong></li>
+<li><strong>Master/Slave pattern</strong></li>
+<li><strong>Pipe/Filter pattern</strong></li>
+<li><strong>Broker pattern</strong></li>
+<li>Peer-to-Peer pattern</li>
+<li><strong>Event-Bus pattern</strong></li>
+<li>MVC pattern (modelo/vista/controlador)</li>
+<li>Blackboard pattern</li>
+<li>Interpreter pattern<pre><code>Los patrones en negrita se desarrollan en la asignatura
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="layered-pattern">Layered pattern</h2>
+<ul>
+<li>Descomposición en subtareas, de forma que:<ul>
+<li>Cada subtarea (nivel) a $\neq$ nivel de abstracción</li>
+<li>El nivel n proporciona servicios al n+1</li>
+</ul>
+</li>
+<li>Son frecuentes 4 niveles:<ul>
+<li>Presentación (interfaz usuario)</li>
+<li>Aplicación (servicio)</li>
+<li>Lógica del negocio (dominio)</li>
+<li>Acceso a datos (persistencia)</li>
+</ul>
+</li>
+<li>Útil para aplicaciones de escritorio, e-commerce, ..</li>
+</ul>
+<hr>
+<p><img src="imagPatt/layered.png" alt="layered pattern"></p>
+<hr>
+<h2 id="cliente-servidor">Cliente/Servidor</h2>
+<ul>
+<li>Un Servidor, que proporciona servicios bajo demanda a múltiples clientes</li>
+<li>N Clientes, que solicitan servicios al servidor</li>
+<li>Sigue un modelo de petición/respuesta sincrónico</li>
+<li>Tras responder a un cliente, un servidor atiende (escucha) nuevas peticiones de otros clientes<ul>
+<li>El servidor puede utilizar concurrencia interna para atender de forma simultánea a N clientes&lt;p</li>
+</ul>
+</li>
+<li>Útil para aplicaciones online (e-mail, compartición de documentos, aplicaciones bancarias, ...)</li>
+</ul>
+<hr>
+<p><img src="imagPatt/cs2.png" alt="client/server pattern.- req/resp">
+<img src="imagPatt/cs3.jpg" alt="client/server pattern.- N:1"></p>
+<hr>
+<h2 id="cliente-servidor-ventajas-inconvenientes">Cliente/Servidor.- ventajas/inconvenientes</h2>
+<ul>
+<li>ventajas<ul>
+<li>Bueno para modelar un conjunto de servicios accesibles a los clientes</li>
+<li>Simple si operaciones idempotentes (servidores stateless)</li>
+<li>Amplia difusión</li>
+</ul>
+</li>
+<li>inconvenientes<ul>
+<li>Complejo si se necesitan servicios con estado</li>
+<li>Los servidores pueden convertirse en puntos de fallo único</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="maestro-esclavo">Maestro/Esclavo</h2>
+<ul>
+<li>El maestro distribuye trabajo entre distintos componentes esclavo equivalentes entre sí</li>
+<li>Cada esclavo completa su parte y devuelve el resultado al maestro</li>
+<li>El maestro computa la respuesta final a partir de los resultados parciales devueltos por los esclavos</li>
+<li>Útil para:<ul>
+<li>escalar tareas que pueden dividirse en fragmentos equivalentes (ej. aplicar una misma tarea sobre fragmentos distintos de los datos)</li>
+<li>replicación pasiva</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><img src="imagPatt/maestro2.png" alt="master/slave pattern"></p>
+<hr>
+<h2 id="maestro-esclavo-ventajas-inconvenientes">Maestro/esclavo.- ventajas/inconvenientes</h2>
+<ul>
+<li>ventajas<ul>
+<li>simple</li>
+<li>escalable</li>
+</ul>
+</li>
+<li>inconvenientes<ul>
+<li>Sólo aplicable a problemas con posibilidad de descomposición en fragmentos equivalentes e independientes entre sí</li>
+<li>Los esclavos están aislados (no comparten estado)</li>
+<li>La comunicación maestro/esclavos/maestro puede introducir lantencias</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="pipe-filter">Pipe/Filter</h2>
+<ul>
+<li>Sistemas que producen/procesan un flujo de datos</li>
+<li>Cada etapa de procesamiento corresponde a un componente Filter</li>
+<li>Filter conectados entre sí mediante tuberías (Pipe)<ul>
+<li>los datos a procesar atraviesan las tuberías</li>
+<li>las tuberías pueden usarse para buffering y/o sincronización</li>
+</ul>
+</li>
+<li>Útil para compilación distribuida (análisis léxico, parsing, análisis semántico, generación código), workflow en biotecnología, ...</li>
+</ul>
+<hr>
+<p><img src="imagPatt/pipe2.png" alt="pipe/filter pattern"></p>
+<hr>
+<h2 id="pipe-filter-ventajas-inconvenientes">Pipe/Filter.- ventajas/inconvenientes</h2>
+<ul>
+<li>ventajas<ul>
+<li>muy flexible. Es fácil añadir/modificar filtros</li>
+<li>Filtros reutilizables, y combinables en distintas configuraciones</li>
+<li>refleja la concurrencia implícita en los problemas basados en flujos</li>
+</ul>
+</li>
+<li>inconvenientes<ul>
+<li>El filtro más lento limita el rendimiento global</li>
+<li>sobrecarga por el desplazmiento de los datos entre filtros</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="broker">Broker</h2>
+<ul>
+<li>Patrón usado para estructurar SD con componentes desacoplados<ul>
+<li>Los componentes interactúan entre sí mediante invocación de servicios remotos</li>
+</ul>
+</li>
+<li>El componente broker (intermediario) se ocupa de la coordinación/comunicación entre componentes<ul>
+<li>Los servidores comunican al broker sus características</li>
+<li>El cliente solicita los servicios al broker</li>
+<li>El broker redirecciona cada solicitud al servidor adecuado (ej. equilibrando la carga)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><img src="imagPatt/broker2.png" alt="broker pattern"></p>
+<p><img src="imagPatt/broker3.gif" alt="broker pattern"></p>
+<hr>
+<h2 id="broker-ventajas-inconvenientes">Broker.- ventajas/inconvenientes</h2>
+<ul>
+<li>ventajas<ul>
+<li>distribución transparente al cliente y al desarrollador</li>
+<li>permite transparencia de fallos</li>
+<li>facilita la contabilidad asociada al uso que hacen los clientes del sistema, proporciona un nivel de aislamiento (seguridad), permite transformar las peticiones según las necesidades del sistema, etc.</li>
+</ul>
+</li>
+<li>inconvenientes<ul>
+<li>requiere estandarización de las descripciones de servicios</li>
+<li>si se añaden políticas de equilibrado de carga y de reconfiguración ante fallos, el broker se complica bastante</li>
+<li>requiere broker de respaldo para evitar punto de fallo único</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="peer-to-peer">Peer-to-Peer</h2>
+<ul>
+<li>Los componentes (Peers) pueden actuar como:<ul>
+<li>clientes (solicitan servicios a otros peers)</li>
+<li>servidores (proporcionan servicios a otros peers)</li>
+</ul>
+</li>
+<li>Un Peer puede actuar como cliente, como servidor, o como ambos<ul>
+<li>y puede cambiar su rol de forma dinámica</li>
+</ul>
+</li>
+<li>Suele ser una red no estructurada, con nodos heterogéneos y volátiles (se conectan/desconectan en momentos impredecibles) </li>
+<li>Útil para aplicaciones no críticas que requieren replicación masiva (redes de compartición de ficheros, protocolos multimedia como P2PTV, ..) </li>
+</ul>
+<hr>
+<p><img src="imagPatt/peer2.png" alt="p2p pattern"></p>
+<hr>
+<h2 id="event-bus">Event-Bus</h2>
+<ul>
+<li>Trata con eventos</li>
+<li>Componentes principales<ul>
+<li>fuente (emisor) de eventos.- publica mensajes a canales concretos o a un bus de eventos</li>
+<li>oyente (listener) de eventos.- se suscribe a canales concretos (reciben notificaciones ante la llegada de mensajes a esos canales)</li>
+<li>canales y/o bus de eventos</li>
+</ul>
+</li>
+<li>Útil para servicios de notificación, desarrollo Android, ...</li>
+</ul>
+<hr>
+<p><img src="imagPatt/event.png" alt="event-bus pattern"></p>
+<p><img src="imagPatt/event2.png" alt="event-bus pattern"></p>
+<hr>
+<h2 id="event-bus-ventajas-inconvenientes">Event-bus.- ventajas/inconvenientes</h2>
+<ul>
+<li>ventajas<ul>
+<li>Flexible.- es fácil añadir publicadores, suscriptores y conexiones</li>
+<li>Adecuado para aplicaciones masivamente distribuidas</li>
+</ul>
+</li>
+<li>inconvenientes<ul>
+<li>El bus puede convertirse en un cuello de botella</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="mvc-modelo-vista-controlador-">MVC (modelo/vista/controlador)</h2>
+<ul>
+<li>Útil para aplicaciones interactivas. Las divide en:<ul>
+<li>modelo.- contiene la funcionalidad y datos básicos</li>
+<li>vista.- muestra la información al usuario (puede definir N vistas sobre un mismo modelo, posiblemente presentando los datos de forma distinta)</li>
+<li>controlador.- Gestiona los enventos de entrada del usuario</li>
+</ul>
+</li>
+<li>Esta división separa la representación de la información de la forma en que se presenta al usuario</li>
+<li>Mayor desacoplamiento $\rightarrow$ mejor reutilización</li>
+</ul>
+<hr>
+<p><img src="imagPatt/MVC.png" alt="mvc pattern"></p>
+<p><img src="imagPatt/MVC2.png" alt="mvc pattern"></p>
+<hr>
+<h2 id="blackboard-pizarra-">Blackboard (pizarra)</h2>
+<ul>
+<li>Resulta útil para problemas en los que no se conoce una estrategia de solución determinista<ul>
+<li>reconocimiento de formas, identificación y seguimiento de vehículos, identificación de la estructura de proteínas, ...</li>
+</ul>
+</li>
+<li>Componentes:<ul>
+<li>pizarra.- Representa una memoria global estructurada que contiene objetos del espacio de solución</li>
+<li>fuente de conocimiento.- módulos especializados, con su propia representación</li>
+<li>Control.- selecciona, configura y ejecuta módulos</li>
+</ul>
+</li>
+<li>Todos los componentes tienen acceso al blackboard<ul>
+<li>Pueden producir nuevos objetos y añadirlos a la pizarra</li>
+<li>O buscar datos en la pizarra utilizando pattern-matching con la fuente de conocimiento existente</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><img src="imagPatt/pizarra.png" alt="blackboard pattern"></p>
+<p><img src="imagPatt/blackboard2.png" alt="blackboard pattern"></p>
+<hr>
+<h2 id="interpreter-pattern">Interpreter pattern</h2>
+<ul>
+<li>Se utiliza para diseñar un componente qeu interpreta programas escritos en un lenguaje dedicado<ul>
+<li>especifica cómo evaluar las expresiones y sentencias de dicho programa</li>
+<li>la idea básica es disponer de una clase por cada símbolo del lenguaje</li>
+</ul>
+</li>
+<li>Se utiliza en lenguajes de interrogación (ej SQL) y lenguajes utilizados para describir protocolos de comunicación </li>
+</ul>
+<hr>
+<p><img src="imagPatt/interprete.png" alt="interpreter pattern"></p>
+
+				</article>
+			</div>
+		</div>
+
+		<footer><a href="../site-index.html">Pages index</a>
+</footer>
+
+		<script src="../assets/js/jquery.js"></script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/highlight.min.js"></script>
+		<script src="../assets/js/tipuesearch_set.js"></script>
+		<script src="../assets/js/tipuesearch.min.js"></script>
+		<script>
+			$(function() {
+				hljs.initHighlightingOnLoad();
+				$('#tipue_search_input').tipuesearch({
+					mode: 'json',
+					contentLocation: '../index.json'
+				});
+			});
+		</script>
+		
+		<!-- Generated by Vegetables from 'extra/patronesDiseño.md' with format 'default' - '2021-9-30 8:42:52 AM' -->
+	</body>
+</html>

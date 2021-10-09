@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Funciones síncronas, asíncronas y callbacks</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Funciones síncronas, asíncronas y callbacks
+##### TSR 2018-19 Francisco Torres
+
+---
+<!-- page_number: true -->
+#HSLIDE
+
+## Lo que ya sabemos
+
+- Una función síncrona se ejecuta cuando se invoca
+- Ej funciones síncronas para lect/escrit. de ficheros:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node.js\nHello everybody!');
+var buffer = fs.readFileSync('mydata.txt');
+console.log(buffer.toString());
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+```js
+Hello Node.js
+Hello everybody!
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+```
+
+
+---
+<!-- footer: TSR 2018-19 -->
+#HSLIDE
+
+## Ejecución asíncrona
+
+- La lectura de un fichero puede ser una acción bloqueante del flujo de ejecución.
+- Es conveniente disponer una variante ASÍNCRONA de esta operación, que la ejecute en 2º plano, sin bloquear el resto del programa.
+- Node.js proporciona funciones predefinidas con comportamiento asíncrono. Por ejemplo, usemos `readFile` en el anterior programa:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node.js\nHello everybody!');
+fs.readFile('mydata.txt');
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+- Ahora bien, dado que no se ha especificado un 2º argumento de la función `readFile`, la salida en consola es:```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+```
+
+
+---
+#HSLIDE
+
+## ¿Cómo se debe invocar una función asíncrona?
+
+- Es necesario proporcionar, como argumento, una función que contenga las operaciones a realizar cuando termine la ejecución de la función asíncrona.
+- Consideremos los perfiles de las funciones de lectura de ficheros:
+ - La función síncrona: `fs.readFileSync(path[, options])`
+ - La función asíncrona: `fs.readFile(path[, options], callback)`
+ - Donde:
+  - `path` es la ruta del fichero a leer
+  - `options` son argumentos opcionales sobre el modo de lectura
+  - `callback` es un función, a invocar cuando termine la ejecución de la función asíncrona
+- Consideremos de nuevo el programa anterior, especificando una función `callback` muy simple:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node.js\nHello everybody!');
+fs.readFile('mydata.txt', function () { console.log("Fichero leído"); });
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+- Ahora, la salida en consola es:```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+Fichero leído
+```
+
+
+---
+#HSLIDE
+
+## ¿Cómo se debe invocar una función asíncrona? (ii)
+
+- En nuestro ejemplo, deseamos mostrar el contenido del fichero, no un mensaje &quot;Fichero leído&quot;.
+- La función callback necesita 2 argumentos:
+ - El primer argumento, `err`, contendrá información de error, en el caso de que la ejecución de la función asíncrona haya tenido algún problema. 
+ - El segundo argumento, `data`, contendrá el resultado de la función asíncrona, si esta ha terminado sin error.
+- En el caso de lectura de fichero, `data` guarda el contenido del fichero y `err` una descripción del fallo de la lectura (por ejemplo, que el fichero no exista).
+- En nuestro ejemplo, podríamos escribir la siguiente función callback:```js
+var myCB = function (err, data) {
+ if (err) console.error(err.stack);
+ else console.log(data.toString());
+}
+```
+- Y pasarla como argumento en la lectura asíncrona de fichero:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', 'Hello Node.js\nHello everybody!');
+fs.readFile('mydata.txt', myCB);
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+- Ahora, la salida en consola es la deseada:```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+Hello Node.js
+Hello everybody!
+```
+
+
+---
+#HSLIDE
+
+## ¿Cómo se debe invocar una función asíncrona? (iii)
+
+- Completemos el ejemplo anterior, añadiendo la lectura de un fichero inexistente:```js
+var fs = require('fs');
+var myCB = function (err, data) {
+ if (err) console.error(err.stack);
+ else console.log(data.toString());
+}
+fs.writeFileSync('mydata.txt', 'Hello Node.js\nHello everybody!');
+fs.readFile('mydata.txt', myCB);
+fs.readFile('nothing.txt', myCB);
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+- La salida en consola es:```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+Error: ENOENT: no such file or directory, open 'C:\ ... \nothing.txt'
+  at Error (native)
+Hello Node.js
+Hello everybody!
+```
+
+
+---
+#HSLIDE
+
+## Más ejemplos
+
+- Supongamos que se sabe que el fichero a leer contiene nada más que números enteros, y que se quieren leer y duplicar todos ellos, mostrando el resultado.
+- El siguiente programa sería válido:```js
+var fs = require('fs');
+fs.writeFileSync('mydata.txt', '1 2 3 4 5 6 7 8');
+var g = function (str) {
+  var numbers = str.split(" ");
+  var doubles = numbers.map(function(a) {return 2 * a});
+  console.log(doubles);    
+}
+var f = function (err, data) {
+ if (err) console.error(err.stack);
+ else g(data.toString());
+}
+fs.readFile('mydata.txt', f);
+console.log('ejecutando otras instrucciones');
+console.log('raiz(2) =', Math.sqrt(2));
+```
+- Su salida en consola:```js
+ejecutando otras instrucciones
+raiz(2) = 1.4142135623730951
+[ 2, 4, 6, 8, 10, 12, 14, 16 ]
+```
+
+
+---
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

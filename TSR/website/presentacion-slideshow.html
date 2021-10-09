@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Presentación curso 2021-22</title>
+	<link rel="stylesheet" href="assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: base-theme
+_paginate: false 
+-->
+#HSLIDE
+
+# Presentación curso 2021-22
+##### Tecnología de los Sistemas de Información en la Red, Juansa Sendra, Grupo B
+
+---
+<!-- footer: TSR 2021-22  Presentació -->
+<!-- paginate: true -->
+#HSLIDE
+
+## Índice
+
+- Datos profesor i grupo
+- Objetivos asignatura
+- Estructura asignatura
+- Teoría
+- Laboratorio
+- Evaluación
+- Bibliografía
+
+
+---
+#HSLIDE
+
+## Datos profesor y grupo
+
+- Profesor: Juan Salvador Sendra Roig (Juansa)
+ - jsendra@dsic.upv.es
+ - consultas y tutorías bajo demanda (email, Teams)
+- Grup: B
+ - docencia en Castellano
+ - Canal de Teams: grupB dentro del canal general de TSR
+ - Horario
+  - Martes    8.30-10h
+  - Viernes 11.30-13.00h
+
+
+---
+#HSLIDE
+
+## Objectivos Asignatura
+
+- Objectivo General
+ - Aproximación pragmática al diseño y construcción de Sistemas Distribuidos (SD)
+- Objectivos específicos
+ - Entender las propietades de los SD
+  - Advantatges i àmbit d&#39;aplicació, Inconvenients i aspectes a resoldre
+  - Influència de l&#39;estructura del sistema (arquitectura)
+ - Coneixer les principals tecnologíes i aproximacions
+  - Programació asincrònica per a la implantació de components
+  - Middleware per a facilitar la cooperació entre components
+ - Capacitar per al disseny de l&#39;arquitectura adecuada per a problemes especifics
+  - Estudi de examples de sistemes i la seua arquitectura
+  - Ús de tecnologies rellevants per a la resolució de problemes de laboratori
+
+
+---
+#HSLIDE
+
+## Estructura Asignatura
+
+- Asignatura de 6 créditos
+ - Teoría (1.5 cr)
+  - Principios i propiedades generales
+ - Seminarios (3 cr)
+  - Tecnologías básicas, ejemplos, resolución de problemas
+ - Laboratorio (1.5 cr)
+  - Implantación de soluciones a problemas sencillos
+
+Teoría y seminarios se imparten de forma conjunta: en el resto del texto se utilizas para ambos el nombre &quot;Teoria&quot;
+
+
+---
+#HSLIDE
+
+## Teoría
+|  Tema |  contenido |  herramientas |  sesiones | 
+|--|--|--|--|
+|  1- Introducción |  intro SD, motivación |   |  2 | 
+|  2- NodeJS |  javascript y NodeJS |  NodeJS |  7 | 
+|  3- Middleware |  Middleware de mensajería |  0MQ |  6 | 
+|  4- Despliegue |  Despliegue |  Docker |  6 | 
+|  5- Gestió de fallos |  Consistència |   |  3 | 
+|  6- Escalabilidad |  Escalabilidad |  cluster, MongoDB |  3 | 
+
+
+---
+#HSLIDE
+
+## Laboratorio
+
+- Proyecto 0 (JavaScript básico: desde la segunda semana). Sin supervisión
+ - javaScript es distinto a Java
+  - Diferente model de tipus, soporte en ejecución, etc.
+  - Programación funcional
+  - Programación dirigida por eventos (servidores asincrónicos)
+-  10 sesiones supervisadas, repartidas en tres proyectos
+ 1. Proxy inverso TCP/IP (3 sesiones). Utilita javaScript (JS) y NodeJS (Node)
+ 1. Aplicaciones en NodeJS y 0MQ (4 sesions) Utiliza JS, Node, 0MQ
+ 1. Despliegue (3 sesions). Utiliza JS, Node, Docker
+
+
+---
+#HSLIDE
+
+## Evaluación
+|  fecha |  prueba |  temario |  formato |  puntos |  minimo |  recup | 
+|--|--|--|--|--|--|--|
+|  28 octubre |  Parcial 1 |  temas 1..3(principio), lab 1 |  test |  3+1 |  30% |  si | 
+|  ?? |  Lab 2 |  lab 2 |  resp abierta |  2 |  30% |  si  | 
+|  ?? |  Parcial 2 |  temas 3(final)..6, lab 3 |  test |  3+1 |  30% |  si | 
+
+
+- Recuperación el ??
+ - Cualquier subconjunto de las pruebas anteriores
+ - La nota de recuperación prevalece sobre el acto original recuperado
+
+
+---
+#HSLIDE
+
+## Bibliografía
+
+- No hay ningún texto que se corresponda exactament con los contenidos del curso
+ - Material disperso: artículos, libros, páginas web (mayoritariamente en inglés). Indicado en cada tema
+ - textos generales de consulta (en inglés y español)
+  - Distributed Systems: Principles and Paradigms (2nd Ed). Andrew S. Tanenbaum, Maarten van Steen. Prentice Hall 2006
+  - Distributed Systems: Concepts and Design (5th Ed). George Coulouris, Jean Dollimore, ... Addison-Wesley 2011 
+- Guías del alumno para cada tema, y otro material adicional accesible en Poliformat
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="assets/js/reveal/reveal.js"></script>
+<script src="assets/js/reveal/lib/head.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

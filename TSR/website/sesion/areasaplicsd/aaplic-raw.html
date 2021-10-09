@@ -1,0 +1,173 @@
+<pre><!-- 
+$theme: gaia
+_paginate: false 
+-->
+# Áreas de Aplicación de los Sistemas Distribuidos
+##### TSR 2021 Grupo B. Juansa Sendra
+
+<!-- paginate: true -->
+
+---
+## Entorno de computación actual $\rightarrow$ __distribuido e interconectado__
+- Infinidad de dispositivos interconectados (PCs, portátiles, tabletas, móviles, ...)
+- Que soportan de manera nativa estandards universales.- ethernet, ip, http, html, ...
+
+La idea es aprovechar ese contexto para:
+1. Ofrecer/consumir servicios remotos y robustos
+	- robustos $\rightarrow$ toleran fallos (alta disponibilidad) y son escalables
+	- buscadores, almacenamiento (persistencia), redes sociales, aplicaciones online, ...
+1. Explotar la cooperación entre dispositivos para resolver problemas complejos
+	- ej. sustituir super-ordenadores por la cooperación de varios dispositivos económicos y/o pre-existentes
+1. Desarrollar nuevos escenarios (nueva funcionalidad)
+	- ej. utilizar Mots = ordenadores económicos que pueden incrustarse en otros dispositivos (electrodomésticos, vehículos, etc.)
+	
+---
+## Infraestructura actual.- WWW
+- Solicitud/respuesta $\rightarrow$ Cliente/Servidor
+  - cliente = usuario que interactúa (pide documentos) mediante un navegador
+- Compartición de documentos (documentos estáticos)
+
+![](d0.png)
+
+- Simple.- stateless (servidores sin estado)
+- Potente.- cada documento mantiene enlaces a otros documentos
+  - Las partes enlazadas pueden residir en servidores diferentes
+
+---
+## 1.- __Servicios robustos__
+WWW + el usuario no solicita documentos, sino servicios:
+- La solicitud incluye la funcionalidad deseada y los argumentos correspondientes (ej.- queremos obtener el mapa que corresponde a unas coordenadas y escala)
+- El servidor ejecuta la lógica de aplicación, y __calcula__ la resposta (respuesta dinámica)
+- El servidor puede modificar su estado en respuesta a solicitudes cliente
+- La respuesta del servidor corresponde al resultado de la solicitud de servicio
+
+![www-serveis](d1.png)
+
+---
+## 1.- Servicios robustos: __Disponibilidad__
+- El servicio ha de estar siempre disponible 
+  - Queremos que tolere fallos $\rightarrow$ requiere replicación
+Queremos evitar el siguiente escenario
+![diagrama disponibilidad](d2.png)
+---
+## 1.- Servicios robustos: __Escalabilidad__ 
+- El servicio ha de ser escalable
+  - Ha de ser capaz de adaptarse a una carga variable (ej. muchos clientes simultáneos)
+Queremos evitar el siguiente escenario
+![diagrama escalabilidad](d3.png)
+
+---
+## 1.- Servicios robustos $\rightarrow$ __Sistema Distribuido (SD)__
+La única opció para tener Disponibilidad + Escalabilidad es utilitzar un SD para la parte servidor
+
+Sistema Distribuido = 
+- colección de ordenadores (nodos) interconectados en red
+- (+) coopeeran entre si
+- (+) ofrecen imagen de máquina única
+
+Implantamos servidores robustos utilizando un SD especializado denominado __cluster altamente disponible__
+
+---
+## 1.- Servicios robustos: __Cloud Computing__
+- Desarrollar y mantener un cluster altamente disponible es muy costoso (hardware, software, personal de mantenimento, ...)
+- Una opción es externalitzar $\rightarrow$ dejar esa tarea a empresas especializadas, acceder via internet, y pagar por uso:
+  - Los centros de computación externos son SD que dan garantías de disponibilidad y escalabilidad
+  - Es muy flexible (la empresa cliente puede variar la cuota segús sus necesidades en cada momento)
+  - Hablamos de de potencia computacional, espacio de almacenamiento, etc. garantizado por un proveedor mediante centros de cómputo repartidos globalmente $\rightarrow$ tenemos transparencia de ubicación, y por eso decimos que todo está en la 'nube'
+
+---
+## 1.- Servicios robustos: __Preguntas__
+Plantéate las siguientes cuestiones:
+1. ¿Tendría sentido actualmente un dispositivo que no implemente los estandards de internet?
+2. ¿Donde están físicamente los servidors de DropBox, Facebook, WhatsApp, Wikipedia, etc.?
+3. ¿Qué arquitectura tienen esos servidores?
+
+---
+## 2.- Cooperación para resolver problemas complejos
+Algunas aplicaciones no pueden abordarse con un ordenador 'normal'
+- Muchos proyectos científicos y de ingenieria son muy complejos (SETI, genoma, desarrollo de vacunas)
+- Algunas aplicaciones deben atender miles de solicitudes simultáneas (buscadores, wikipedia)
+
+Alternativas	
+1. Un super-ordenador $\rightarrow$ carísimo, no ofrece escalabilidad ni elevada disponibilidad
+2. SD: __Cooperación__ de varios equipos 'normales' siguiendo determinado patrón de diseño. Podemos:
+	- Aprovechar potencia de cómputo infrautilizada $\rightarrow$ computación cooperativa
+	- Utilizar ordenadores dedicados (organizados en patrones Map/reduce, patrón Broker/Workers, ..)
+
+---
+## 2.- Cooperación ... .- __Computación cooperativa__
+- Muchos PCs infrautilizados, y muchos problemas complejos de interés global (ej.- investigación en salud) 
+- El propietario de un equipo dona parte de su potencia de cálculo de forma altruista para ayudar a resolver alguno de estos problemas
+
+La entidad responsable (universidad, instituto de investigación, etc.) pide colaboración
+- Descompone el problema en una colección de subproblemas
+- Desarrolla un servidor que mantiene la lista de clientes (nodos dados de alta) 
+- Calcula la respuesta final a partir de las respuestas parciales generadas por los clientes
+
+Cada equipo voluntario (cliente)
+- Se dá de alta $\rightarrow$ recibe del servidor e instala software específico 
+- El software cliente pide trabajo al servidor cuando el equipo está infrautilizado, procesa los datos que envia el servidor, y devuelve respuesta
+  
+---
+## 2.- Cooperación ... .- patrón __Map/Reduce__
+Partimos de una misma operación a aplicar sobre una cantidad enorme de información
+- El servidor reparte fragmentos de información a cada nodo, y el nodo aplica esa operació sobre los datos que recibe
+- Cada nodo calcula su parte y envía la respuesta
+- El servidor calcula la solución a partir de las respuestas parciales
+![](mapreduce.png)
+
+---
+## 2.- Cooperación ... : patrón __Broker-Workers__
+- Asumimos varias tareas y varios nodos worker equivalentes
+- Un nodo broker actúa como intermediario: recibe todas las solicitudes, y reparte las tareas entre los workers (equilibra la carga entre workers)
+
+![w:400](brokerworker.png)
+
+---
+## 2.- Cooperación ... .- __Preguntas__
+Plantéate las siguientes cuestiones:
+1. ¿Porqué necesitamos dar de alta a un cliente en el modelo de computació cooperativa?
+2. Piensa en algún tipo de problema en el que se pueda aplicar Map/Reduce
+3. En el patrón broker/workers todas las solicitudes y las respuestas pasan por el broker. ¿Dicho broker se convierte en un cuello de botella? ¿Implica que el sistema no puede ser escalable?
+
+---
+## 3.- Nueva funcionalidad
+La parte cliente ya no es necesariamente una persona frente a un interfaz usuario 
+- Los clientes forman parte de un SD, y cooperan con el servidor. Posibilidades:
+1. El cliente es una aplicació $\rightarrow$ Bussiness to Bussiness (B2B)
+	- La parte cliente y la parte servidor pueden intercambiar mensajes http con text JSON o XML
+2. El cliente es un Mot (ordenador de bajo coste que dispone de sensores y posiblemente actuadores)
+	- El mot está integrado en un dispositivo (electrodomésticos, vehiculos, etc.)
+	
+---
+## 3.- Nueva funcionalidad.- Mots
+- Redes de sensores. Los mots son muy simples 
+	- Tienen sensors: monitorizan su entorno y envían datos a un servidor
+	- Muy poca capacidad de cálculo
+	- Útiles para vigilancia, monitoritzación, ...
+- Internet de las cosas (IoT)
+	- Mots más elaborados: sensores, actuadores (pueden alterar su entorno), y más potencia
+	- Además de interactuar con el servidor pueden colaborar entre ellos
+	- Útiles en medicina, fabricación, y en general automatización de procesos, ciudades inteligentes, ...
+
+---
+## 3.- Nueva funcionalidad.- __Preguntas__
+Plantéate las siguientes cuestiones:
+1. En B2B, ¿se necesita un navegador en la parte cliente?
+2. Una posible aplicación de les redes de sensores es monitorizar el tráfico en una ciudad. ¿Qué utilidad tendría ese sistema?
+3. Si aplicamos IoT a control de tráfico en una ciudad, ¿que funcionalidad podemos añadir respecto a la que proporciona una red de sensores?
+
+---
+## Resumen: __Áreas aplicación SD__
+- Servicios robustos (escalables y disponibles)
+  - Clusters altamente disponibles
+  - (externalización) Cloud Computing
+- Descomposición de problemes
+  - Donación altruista de potencia de cómputo de dispositivus infrautilizados: Computación cooperativa
+  - Patrones de cooperación: Map/Reduce, Broker/Workers, ...
+- Nueva funcionalidad
+	- Sistemas B2B
+	- Mots
+	  - Redes de sensores
+	  - IoT (Internet of Things)
+</pre>

@@ -1,0 +1,60 @@
+<pre># Laboratorios TSR
+Este documento
+- Proporciona instrucciones para que el alumno puede utilizar la infraestructura de los laboratorios DSIC
+- Indica aspectos concretos relativos a la asignatura TSR
+
+## Virtualización
+Para facilitar la flexibilidad y mantenimiento de los laboratorios, se usan técnicas de virtualización (MV):
+- El funcionamiento habitual de los laboratorios se basa en la virtualización de equipos, almacenamiento y redes -> Los alumnos utilizan máquinas virtuales para el desarrollo de sus actividades
+- Acceso a las máquinas virtuales
+  - desde los equipos alojados en las salas de laboratorio
+  - mediante conexión remota (sin soporte ni garantia de funcionamiento fuera del horario y calendario docente de los laboratorios)
+
+## Tipos de MV
+a) Compartida (no necesitamos almacenamiento persistente) -> escritorios virtuales
+	- Sesiones sobre equipos virtuales compartidos. Ningún usuario puede modificar características compartidas ni asumir uso exclusivo (ej. uso exclusivo de puertos de comunicación)
+		- Ej sesiones sobre los equipos ubicados en el lab y las sesiones remotas en los servidores 'linuxdesktop' y 'windesktop'
+	- Se complementa con una unidad persistente propia de cada usuario (carpeta DsicoW en Linux, unidad w: en Windows) 
+	- No mantiene las modificaciones fuera del DiscoW -> el alumno copia manualmente la información que quiera mantener entre el directorio $HOME y DiscoW
+		- excepción.- la carpeta $HOME/myconfig se copia automáticamente a $HOME al inicial sesión
+	  
+b) No compartida (equipo individual por alumno -> ej cada alumno puede instalar software específico y configurar del sistema) -> uso exclusivo, estado persistente -> servidores virtuales de portal
+	- Las modificaciones se mantienen entre sesiones (estado persistente)
+	- Los servidores virtuales con MV individuales, que pueden encontrarse detenidas
+	- Para reducir riesgos, estas MV estan separadas de otros recursos (DiscoW, impresoras, directorios de asignaturas, identificación de usuarios, automatización de copias de seguridad, ..) mediante una VPN (red privada virtual) denominada portal
+		- los equipos de portal pertenecen al dominio cloud
+		- para activar una MV detenida existe un servidor portal-ng.dsic.cloud, visible por https desde los equipos con acceso a la VPN del portal
+			- todas las sesiones de escritorio tienen ya establecidad una conexión con la VPN portal (portal es visible desde linuxdesktop y windesktop)
+			
+## TSR
+Utiliza MV no compartida (una por alumno) TSR-xx
+- Arrancar MV (desde equipo con acceso a la VPN del portal):
+	1) abrir en un navegador https://portal-ng.dsic.cloud
+	2) Se muestra un aviso del navegador 'conexion no segura' -> admitir el certificado no oficial
+	3) Muestra diálogo solicitando nombre de usuario y contraseña -> usar el identificador y password de los labs del DSIC
+	4) Se muestra la lista de nuestras máquinas virtuales. Seleccionamos la que interese (TSR-xx) y si está detenida pulsamos iniciar
+		- NOTA.- pulsando sobre el nombre de la MV nos muestra algunos detalles (ej nombre e IP)
+
+- Iniciar sesión interactiva remota en modo gráfico
+	- conectar mediante un cliente de escritorio remoto (ej 'conexión a escritorio remoto' desde Windows, o 'Remmina' en Linux
+
+- Detener MV.- ejecutar en la MV la orden shutdown -h now
+
+- Otros aspectos importantes
+a) Contraseña. todas las MV tiene una contraseña inicial para el usuario root. Dicha contraseña se comunicará en su momento, pero debe modificarse cuanto antes (para evitar acceso desde terceros)
+
+b) Ports. con la configuración inicial de la MV el cortafuegos impide el acceso desde el exterior a la mayor parte de puertos. Para habilitar un rango de puertos (ej 8000 a 8100) ejecutamos 
+   firewall-cms --permanent --add-port=8000-8100/tcp
+   firewall-cmd --reload
+Por economía de recursos, es posible que en una sesión dos estudiantes compartan el mismo equipo (ej una misma máquina virtual remota) -> pueden aparecer interferencias al usar ports. Se recomienda comprobar si hay otros usuarios conectados y pactar las responsabilidades de cada usuario
+
+c) copia de ficheros
+   - modo texto (Linux). Usamos shell remoto seguro (ssh)
+   - modo texto (Windows). scp archivos root@TSR-xx.dsic.cloud
+   - modo grafico (Linux)
+		Lanzar Sistema/conectar con el servidor
+		Ajustar para TSR-xx.dsic.cloud, usuario root, port 22, protocolo ssh
+		Usar ventana de explorador de archivos para trabajar con el sistema de ficheros remoto
+   
+## Bibliografía
+...</pre>

@@ -1,0 +1,423 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tema 1.- Introducción - TSR 2021-22</title>
+		<link rel="stylesheet" href="../assets/css/highlight.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/css/tipuesearch.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
+	</head>
+	<body>
+		<header class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../">TSR 2021-22</a> <p class="navbar-text hidden-xs">Tema 1.- Introducción</p>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse-1">
+					<form action="../search.html" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" name="q" id="tipue_search_input" autocomplete="off" required class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../extra/tsr01-slideshow.html" target="_blank">View as slideshow</a></li>
+						<!--li><a href="../extra/tsr01-raw.html">View Markdown</a></li-->
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!--
+<div class="toc">
+<p class="lead">Table of contents:</p>
+<p class="toc-1">
+<a href="#tema-1-introducci-n">Tema 1.- Introducción</a>
+</p>
+<p class="toc-2">
+<a href="#-ndice">Índice</a>
+</p>
+<p class="toc-2">
+<a href="#concepto-de-sistema-distribuido">Concepto de Sistema Distribuido</a>
+</p>
+<p class="toc-2">
+<a href="#relevancia-de-los-sist-distribuidos">Relevancia de los Sist. Distribuidos</a>
+</p>
+<p class="toc-2">
+<a href="#relevancia-">Relevancia ...</a>
+</p>
+<p class="toc-2">
+<a href="#relevancia-">Relevancia ...</a>
+</p>
+<p class="toc-2">
+<a href="#principales-reas-de-aplicaci-n">Principales áreas de aplicación</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-www">Aplicación: WWW</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-redes-de-sensores">Aplicación: Redes de Sensores</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-internet-of-things">Aplicación: Internet of Things</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-internet-of-things">Aplicación: Internet of Things</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-comp-cooperativa">Aplicación: Comp. Cooperativa</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-clusters-uparrow-disponibles">Aplicación: Clusters $\uparrow$ Disponibles</a>
+</p>
+<p class="toc-2">
+<a href="#aplicaci-n-cloud-computing-cc-">Aplicación: Cloud Computing (CC)</a>
+</p>
+<p class="toc-2">
+<a href="#aplic-cc-modelos-de-servicio">Aplic.: CC modelos de servicio</a>
+</p>
+<p class="toc-2">
+<a href="#implementaci-n-servidor">Implementación servidor</a>
+</p>
+<p class="toc-2">
+<a href="#servidor-concurrente-multi-hilo-">Servidor concurrente (multi-hilo)</a>
+</p>
+<p class="toc-2">
+<a href="#servidor-asincr-nico">Servidor Asincrónico</a>
+</p>
+<p class="toc-2">
+<a href="#servidor-asincr-nico-">Servidor Asincrónico ...</a>
+</p>
+</div>
+-->
+
+		<div class="container">
+			<div class="row">
+				<nav id="sidebar" class="col-lg-2 col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation" class=""><a href="../index.html">Home</a></li>
+						<li role="presentation" class=""><a href="../presentacion.html">Presentación</a></li>
+						<li role="presentation" class=""><a href="../avaluacio.html">Evaluación</a></li>
+						<li role="presentation" class=""><a href="../docenciainversa.html">Metodología: docencia inversa</a></li>
+						<li role="presentation" class=""><a href="../tasques.html">Calendario (plan de trabajo)</a></li>
+						<li role="presentation" class=""><a href="../teoria.html">Teoría</a></li>
+						<li role="presentation" class=""><a href="../practicas.html">Laboratorio</a></li>
+						<li role="presentation" class=""><a href="../extra.html">Material extra</a></li>
+					</ul>
+					<!--
+Available versions:<br>
+raw<br>
+->extra/tsr01-raw.html<br>
+slideshow<br>
+->extra/tsr01-slideshow.html<br>
+default<br>
+->extra/tsr01.html<br>
+<br>
+Document informations:<br>
+extra/tsr01.md<br><br>
+active
+-->
+				</nav>
+				<header>
+					<div class="entry-meta text-right">
+
+					</div>
+				</header>
+				<article id="content" class="col-lg-10 col-sm-9">
+					<!-- $theme: gaia -->
+<h1 id="tema-1-introducci-n">Tema 1.- Introducción</h1>
+<h6 id="tecnolog-as-de-los-sistemas-de-informaci-n-en-la-red">Tecnologías de los Sistemas de Información en la Red</h6>
+<hr>
+<!-- page_number: true -->
+<!-- footer: TSR 2018-19  Tema 1.- Introducción -->
+<h2 id="-ndice">Índice</h2>
+<ul>
+<li>Definición de <strong>Sistema Distribuido</strong><ul>
+<li>Formado por distintos nodos interconectados en red</li>
+<li>Ofrece imagen de máquina única</li>
+</ul>
+</li>
+<li>Relevancia y áreas de aplicación</li>
+<li>Evolución histórica<ul>
+<li>etapa actual = computación en la nube</li>
+</ul>
+</li>
+<li>Implementación servidores</li>
+</ul>
+<hr>
+<h2 id="concepto-de-sistema-distribuido">Concepto de Sistema Distribuido</h2>
+<ul>
+<li>Conjunto de agentes autónomos. Cada agente;<ul>
+<li>es un proceso secuencial con su propio ritmo</li>
+<li>tiene su propio estado independiente</li>
+</ul>
+</li>
+<li>Los agentes interactúan (cooperan). Opciones:<ul>
+<li>intercambio de mensajes</li>
+<li>memoria compartida</li>
+</ul>
+</li>
+<li>En la práctica, un sist. distribuido es un sistema en red</li>
+</ul>
+<hr>
+<h2 id="relevancia-de-los-sist-distribuidos">Relevancia de los Sist. Distribuidos</h2>
+<ul>
+<li>Área  en evolución continua<ul>
+<li>Entorno de computación actual distribuido e interconectado (web)<ul>
+<li>Infinidad de nodos conectados</li>
+<li>Infinidad de servicios remotos</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Rama de los sistemas concurrentes<ul>
+<li>Asumimos la base proporcionada por CSD</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="relevancia-">Relevancia ...</h2>
+<ul>
+<li>:thumbsup: Mejora el rendimiento<ul>
+<li>Divide un tarea compleja en subtareas, y asigna cada una a un nodo diferente</li>
+</ul>
+</li>
+<li>:thumbsup: Mayor disponibilidad<ul>
+<li>Si falla un nodo, otros completan su tarea</li>
+</ul>
+</li>
+<li>:thumbsup: Compartición de recursos<ul>
+<li>Cada nodo tiene recursos asociados (ej.- impresoras, discos)</li>
+<li>Otros nodos del sistema pueden acceder a ellos</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="relevancia-">Relevancia ...</h2>
+<ul>
+<li>Reto<ul>
+<li>conseguir que los ordenadores cooperen entre sí y colectivamente desarrollen trabajo útil</li>
+<li>Crear subsistemas capaces de proporcionar servicios robustos</li>
+</ul>
+</li>
+<li>Ejemplos a gran escala (millones de usuarios)<ul>
+<li>Servicio de búsqueda de Google</li>
+<li>Compartición de ficheros en DropBox</li>
+<li>Simulación de fármacos contra el cáncer</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="principales-reas-de-aplicaci-n">Principales áreas de aplicación</h2>
+<ol>
+<li>World Wide Web</li>
+<li>redes de sensores</li>
+<li>Internet of things</li>
+<li>Computación cooperativa</li>
+<li>Clustes altamente disponibles</li>
+<li>Cloud Computing</li>
+</ol>
+<hr>
+<h2 id="aplicaci-n-www">Aplicación: WWW</h2>
+<ul>
+<li>Basada en el modelo Cliente/Servidor<ul>
+<li>cliente = navegador web (solicita/recibe documento)</li>
+<li>servidor.- responde a peticiones de docs</li>
+</ul>
+</li>
+<li>Inicialmente diseñado para compartir documentos<ul>
+<li>los documentos pueden formarse a partir de las respuestas de varios servidores</li>
+<li>Posteriormente extendido para soportar peticiones sobre servicios</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="aplicaci-n-redes-de-sensores">Aplicación: Redes de Sensores</h2>
+<ul>
+<li>Aparecen equipos de muy bajo coste<ul>
+<li>Mini-ordenadores de propósito específico</li>
+<li>Empotrados en disp. de uso cotidiano<ul>
+<li>ej.- en algunos electrodomésticos</li>
+</ul>
+</li>
+<li>Contienen sensores (humedad, temperatura, ..)</li>
+</ul>
+</li>
+<li>Muchas aplicaciones potenciales<ul>
+<li>Vigilancia, detección de desastres, monitorización consumo, ...</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="aplicaci-n-internet-of-things">Aplicación: Internet of Things</h2>
+<ul>
+<li>Generalización de las redes de sensores</li>
+<li>Facilita la interoperabilidad de los dispositivos<ul>
+<li>Los dispositivos pueden interactuar entre sí</li>
+<li><em>Los dispositivos pueden alterar su entorno</em></li>
+</ul>
+</li>
+<li>Nuevos escenarios<ul>
+<li>Ciudades inteligentes</li>
+<li>Automatización (construcción, fabricación, ...)</li>
+<li>Cuidado médico informatizado</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="aplicaci-n-internet-of-things">Aplicación: Internet of Things</h2>
+<p><img src="internet_of_things.png" alt="imag internet of things"></p>
+<hr>
+<h2 id="aplicaci-n-comp-cooperativa">Aplicación: Comp. Cooperativa</h2>
+<ul>
+<li>Recursos en internet infrautilizados<ul>
+<li>Muchos PCs pasan horas inactivos</li>
+<li>Pueden suscribirse para recibir tareas <ul>
+<li>instala soft. cliente, se registra en un servidor </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>El servidor <ul>
+<li>Divide tarea grande en subtareas</li>
+<li>Distribuye subtareas entre los clientes</li>
+<li>Recopila los resultados</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="aplicaci-n-clusters-uparrow-disponibles">Aplicación: Clusters $\uparrow$ Disponibles</h2>
+<ul>
+<li>Ciertas entornos necesitan $\uparrow$ disponibilidad<ul>
+<li>Bancario, Empresarial, Asistencia médica, ...<ul>
+<li>Deben garantizar integridad información</li>
+<li>Deben mantener disponibilidad servidores</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Hechos:<ul>
+<li>Todo dispositivo falla en algún momento</li>
+<li>Pero fallo simultáneo es muy improbable</li>
+</ul>
+</li>
+<li>Solución.- replicación (y reconfiguración tras fallo)</li>
+</ul>
+<hr>
+<h2 id="aplicaci-n-cloud-computing-cc-">Aplicación: Cloud Computing (CC)</h2>
+<ul>
+<li>Queremos construir y facilitar <strong>servicios de forma sencilla, eficiente, y económica</strong></li>
+<li>Implantados mediante clusters $\uparrow$ disponibles<ul>
+<li>Un centro de cómputo dedicado es caro<ul>
+<li>adquisición, administración, mantenimiento</li>
+</ul>
+</li>
+<li>Para $\downarrow$ costes compartimos centros de cómputo externos (pago por uso)<ul>
+<li>Acceso al centro externo a través de internet</li>
+<li>Posible por mejoras en redes y navegadores</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="aplic-cc-modelos-de-servicio">Aplic.: CC modelos de servicio</h2>
+<ul>
+<li><strong>SaaS</strong> (software como servicio)<ul>
+<li>Aplicaciones escalables como servicio</li>
+</ul>
+</li>
+<li><strong>PaaS</strong> (plataforma como servicio)<ul>
+<li>Automatiza la gestión de servicios elásticos (ciclo de vida, escalabilidad)</li>
+</ul>
+</li>
+<li><strong>IaaS</strong> (infraestructura como servicio)<ul>
+<li>Automatiza gestión de recursos</li>
+<li>Usa virtualización</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="implementaci-n-servidor">Implementación servidor</h2>
+<ul>
+<li>Un servidor recibe peticiones, las procesa, y retorna respuestas</li>
+<li>Para completar una petición puede necesitar pedir a su vez servicios a otros</li>
+<li>Por escalabilidad, un servidor debería aceptar varias peticiones simultáneas<ul>
+<li>Mientras gestiona una petición, debe ser capaz de aceptar otras</li>
+</ul>
+</li>
+<li>Alternativas para implantar un servidor: <strong>servidor concurrente</strong>, y <strong>servidor asincrónico</strong></li>
+</ul>
+<hr>
+<h2 id="servidor-concurrente-multi-hilo-">Servidor concurrente (multi-hilo)</h2>
+<ul>
+<li>Cada petición servida por un hilo distinto<ul>
+<li>Todos los hilos comparten un estado global</li>
+<li>Hay que evitar interferencias e interbloqueos</li>
+</ul>
+</li>
+<li>:thumbsup: cada hilo se planifica por separado (si se suspende no afecta al resto del servidor)</li>
+<li>:thumbsdown: control concurrencia $\rightarrow$ suspensión. Sobrecarga</li>
+<li>:thumbsdown: programación y depuración complejas</li>
+<li>Usado en Java y .NET</li>
+</ul>
+<hr>
+<h2 id="servidor-asincr-nico">Servidor Asincrónico</h2>
+<ul>
+<li>programación asincrónica = dirigida por eventos<ul>
+<li>corresponde al modelo guarda/acción<ul>
+<li>guarda = evento</li>
+<li>acción = callback del evento</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>múltiples actividades, pero no acceden de forma concurrente al estado compartido<ul>
+<li>Las acciones preparadas para ejecución (cumplen la guarda) se encolan en orden FIFO</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="servidor-asincr-nico-">Servidor Asincrónico ...</h2>
+<ul>
+<li>:thumbsup: No hay estado compartido: $\downarrow$ complejidad</li>
+<li>:thumbsup: No soporta threads: $\downarrow$ sobrecarga $\uparrow$ escalable</li>
+<li>:thumbsup: El funcionamiento real de un S.D. es dirigido por eventos: facilita razonar sobre el sistema</li>
+<li>:thumbsdown: Toda acción debe cuidar la gestión el estado</li>
+<li>:thumbsdown: No es fácil controlar el orden de encolado</li>
+<li>:thumbsdown: Todo el entorno debe ser asincrónico (ej. servicios del S.O. no bloqueantes)</li>
+<li>Usado en NodeJS y Async .NET</li>
+</ul>
+
+				</article>
+			</div>
+		</div>
+
+		<footer><a href="../site-index.html">Pages index</a>
+</footer>
+
+		<script src="../assets/js/jquery.js"></script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/highlight.min.js"></script>
+		<script src="../assets/js/tipuesearch_set.js"></script>
+		<script src="../assets/js/tipuesearch.min.js"></script>
+		<script>
+			$(function() {
+				hljs.initHighlightingOnLoad();
+				$('#tipue_search_input').tipuesearch({
+					mode: 'json',
+					contentLocation: '../index.json'
+				});
+			});
+		</script>
+		
+		<!-- Generated by Vegetables from 'extra/tsr01.md' with format 'default' - '2021-9-30 8:42:52 AM' -->
+	</body>
+</html>

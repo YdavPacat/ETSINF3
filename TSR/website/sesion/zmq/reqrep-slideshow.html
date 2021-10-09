@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Patró client/servidor</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				# Patró client/servidor
+#### TSR 2020, Juansa Sendra, Grup A
+
+---
+#HSLIDE
+
+## Patró client/servidor
+
+- Socket tipus **req** en el client
+ - Supose definit `var cs = zmq.socket(&#39;req&#39;) // cs = client Socket`
+ - `cs.connect(URL)` (URL = `&#39;ftp://IPserver:PortServer&#39;`)
+ - Enviament: `cs.send(msg) // msg pot ser multisegment`
+ - Per a rebre `cs.on(&#39;message&#39;, callback)`
+- Socket tipus **rep** en el servidor 
+ - supose definit `var ss = zmq.socket(&#39;rep&#39;) // ss = server Socket`
+ - `ss.bind(tcp://*:portServer)`
+ - Enviament: `ss.send(msg) // msg pot ser multisegment`
+ - per a rebre `ss.on(&#39;message&#39;, callback)`
+
+
+---
+#HSLIDE
+
+## Cues
+
+- entrada (recepció)
+ - manté els missatges que han arribat fins passar-los a la aplicació
+ - la arribada d&#39;un missatge genera el esdeveniment &#39;message&#39;
+- eixida (envíament)
+ - manté els missatges a enviar a altres agents
+ - guarda els missatges enviats per la aplicació
+|entrada|salida
+  ---|-------|------
+req|1 cua  |1 cua
+rep|1 cua  |1 cua
+
+
+---
+#HSLIDE
+
+## Funcionament sincrònic
+
+- El enviament i recepció NO són bloquejants
+ - emisor i receptor continuen funcionant de forma asincrónica
+- Però tots els parells petició/resposta està totalment ordenat
+- Part client
+ - Cuant el client envia petició a través de **req**, eixe missatge arriba al socket rep del servidor
+ - Si el client envia altra solicitud, es queda en la cua d&#39;eixida de req (no es completa l&#39;envíament), perque NO podems tindre més d&#39;una solicitud pendent per els clients.
+ - Cuant arriba la resposta a la primera solicitud, s&#39;envia la segona petició desde la cua d&#39;eixida de req
+- Parte servidor
+ - Cuant el servidor rep la primera solicitud (cua d&#39;entrada del socket rep) la aplicació recull i procesa eixe missatge
+ - Si arriba altra petició (de altre client), es manté en la cua d&#39;entrada del socket rep
+ - Cuant s&#39;envía la resposta a la primera solicitud, es trau de la cua la segunda solicitud.
+ - Només pot enviar una resposta a través de rep si hem rebut previament una solicitud por eixee mateix socket (el envíament es bloqueja fins a rebre la petició corresponent)
+- Si un client envia n peticions per un socket, la segona, tercera, .. queden en cua local fins rebre resposta de la primera
+  figura
+
+
+---
+#HSLIDE
+
+## Ejemple 1:1
+```js
+// server.js
+const zmq = require('zeromq')
+const rp= zmq.socket('rep')
+rp.bind('tcp://*:8888',function(err) {if(err) throw err})
+rp.on('message', (msg)=>{console.log(’Request: '+msg); rp.send(’World')})
+```
+```js
+// client.js
+const zmq = require('zeromq')
+const rq= zmq.socket('req')
+rq.connect('tcp://127.0.0.1:8888')
+rq.send(’Hello')
+rq.on('message', (msg)=>{console.log('Response: '+msg)})
+```
+
+---
+#HSLIDE
+
+## Example 1:n
+
+- Cada petició va a un rep diferent
+ - seguint política RR (Round Robin)
+- IMPORTANT.- No podem mantiendre varies peticions pendents
+ - NO envia noves peticiones fins rebre la resposta a la actual
+ - No hi ha paralelització de peticions
+
+```js
+// server1.js
+const zmq = require('zeromq')
+const rp= zmq.socket('rep')
+rp.bind('tcp://*:8889',function(err) {if(err) throw err})
+rp.on('message', (msg)=>{console.log(’Request: '+msg); rp.send(’World2')})
+```
+```js
+// server2.js
+const zmq = require('zeromq')
+const rp= zmq.socket('rep')
+rp.bind('tcp://*:8888',function(err) {if(err) throw err})
+rp.on('message', (msg)=>{console.log(’Request: '+msg); rp.send(’World1')})
+```
+```js
+// client.js
+const zmq = require('zeromq')
+const rq= zmq.socket('req')
+rq.connect('tcp://127.0.0.1:8888')
+rq.connect('tcp://127.0.0.1:8889')
+rq.send(’Hello1'); rq.send(’Hello2'); rq.send(’Hello3')
+rq.on('message', (msg)=>{console.log('Response: '+msg)})
+```
+
+---
+#HSLIDE
+
+## Example n:1
+
+- Configuració típica per a un servidor
+- El socket rep gestiona els missatges d&#39;entrada amb una cua FIFO
+ - atén a tots els clients de manera equitativa (no hi ha inanició)
+
+```js
+// server.js
+const zmq = require('zeromq')
+const rp= zmq.socket('rep')
+rp.bind('tcp://*:8888',function(err) {if(err) throw err})
+rp.on('message', (msg)=>{console.log(’Request: '+msg); rp.send(’World')})
+```
+```js
+// client1.js
+const zmq = require('zeromq')
+const rq= zmq.socket('req')
+rq.connect('tcp://127.0.0.1:8888')
+rq.send(’Hello1')
+rq.on('message', (msg)=>{console.log('Response: '+msg)})
+```
+```js
+// client2.js
+const zmq = require('zeromq')
+const rq= zmq.socket('req')
+rq.connect('tcp://127.0.0.1:8888')
+rq.send(’Hello2')
+rq.on('message', (msg)=>{console.log('Response: '+msg)})
+```
+
+---
+#HSLIDE
+
+## Cronograma i fallades
+
+- Cronograma 1:n sense fallades
+figura
+- Cronograma 1:n amb fallades
+ - Si falla rep#2 el req que havia llanzat eixa sol.licitud no es recupera
+ - cal tancar la conexió y establir una nova
+figura
+
+
+---
+#HSLIDE
+
+## Modificació del missatge (format missatges)
+
+- Estructura missatge típic `[envoltorio delimitador cos]`
+ - envolcall  = indica metadades associades al missatge
+  -  1 o més segments
+   -delimitador = segment buit que separa envolcall y cos (en la figura es representa usant una ,)
+  -  1 o mas segmentos
+|envío                            |recepción
+  ----|-------------------------------|----------------
+req |afig delimitador com a primer segment     |elimina primer seg (delimitador)
+rep |guarda envolcall, pasa cos a la aplic. |afig envolcall guardat
+
+figura
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

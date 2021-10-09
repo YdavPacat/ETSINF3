@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Declaración y ámbito de las variables en Javascript</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$**theme: nesga
+_**paginate: **false 
+-->
+#HSLIDE
+
+# Declaración y ámbito de las variables en Javascript
+#### TSR 2021. Grupo B, Juansa Sendra
+
+---
+<!-- footer: TSR 2021-22  Variables en JS -->
+<!-- paginate: true -->
+#HSLIDE
+
+## Utilización correcta de la declaración de variables en JS
+Varías alternativas. ¿diferencias?
+
+
+- declaración **const**        `const x = ..`Inicialización obligatoria. No puede reasignarse
+- declaración **implicita**    `x = ..`      Inicialización obligatoria. **NO UTILIZAR**
+- declaración **var**        `var x = ..`  Inicialización opcional
+- declaración **let**        `let x = ..`  Inicialización opcional. **UTILIZAR**
+
+Diferencias
+
+
+- La declaración const x introduce una constante, el resto variables
+- La declaración **implícita**, **let** y **var** se diferèncien en el ámbito de declaración de x
+ - excepto en var, no podemos redeclarar en el mismo ámbito
+
+
+---
+#HSLIDE
+
+## Ámbito de las variables
+
+- ámbito de x $\rightarrow$ desde qué posiciones del código tenemos acceso a x
+- Los ámbitos son anidables, y busca desde dentro hacia afuera
+ - Si encontramos `x` en un nivel, enmascara declaraciones de `x` en ámbitos más externos
+ - En un punto P del programa son accesibles las variables definidas en todos los ámbitos que incluyen P 
+ - El ámbito puede ser:
+  - Local al bloque = fragmento de código entre {..} o instrucción (ej. bucle for) (let) (desde el punto de declaración hasta el final del bloque)
+  - Local a la función (var) (toda la función donde se define)
+  - Global (implicita, o var/let fuera de ninguna función o block)
+
+
+---
+#HSLIDE
+
+## Ejemplo 1
+Partimos de este ejemplo, y vamos creando otros en base a modificaciones menores. Trata de averiguar el resultado en cada caso. La solución al final
+```js {1,2,4-5}
+longFunc()
+
+function longFunc() {
+    console.log(x)
+    var x = &#39;A short text &#39; + x
+    for (i=1; i&lt;=10; i++) {
+        console.log(&#39;10 x &#39;+i +&#39; = &#39;+ i*10)
+    }
+    console.log(&#39;The final value of &quot;i&quot; is &#39; + i)
+}
+
+// console.log(x)
+// console.log(i)
+
+```
+
+---
+## Ejemplo 2
+```javascript
+longFunc()
+
+function longFunc() {
+    console.log(x)
+    x = 'A short text ' + x        // x implicita
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 3
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0 //***
+    console.log(x)
+    x = 'A short text ' + x
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 4
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    x = 'A short text ' + x
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+console.log(x)        //****
+// console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 5
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0 //***
+    console.log(x)
+    x = 'A short text ' + x
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x) //****
+ console.log(i)    //****
+```
+
+---
+#HSLIDE
+
+## Ejemplo 6
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    let x = 'A short text ' + x        //***
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 7
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    x = 'A short text ' + x
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 8
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    x = 'A short text ' + x
+    for (i=1; i<=10; i++) {
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+console.log(i)  //****
+```
+
+---
+#HSLIDE
+
+## Ejemplo 9
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    let x = 'A short text ' + x        
+    for (var i=1; i<=10; i++) {    //****
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+console.log(i)
+```
+
+---
+#HSLIDE
+
+## Ejemplo 10
+```javascript
+longFunc()
+
+function longFunc() {
+    var x=0
+    console.log(x)
+    let x = 'A short text ' + x
+    for (let i=1; i<=10; i++) {  //****
+        console.log('10 x '+i +' = '+ i*10)
+    }
+    console.log('The final value of "i" is ' + i)
+}
+
+// console.log(x)
+// console.log(i) //****
+```
+
+---
+#HSLIDE
+
+## Ejemplo 11
+```javascript class:&quot;LineNo&quot;
+longFunc()
+
+function longFunc() {
+    var x=0
+    let i    //****
+    console.log(x)
+    x = &#39;A short text &#39; + x
+    for (i=1; i&lt;=10; i++) {    //****
+        console.log(&#39;10 x &#39;+i +&#39; = &#39;+ i*10)
+    }
+    console.log(&#39;The final value of &quot;i&quot; is &#39; + i)
+}
+
+// console.log(x)
+// console.log(i)
+```
+
+
+---
+#HSLIDE
+
+## Resumen
+
+- Ejemplo 1.- No error, pero console.log(x) dentro de longFunc muestra &#39;undefined&#39;
+- Ejemplo 2.- Error. Linea 4, x not defined
+- Ejemplo 3.- ok
+- Ejemplo 4.- Error. Linea 13, x not defined
+- Ejemplo 5.- ok
+- Ejemplo 6.- Error. Linea 6, x has already been declared
+- Ejemplo 7.- ok
+- Ejemplo 8.- ok
+- Ejemplo 9.- Error. Linea 14, y not defined
+- Ejemplo 10.- Error. Linea 10, y is not defined
+- Ejemplo 11.- ok
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

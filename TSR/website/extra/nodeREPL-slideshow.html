@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Introducción a NodeJS REPL</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- $theme: gaia -->
+#HSLIDE
+
+# Introducción a NodeJS REPL
+#HSLIDE
+
+## (node shell)
+##### TSR 2018-19  Juansa Sendra
+##### información completa sobre REPL
+
+---
+<!-- page_number: true -->
+<!-- footer: TSR 2018-19 Juansa Sendra-->
+#HSLIDE
+
+# REPL (Read Eval Print Loop)
+Entorno interactivo (node shell) para:
+
+
+- Desarrollar y probar código de forma ágil
+ - *Resolver dudas sobre sintaxis/funcionamiento de js*
+ - *Ejecuta código escrito en cualquier editor*
+- Depurar fragmentos de código
+ - *Escribe código en editor, cárgalo en REPL, y trabaja de forma interactiva*
+
+```txt
+Para seguir este texto necesitas un editor y una terminal
+```
+
+---
+#HSLIDE
+
+# REPL
+Desde la consola escribe `node`
+
+
+- el prompt cambia a `&gt;`
+- podemos evaluar cualquier expresión `&gt; 23 + 32`
+- el sistema lee la expresión (Read), la evalua (Eval), e imprime el resultado (Print), tras lo cual vuelve al principio (Loop)  ```
+ 55 
+>
+```
+- Para salir pulsa CTRL-C dos veces consecutivas
+
+
+---
+#HSLIDE
+
+# REPL
+```js
+> 23 + 32
+55
+> "hola, " + "lector"
+"hola, lector"
+> let x = 10, y = 20
+undefined
+>x+y
+30
+> "otorrinolaringologo".length
+19
+> [4,2,8,12].includes(6)
+false
+>
+```
+
+---
+#HSLIDE
+
+# REPL
+Si la expresión a evaluar ocupa varias líneas:
+
+
+- En cada línea nueva aparece `...` (indica que continuamos con la expresión)
+- Vuelve al modo normal cuando finaliza la definición o expresión actual, se ejecuta `.break`
+
+```js
+> function suma(a,b) {
+... return a+b
+... }
+undefined
+> suma(10,30)
+40        
+>
+```
+
+---
+#HSLIDE
+
+# Ejecucion fichero externo
+
+- Edita el fichero `f.js` con cualquier editor
+- Ejecuta en al consola `node f.js`
+
+```js
+// fichero fact.js
+function fact(n) {
+   if (n==1) return 1
+   else {
+      return n*fact(n-1)
+   }
+}
+console.log(fact(5))
+```
+```js
+node fact.js
+120
+```
+
+---
+#HSLIDE
+
+# Depuración con REPL
+-Ejecuta `.load f.js` desde REPL
+
+
+- carga y ejecuta el fichero, y se mantiene en el REPL
+- puedes probar funciones, inspeccionar variables, etc.
+
+
+---
+#HSLIDE
+
+# Depuración con REPL
+```js
+> .load fact.js
+// fichero fact.js
+function fact(n) {
+   if (n==1) return 1
+      else {
+            return n*fact(n-1)
+               }
+               }
+               console.log(fact(5))
+120
+undefined
+> fact(0)
+RangeError: Maximum call stack size exceeded
+    at fact (repl:2:14)
+    at fact (repl:5:22)
+    ...
+```
+
+---
+#HSLIDE
+
+# Dot commands
+
+- Son órdenes especiales que empiezan por `.`
+- Las más útiles son
+ - `.help`  explica las distintas órdenes dot
+ - `.exit`  sale de REPL
+ - `.editor`  para escribir expresiones multilínea
+ - `.break`  sale del modo editor
+ - `.save fichero`  guarda en ese fichero la sesión actual del trabajo (todo lo escrito en REPL)
+ - `.load fichero`  carga el fichero en la sesión actual
+
+
+---
+#HSLIDE
+
+# También te interesa saber ...
+
+- Las teclas `arriba/abajo` permiten recorrer la historia de los comandos anteriores
+- `tab` autocompleta expresiones u órdenes
+ - Si no hay una finalización unica, otro `tab` muestra las alternativas
+ - Si no escribimos nada, `tab+tab` muestra los módulos que node exporta por defecto
+ - Si x es el nombre de un modulo/objeto, `x.` `tab+tab`, muestra sus funciones/propiedades
+- `_` representa el resultado de la última expresión
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

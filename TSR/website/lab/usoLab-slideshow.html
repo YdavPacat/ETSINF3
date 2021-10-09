@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Prácticas TSR</title>
+	<link rel="stylesheet" href="../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: base-theme
+_paginate: false 
+-->
+#HSLIDE
+
+# Prácticas TSR
+#VSLIDE
+
+### Curso 2020-2021
+
+---
+<!-- footer: TSR 2020-21  Uso Laboratorio -->
+<!-- paginate: true -->
+#HSLIDE
+
+## Objetivo y herramientas
+
+- Objetivo.- Desarrollar y ejecutar componentes NodeJS que se comunican usando ZeroMQ, y desplegarlos mediante Docker para construir un servicio distribuido
+- Herramientas software
+ - NodeJS, 0MQ, Docker
+
+|  Práctica |  NodeJS |  0MQ |  Docker | 
+|--|--|--|--|
+|  1 |  x |   |   | 
+|  2 |  x |  x |   | 
+|  3 |  x |  x |  x | 
+
+
+---
+#HSLIDE
+
+## Infraestructura para acceso remoto
+
+- **Escritorio compartido** `linuxdesktop` (sesión sobre un servidor compartido)
+ - Incluye NodeJS y 0MQ.- útil para las prácticas 1 y 2
+ - No soporta uso exclusivo (ej.- ports compartidos por todos los usuarios)
+ - Para evitar interferencias entre usuarios
+  - No permite instalar/eliminar programas, cambiar configuración, ..
+  - Para guardar vuestro trabajo debéis usar el directorio DiscoW
+- **Servidor dedicado** (máquina virtual personal)
+ - Misma configuración que `linuxdesktop`, y además
+  - Incorpora Docker (se puede usar para cualquier práctica, incluyendo la 3)
+  - Se puede modificar y administrar como se quiera (no se comparte)
+  - Las modificaciones se preservan entre sesiones
+ - Las maquinas virtuales dedicadas se acceden con la VPN portal.dsic.cloud
+  - No se integran con recursos como DiscoW, impresoras, ..
+
+
+---
+#HSLIDE
+
+## Escritorio (sesión) vs máquina dedicada
+|   |  sesión |  servidor | 
+|--|--|--|
+|  Sistema |  Ubuntu 20.04, MATE |  Ubuntu 20.04, MATE | 
+|  herramientas |  NodeJs, 0MQ |  NodeJs, 0MQ, Docker | 
+|  acceso a DiscoW |  si, parte de $HOME |  no | 
+|  información fuera de DiscoW |  se pierde |  se mantiene | 
+|  configuracion del sistema |  NO modificable |  modificable | 
+|  configuración aplicaciones |  solo con $HOME |  si | 
+|  instalar/desinstalar aplicaciones |  NO |  si | 
+|  recursos usados en exclusiva |  NO (ej ports compartidos) |  si | 
+|  acceso internet |  si |  si | 
+|  Arrancar/parar servidor |  no |  si | 
+
+
+---
+#HSLIDE
+
+## Alternativas para el alumno
+
+- ~~Presencial~~ = uso de las herramientas desde los equipos de los laboratorios de DSIC.- **DESCARTADO (covid 19)**
+- Sesión remota (escritorio virtual `linuxdesktop`)
+- Servidor remoto (máquina virtual dedicada)
+ - Todo alumno debe conocer los pasos para usar su máquina virtual dedicada
+- Instalando las herramientas en local
+- Instalando la máquina virtual en local (sobre virtualBox)
+ - Imagen `https://filesender.rediris.es/?s=download&amp;amp;token=0c7f6111-4bdf-e152-b001-8d89570557bb` 
+ - La versión actual (tsr-vbox-2021_a.ova) ocupa 5.7GB, expira el 10/12
+ - Al arrancar autoconecta al usuario user
+
+
+---
+#HSLIDE
+
+## Sesión remota
+
+- VPN dsic.upv.es. 
+- Requiere cliente de escritorio remoto
+ - selecciona al menos resolucion 1024x768 y 16bpp (bits por pixel)
+ - Mas resolucion y/o colores implica mas trafico de red
+ - ej `rdesktop miVirtual -u usuario_remoto -a 16 -g &#39;1024x768&#39;`
+
+
+---
+#HSLIDE
+
+## Servidor remoto
+
+- VPN dsic.cloud portal-ng
+- acceso a https://portal-ng.dsic.cloud
+ - la URL genera una queja del navegador: acepta el certificiado no oficial y sigue
+ - Identifícate en el portal (tulogin/tuclave)
+- Arranca máquina virtual (`tsr-tulogin-2021.dsic.cloud`)
+- Arranca cliente de escritorio remoto y conecta (o enlace descarga archivo RDP)
+ - Identifícate en la maquina virtual (como user/resu o root/GalYMatias)
+  - Son contraseñas inciales que se recomienda cambiar (orden `passwd`). 
+  - OJO.- Si olvidas la contraseña de root no podrás administrar la máquina
+- Al acabar cierra sesión (si no se va a usar en dias, mejor apaga maquina virtual)
+ - Se puede parar con &quot;shutdown -h now&quot; (recomendable) o desde el portal
+
+
+---
+#HSLIDE
+
+## Uso de ports compartidos en el escritorio remoto
+
+- Debemos evitar conflictos al usar ports compartidos
+ - Si el boletin indica port `xxxxN` donde N es un dígito (0..9)
+ - Usa como port `5uuuN`, donde `uuu` son las 3 ultimas cifras de tu DNI
+
+
+---
+#HSLIDE
+
+## Directorio $HOME del escritorio remoto
+
+- Muchas aplics guardan información personalizada en $HOME
+- Pero no podemos escribir fuera de DiscoW
+ - Al iniciar sesion el sistema copia el contenido de DiscoW/myconfig a $HOME
+ - Si al final de sesión queremos copiar de $HOME a myconfig, hay que hacerlo a mano `cp –pR $HOME/.vscode$HOME/DiscoW/myconfig`
+
+
+---
+#HSLIDE
+
+## Intercambio de ficheros con servidor remoto
+
+- En modo texto:
+ - Desde linux usa ssh
+ - Desde windows usa git-bash. `scp archivos root@miVirtual`
+- En modo grafico (recomendable)
+ - &quot;sistema/conectar con servidor&quot;, miVirtual, user root, port 22, protocol ssh
+ - Seguimos a pesar de un aviso &quot;no puedo verificar identidad ..&quot; 
+ - Puedes trabajar sobre el sist de archivos remoto mediante una ventana del explorador de archivos
+  - Se copia arrastrando archivos
+  - click con boton derecho sobre el fondo de la ventana arranca un shell remoto en el servidor de portal
+   - para iniciar aplicaciones locales que trabajan sobre archivos remotos
+
+
+---
+#HSLIDE
+
+## Configuracion del cortafuegos en el servidor remoto
+
+- ej abrir ports 8000-9999 
+ - `firewall-cmd --permanent -add-port=8000-9999/tcp; firewall-cmd --reload`
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../assets/js/reveal/reveal.js"></script>
+<script src="../assets/js/reveal/lib/head.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

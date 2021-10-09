@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+	  <html>
+	   <head>
+		<meta charset="utf-8" />
+		<title>
+repl
+</title>
+	<style>
+	  @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+	  @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+	  @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+	  body {
+		font-family: 'Droid Serif';
+	  }
+	  h1, h2, h3 {
+		font-family: 'Yanone Kaffeesatz';
+		font-weight: 400;
+		margin-bottom: 0;
+	  }
+	  .remark-slide-content h1 { font-size: 3em; }
+	  .remark-slide-content h2 { font-size: 2em; }
+	  .remark-slide-content h3 { font-size: 1.6em; }
+	  .footnote {
+		position: absolute;
+		bottom: 3em;
+	  }
+	  li p { line-height: 1.25em; margin-bottom: 20px; }
+	  ul p { line-height: 1.25em; margin-bottom: 20px; }
+	  .red { color: #fa0000; }
+	  .large { font-size: 2em; }
+	  a, a > code {
+		color: rgb(249, 38, 114);
+		text-decoration: none;
+	  }
+	  code {
+		background: #e7e8e2;
+		border-radius: 5px;
+	  }
+	  .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+	  .remark-code-line-highlighted     { background-color: #373832; }
+	  .pull-left {
+		float: left;
+		width: 47%;
+	  }
+	  .pull-right {
+		float: right;
+		width: 47%;
+	  }
+	  .pull-right ~ p {
+		clear: both;
+	  }
+	  #slideshow .slide .content code {
+		font-size: 0.8em;
+	  }
+	  #slideshow .slide .content pre code {
+		font-size: 0.9em;
+		padding: 15px;
+	  }
+	  .inverse {
+		background: #272822;
+		color: #777872;
+		text-shadow: 0 0 20px #333;
+	  }
+	  .inverse h1, .inverse h2 {
+		color: #f3f3f3;
+		line-height: 0.8em;
+	  }
+
+	  /* Slide-specific styling */
+	  #slide-inverse .footnote {
+		bottom: 12px;
+		left: 20px;
+	  }
+	  #slide-how .slides {
+		font-size: 0.9em;
+		position: absolute;
+		top:  151px;
+		right: 140px;
+	  }
+	  #slide-how .slides h3 {
+		margin-top: 0.2em;
+	  }
+	  #slide-how .slides .first, #slide-how .slides .second {
+		padding: 1px 20px;
+		height: 90px;
+		width: 120px;
+		-moz-box-shadow: 0 0 10px #777;
+		-webkit-box-shadow: 0 0 10px #777;
+		box-shadow: 0 0 10px #777;
+	  }
+	  #slide-how .slides .first {
+		background: #fff;
+		position: absolute;
+		top: 20%;
+		left: 20%;
+		z-index: 1;
+	  }
+	  #slide-how .slides .second {
+		position: relative;
+		background: #fff;
+		z-index: 0;
+	  }
+
+	  /* Two-column layout */
+	  .left-column {
+		color: #777;
+		width: 20%;
+		height: 92%;
+		float: left;
+	  }
+		.left-column h2:last-of-type, .left-column h3:last-child {
+		  color: #000;
+		}
+	  .right-column {
+		width: 75%;
+		float: right;
+		padding-top: 1em;
+	  }
+	.footer { position: absolute; bottom: 12px; left: 0px, font-size: 0.1em; }
+	}
+	</style>
+  </head>
+  <body>
+	<textarea id='source'>
+class: center, middle, inverse
+
+#Introducción a NodeJS REPL
+.center[## (node shell)]
+
+.center[[enlace a información completa sobre REPL](https://nodejs.org/api/repl.html)]
+
+---
+layout: false
+.left-column[## REPL 
+### **R**ead 
+### **E**val 
+### **P**rint 
+### **L**oop
+.footer[TSR]
+]
+.right-column[
+Entorno interactivo (node shell) para:
+
+- Desarrollar y probar código de forma ágil
+
+  - Resuelve dudas sobre sintaxis/funcionamiento de js
+
+  - Ejecuta código escrito en cualquier editor
+
+- Depurar fragmentos de código
+
+  - Escribe código en editor, cárgalo en REPL, y trabaja de forma interactiva
+
+```
+Para seguir este texto necesitas un editor y una terminal
+```
+]
+
+???
+- Notas para el presentador
+
+- Cualquier cosa importante
+
+---
+.left-column[## REPL
+.footer[TSR]
+]
+.right-column[
+Desde la consola escribe node
+- el prompt cambia a `>`
+
+- podemos evaluar cualquier expresión `> 23 + 32`
+
+- el sistema lee la expresión (Read), la evalua (Eval), e imprime el resultado (Print), tras lo cual vuelve al principio (Loop)  
+```
+55 
+>
+```
+- Para salir pulsa CTRL-C dos veces consecutivas
+
+```
+> 23 + 32
+55
+> "hola, " + "lector"
+"hola, lector"
+> let x = 10, y = 20
+undefined
+>x+y
+30
+> "otorrinolaringologo".length
+19
+> [4,2,8,12].includes(6)
+false
+>
+```
+]
+---
+
+.left-column[## REPL
+.footer[TSR]
+]
+.right-column[
+Si la expresión a evaluar ocupa varias líneas:
+
+- En cada línea nueva aparece `...` (indica que continuamos con la expresión)
+
+- Vuelve al modo normal cuando finaliza la definición o expresión actual, se ejecuta `.break`
+
+```js
+> function suma(a,b) {
+... return a+b
+... }
+undefined
+> suma(10,30)
+40		
+>
+```
+]
+---
+.left-column[## Ejecucion fichero externo
+.footer[TSR]
+]
+.right-column[
+- Edita el fichero `f.js` con cualquier editor
+
+- Ejecuta en la consola `node f.js`
+
+```
+// fichero fact.js
+function fact(n) {
+*  if (n==1) return 1
+   else {
+      return n*fact(n-1)
+   }
+}
+console.log(fact(5))
+```
+```
+node fact.js
+120
+```
+]
+---
+
+.left-column[## Depuración con REPL
+.footer[TSR]
+]
+.right-column[
+Ejecuta `.load f.js` desde REPL
+
+- carga y ejecuta el fichero, y se mantiene en el REPL
+
+- puedes probar funciones, inspeccionar variables, etc.
+
+
+```
+> .load fact.js
+// fichero fact.js
+function fact(n) {
+   if (n==1) return 1
+      else {
+            return n*fact(n-1)
+               }
+               }
+               console.log(fact(5))
+120
+undefined
+> fact(0)
+RangeError: Maximum call stack size exceeded
+    at fact (repl:2:14)
+    at fact (repl:5:22)
+    ...
+```
+]
+---
+.left-column[## Dot commands
+.footer[TSR]
+]
+.right-column[
+- Son órdenes especiales que empiezan por `.`
+
+- Las más útiles son
+
+  - `.help`  explica las distintas órdenes dot
+  
+  - `.exit`  sale de REPL
+  
+  - `.editor`  para escribir expresiones multilínea
+
+  - `.break`  sale del modo editor
+
+  - `.save fichero`  guarda en ese fichero la sesión actual del trabajo (todo lo escrito en REPL)
+
+  - `.load fichero`  carga el fichero en la sesión actual
+]
+---
+.left-column[## También te interesa saber ...
+.footer[TSR]
+]
+.right-column[
+- Las teclas `arriba/abajo` permiten recorrer la historia de los comandos anteriores
+
+- `tab` autocompleta expresiones u órdenes
+
+  - Si no hay una finalización unica, otro `tab` muestra las alternativas
+
+  - Si no escribimos nada, `tab+tab` muestra los módulos que node exporta por defecto
+
+  - Si `x` es el nombre de un modulo/objeto, `x.` `tab+tab`, muestra sus funciones/propiedades
+
+  - `_` representa el resultado de la última expresión
+]
+	</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="https://remarkjs.com/remark.language.js"></script>
+    <script>
+      var slideshow = remark.create({
+          highlightStyle: 'monokai',
+          highlightLanguage: 'javascript',
+          highlightLines: true
+        }) ;
+    </script>
+  </body>
+</html>"
+
