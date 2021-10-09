@@ -81,7 +81,7 @@ int main(int argc, char * argv[]) {
     for(i=0; i<rep; i++) {
       init_vector(vector_in, msize);
       init_vector(vector_in2, msize);
-      fvalue = Scalar(vector_in2, vector_in, msize);      // A MODIFICAR  
+      //fvalue = Scalar(vector_in2, vector_in, msize);      // A MODIFICAR  
       //fvalue = ScalarSSE(vector_in2, vector_in, msize); // A MODIFICAR
     } // end for
 

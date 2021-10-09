@@ -14,6 +14,8 @@
 #include "bits/iconmask"
 #include "bits/runicon"
 #include "bits/runiconm"
+#include <errno.h>
+#include <stdio.h>
 #include "bits/cboard50"
 #include "bits/gray25"
 

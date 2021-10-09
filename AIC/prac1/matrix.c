@@ -7,9 +7,9 @@
 
 float matrix_in[MSIZE*MSIZE], matrix_in2[MSIZE*MSIZE], matrix_out[MSIZE*MSIZE];
 
-#define __SCALAR_PROD(v1, v2, s)  Scalar(v1, v2, s);
+//#define __SCALAR_PROD(v1, v2, s)  Scalar(v1, v2, s);
 //#define __SCALAR_PROD(v1, v2, s)  ScalarSSE(v1, v2, s);
-//#define __SCALAR_PROD(v1, v2, s)  
+#define __SCALAR_PROD(v1, v2, s)  
 
 
 //////////
