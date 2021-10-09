@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <omp.h>
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -90,7 +89,7 @@ int Filtro(int pasos, int radio, struct pixel **ppsImagenOrg, struct pixel **pps
 {
   int i, j, k, l, p, tot;
 
-  int r, g, b;
+  struct { int r, g, b; } resultado;
   int **ppdBloque, v;
 
   if ((ppdBloque = (int **)malloc(sizeof(int *) * (2*radio + 1))) == NULL) {
@@ -106,40 +105,33 @@ int Filtro(int pasos, int radio, struct pixel **ppsImagenOrg, struct pixel **pps
     for (j = -radio; j <= radio; j++)
       ppdBloque[i + radio][j + radio] = (radio - abs(i)) * (radio - abs(i)) + (radio - abs(j)) * (radio - abs(j)) + 1;
 
-  // Bucle 1 No se puede paralelizar 
   for (p = 0; p < pasos; p++) {
-    // Bucle 2
     for (i = 0; i < n; i++) {
-      // Bucle 3
       for (j = 0; j < m; j++) {
-        r = 0;
-        g = 0;
-        b = 0;
+        resultado.r = 0;
+        resultado.g = 0;
+        resultado.b = 0;
         tot = 0;
-        // Bucle 4
-        #pragma omp parallel for private(l, v) reduction(+:r, g, b, tot)
         for (k = max(0, i - radio); k <= min(n - 1, i + radio); k++) {
-          // Bucle 5
           for (l = max(0, j - radio); l <= min(m - 1, j + radio); l++) {
             v = ppdBloque[k - i + radio][l - j + radio];
-            r += ppsImagenOrg[k][l].r * v;
-            g += ppsImagenOrg[k][l].g * v;
-            b += ppsImagenOrg[k][l].b * v;
+            resultado.r += ppsImagenOrg[k][l].r * v;
+            resultado.g += ppsImagenOrg[k][l].g * v;
+            resultado.b += ppsImagenOrg[k][l].b * v;
             tot += v;
           }
         }
-        r /= tot;
-        g /= tot;
-        b /= tot;
-        ppsImagenDst[i][j].r = r;
-        ppsImagenDst[i][j].g = g;
-        ppsImagenDst[i][j].b = b;
+        resultado.r /= tot;
+        resultado.g /= tot;
+        resultado.b /= tot;
+        ppsImagenDst[i][j].r = resultado.r;
+        ppsImagenDst[i][j].g = resultado.g;
+        ppsImagenDst[i][j].b = resultado.b;
       }
     }
     if (p+1 < pasos)
       memcpy(ppsImagenOrg[0], ppsImagenDst[0], n * m * sizeof(struct pixel));
   }
-
   free(ppdBloque[0]);
   free(ppdBloque);
   return 0;
@@ -150,16 +142,6 @@ int main()
   struct pixel **ImgOrg, **ImgDst;
   int n = 2560, m = 1920;
   int i, rc;
-    
-  float t1, t2;
-  #pragma omp parallel
-   {
-      int id = omp_get_thread_num();
-      if (id == 0)
-         printf("Número de hilos: %d\n", omp_get_num_threads());
-   }
-
-  t1=omp_get_wtime();
 
   rc = lee_ppm(IMAGEN_ENTRADA, &ImgOrg, &n, &m);
   if (rc) { printf("Error al leer el fichero %s\n", IMAGEN_ENTRADA); return 1; }
@@ -180,10 +162,6 @@ int main()
   free(ImgDst[0]);
   free(ImgOrg);
   free(ImgDst);
-
-   t2=omp_get_wtime();
-
-   printf("El tiempo de ejecucion ha sido de %f segunos\n", t2-t1);
 
   return 0;
 }

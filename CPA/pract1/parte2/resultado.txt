@@ -1,0 +1,108 @@
+Tiempo secuencial: 1.839
+
+Tiempo de versiones paralelas
+|          | Versión 1 | Versión 2 | Versión 3 |   Versión 4 |
+|----------+-----------+-----------+-----------+-------------|
+| 1  hilo  |  1.823975 |  1.816895 |  2.135986 |    6.334473 |
+| 2  hilos |  1.022461 |  1.044189 |  2.601074 |   18.353271 |
+| 4  hilos |  0.671387 |  0.742920 |  4.144287 |   43.719482 |
+| 8  hilos |  0.748779 |  0.819092 |  7.077393 |   83.479492 |
+| 16 hilos |  0.761475 |  0.990234 | 91.513672 | 1522.000732 |
+
+###############################
+# Paralelizando segundo bucle #
+###############################
+
+
+Número de hilos: 1
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 1.823975 segunos
+
+Número de hilos: 2
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 1.022461 segunos
+
+Número de hilos: 4
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.671387 segunos
+
+Número de hilos: 8
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.748779 segunos
+
+Número de hilos: 16
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.761475 segunos
+
+##############################
+# Paralelizando tercer bucle #
+##############################
+
+
+Número de hilos: 1
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 1.816895 segunos
+
+Número de hilos: 2
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 1.044189 segunos
+
+Número de hilos: 4
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.742920 segunos
+
+Número de hilos: 8
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.819092 segunos
+
+Número de hilos: 16
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 0.990234 segunos
+##############################
+# Paralelizando cuarto bucle #
+##############################
+
+
+Número de hilos: 1
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 2.135986 segunos
+
+Número de hilos: 2
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 2.601074 segunos
+
+Número de hilos: 4
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 4.144287 segunos
+
+Número de hilos: 8
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 7.077393 segunos
+
+Número de hilos: 16
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 91.513672 segunos
+##############################
+# Paralelizando quinto bucle #
+##############################
+
+
+Número de hilos: 1
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 6.334473 segunos
+
+Número de hilos: 2
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 18.353271 segunos
+
+Número de hilos: 4
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 43.719482 segunos
+
+Número de hilos: 8
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 83.479492 segunos
+
+Número de hilos: 16
+Abierta una imagen de n:512, m:512
+El tiempo de ejecucion ha sido de 1522.000732 segunos
