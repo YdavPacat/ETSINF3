@@ -8,3 +8,5 @@
     + Fecha intermedia entre los parciales
   - Las tres pruebas pueden recuperase de forma independiente al final de semestre 
   - La evaluación de prácticas está incluida en estos parciales
+  
+  [[https://htmlpreview.github.io/?https://github.com/YdavPacat/ETSINF3/blob/main/TSR/website/index.html][link]]
