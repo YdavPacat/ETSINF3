@@ -1,6 +1,5 @@
 (defglobal ?*nod-gen* = 0)
 (defglobal ?*prof* = 15)
-; (defglobal ?*busq* = 2)
 
 (deffacts mapa
     ;; Atributos estáticos
@@ -34,7 +33,6 @@
 (defrule mov_der
 	?f <- (problema pos ?x ?y latas $?z prof ?nivel) 
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?x ?lim_x))
     (not (hueco =(+ ?x 1) ?y ))
     (test (not (member$ (create$ l(+ ?x 1) ?y) $?z)))
@@ -46,8 +44,6 @@
 
 (defrule mov_izq
 	?f <- (problema pos ?x ?y latas $?z prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?x 1))
     (not (hueco =(- ?x 1) ?y ))
     (test (not (member$ (create$ l(- ?x 1) ?y) $?z))); No se mueva hacia la lata
@@ -59,8 +55,6 @@
 
 (defrule mov_aba
 	?f <- (problema pos ?x ?y latas $?z prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?y 1))
     (not (hueco ?x =(- ?y 1)))
     (test (not (member$ (create$ l ?x (- ?y 1)) $?z)))
@@ -73,7 +67,6 @@
 (defrule mov_arr
 	?f <- (problema pos ?x ?y latas $?z prof ?nivel)
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?y ?lim_y))
     (not (hueco ?x =(+ ?y 1)))
     (test (not (member$ (create$ l ?x (+ ?y 1)) $?z)))
@@ -86,11 +79,11 @@
 (defrule mov_lata_arr
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y) 
     (test (<> ?l_y ?lim_y))                     ;; ¿La lata está ya arriba del todo?
-    (test (<> ?y ?lim_y))                     
     (not (hueco ?l_x =(+ ?l_y 1)))              ;; ¿Hay un hueco después de la lata?
-    (test (and (= ?l_x ?x) (= ?l_y (+ ?y 1))))  ;; ¿La lata está arriba del robor?
+    (test (not (member$ (create$ l ?x (+ ?y 2)) $?z)))
+    (test (not (member$ (create$ l ?x (+ ?y 2)) $?w)))
+    (test (and (= ?l_x ?x) (= ?l_y (+ ?y 1))))  ;; ¿La lata está arriba del robot?
     (test (< ?nivel ?*prof*))
 =>
     (bind ?*nod-gen* (+ ?*nod-gen* 1))
@@ -99,11 +92,10 @@
 
 (defrule mov_lata_aba
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
-    (test (<> ?y 1))
     (test (<> ?l_y 1))
     (not (hueco ?l_x =(- ?l_y 1)))
+    (test (not (member$ (create$ l ?x (- ?y 2)) $?z)))
+    (test (not (member$ (create$ l ?x (- ?y 2)) $?w)))
     (test (and (= ?l_x ?x) (= ?l_y (- ?y 1))))
     (test (< ?nivel ?*prof*))
 =>
@@ -114,11 +106,11 @@
 (defrule mov_lata_der
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
-    (test (<> ?x ?lim_x))
     (test (<> ?l_x ?lim_x))
     (not (hueco =(+ ?l_x 1) ?l_y))
-    (test (and (= (+ ?l_x 1) ?x) (= ?l_y ?y)))
+    (test (not (member$ (create$ l (+ ?x 2) ?y ) $?z)))
+    (test (not (member$ (create$ l (+ ?x 2) ?y ) $?w)))
+    (test (and (= (- ?l_x 1) ?x) (= ?l_y ?y)))
     (test (< ?nivel ?*prof*))
 =>
     (bind ?*nod-gen* (+ ?*nod-gen* 1))
@@ -127,12 +119,11 @@
 
 (defrule mov_lata_izq
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
-    (test (<> ?x 1))
     (test (<> ?l_y 1))
     (not (hueco =(- ?l_x 1) ?l_y))
-    (test (and (= (- ?l_x 1) ?x) (= ?l_y ?y)))
+    (test (not (member$ (create$ l (- ?x 2) ?y ) $?z)))
+    (test (not (member$ (create$ l (- ?x 2) ?y ) $?w)))
+    (test (and (= (+ ?l_x 1) ?x) (= ?l_y ?y)))
     (test (< ?nivel ?*prof*))
 =>
     (bind ?*nod-gen* (+ ?*nod-gen* 1))
@@ -143,10 +134,9 @@
     (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?l_y ?lim_y))
-    (test (and (= ?hue_x ?l_x) (= ?hue_y (+ ?l_y 1)))) ;; ¿Arriba de la lata hay un hueco?
-    (test (and (= ?l_x ?x) (= ?l_y (+ ?y 1))))         ;; ¿La lata está arriba del robor?
+    (hueco ?x =(+ ?y 2))
+    (test (and (= ?l_x ?x) (= ?l_y (+ ?y 1))))         ;; ¿La lata está arriba del robot?
     (test (< ?nivel ?*prof*))
 =>
     (bind ?*nod-gen* (+ ?*nod-gen* 1))
@@ -156,10 +146,8 @@
 (defrule tirar_lata_aba
     (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?l_y 1))
-    (test (and (= ?hue_x ?l_x) (= ?hue_y (- ?l_y 1)))) 
+    (hueco ?x =(- ?y 2))
     (test (and (= ?l_x ?x) (= ?l_y (- ?y 1)))) 
     (test (< ?nivel ?*prof*))
 =>
@@ -170,9 +158,8 @@
     (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
     (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
     (test (<> ?l_x ?lim_x))
-    (test (and (= ?hue_x (+ ?l_x 1)) (= ?hue_y ?l_y)))
+    (hueco =(+ ?x 2) ?y)
     (test (and (= ?l_x (+ ?x 1)) (= ?l_y ?y)))
     (test (< ?nivel ?*prof*))
 =>
@@ -182,10 +169,8 @@
 (defrule tirar_lata_izq
     (declare (salience 20))
     ?f <- (problema pos ?x ?y latas $?z l ?l_x ?l_y $?w prof ?nivel)
-    (limites ?lim_x ?lim_y)
-    (hueco ?hue_x ?hue_y)
-    (test (<> ?l_y 1))
-    (test (and (= ?hue_x (- ?l_x 1)) (= ?hue_y ?l_y)))
+    (test (<> ?l_x 1))
+    (hueco =(- ?x 2) ?y)
     (test (and (= ?l_x (- ?x 1)) (= ?l_y ?y)))
     (test (< ?nivel ?*prof*))
 =>
@@ -195,8 +180,7 @@
 
 (defrule fin
     (declare (salience 100))
-    ?f <- (problema $?a latas prof ?nivel)
-    (problema pos ?x ?y latas)
+    ?f <- (problema pos $?a latas prof ?nivel)
 =>
     (printout T"Fin" crlf)
     (printout T"Solución encontrada en el nivel: " ?nivel crlf)
