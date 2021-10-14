@@ -183,7 +183,7 @@ int main()
 
    t2=omp_get_wtime();
 
-   printf("El tiempo de ejecucion ha sido de %f segunos\n", t2-t1);
+   printf("El tiempo de ejecucion ha sido de %f segundos\n", t2-t1);
 
   return 0;
 }
