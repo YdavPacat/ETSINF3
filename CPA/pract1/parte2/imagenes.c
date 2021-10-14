@@ -143,6 +143,16 @@ int main()
   int n = 2560, m = 1920;
   int i, rc;
 
+  float t1, t2;
+  #pragma omp parallel
+   {
+      int id = omp_get_thread_num();
+      if (id == 0)
+         printf("Número de hilos: %d\n", omp_get_num_threads());
+   }
+
+  t1=omp_get_wtime();
+
   rc = lee_ppm(IMAGEN_ENTRADA, &ImgOrg, &n, &m);
   if (rc) { printf("Error al leer el fichero %s\n", IMAGEN_ENTRADA); return 1; }
   printf("Abierta una imagen de n:%d, m:%d\n", n, m);
@@ -162,6 +172,8 @@ int main()
   free(ImgDst[0]);
   free(ImgOrg);
   free(ImgDst);
+
+  t2=omp_get_wtime();
 
   return 0;
 }
