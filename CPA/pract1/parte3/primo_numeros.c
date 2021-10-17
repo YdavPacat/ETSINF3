@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 
 typedef unsigned long long Entero_grande;
-#define N 100000000ULL
+#define N 50000000ULL
 
 int primo(Entero_grande n)
 {
@@ -25,12 +26,25 @@ int main()
 {
   Entero_grande i, n;
 
-  n = 2; /* Por el 1 y el 2 */
+  double t = omp_get_wtime();
+  n = 1;
+  #pragma omp parallel for reduction(+:n) private(i)
   for (i = 3; i <= N; i += 2)
     if (primo(i)) n++;
 
-  printf("Entre el 1 y el %llu hay %llu numeros primos.\n",
-         N, n);
+  t = omp_get_wtime() - t;
+  omp_sched_t tipo;
+  int chunk;
+  #pragma omp parallel
+  #pragma omp single
+  {
+    omp_get_schedule(&tipo,&chunk);
+    printf("Tiempo para %d hilos: %f\n",omp_get_num_threads(),t);
+    printf("Tipo de planificacion: %d chunk: %d\n", tipo, chunk);
+  };
+
+    printf("Entre el 1 y el %llu hay %llu numeros primos.\n",
+          N, n);
 
   return 0;
 }
