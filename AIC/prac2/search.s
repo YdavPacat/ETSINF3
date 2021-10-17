@@ -1,9 +1,9 @@
-# cont = 0;
-# for (i = 0; i < n; i++) {
-#    if (a[i] == 0) {
-#        cont = cont + 1;
-#     }
-# }
+; cont = 0;
+; for (i = 0; i < n; i++) {
+;    if (a[i] == 0) {
+;        cont = cont + 1;
+;     }
+; }
 
 
         .data
@@ -17,11 +17,12 @@ start:	dadd r1, $gp, a   ; Puntero
         dadd r10, r0, r0  ; Contador de ceros
  
 loop:   ld r12, 0(r1) 
+        dsubi r4, r4, 1
 	bnez r12, if 
 
         daddi r10, r10, 1
 
-if:     dsubi r4, r4, 1
+if:     
         daddi r1, r1, 8
         bnez r4, loop
         sd r10, cont($gp)
