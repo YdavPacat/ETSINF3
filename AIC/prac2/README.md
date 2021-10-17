@@ -10,4 +10,4 @@
 - Apxpu-d1
   - [Apxpy-d1](https://htmlpreview.github.io/?https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac2/apxpy-d1/apxpy-d1.html)   
 - Search
-  - [Search](https://htmlpreview.github.io/?https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac2/search/seach.html)
+  - [Search](https://htmlpreview.github.io/?https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac2/search/search.html)
