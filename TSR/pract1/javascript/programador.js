@@ -1,15 +1,13 @@
-const net = require('net');
 
-if (process.argv.length < 4){
-    console.log("Error de argumentos")
-    return;
-}
-const IP_servidor = process.argv[2];  
-const IP_local = process.argv[3];
-const client = net.connect({port:8000, host: IP_servidor},
+const Proxy_IP = process.argv[2]
+const Remote_IP = process.argv[3]
+const Remote_PORT = process.argv[4]
+const net = require('net');
+const client = net.connect({port:8001},
     function() { //connect listener
         console.log('client connected');
-        client.write('world!\r\n');
+        var msg = JSON.stringify ({'remote_ip':Remote_IP, 'remote_port':Remote_PORT})
+        client.write(msg);
     });
 client.on('data',
  function(data) {

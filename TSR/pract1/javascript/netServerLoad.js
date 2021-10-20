@@ -16,7 +16,7 @@ const server = net.createServer(
         });
     });
 
-server.listen(59320,
+server.listen(8002,
     function() { //listening listener
         console.log('server bound');
     });
