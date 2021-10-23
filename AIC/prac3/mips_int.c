@@ -304,7 +304,15 @@ dword mux_ALUsup(dword npc, dword ra, dword mem, dword wb) {
                        que la instruccion que hay en MEM es mas moderna */
                                         /* WBtoEX */
                     
+               /* Ejercicio 2     */ 
               /* INSERTAR CÓDIGO */
+                if(escribe_Rdst(MEM_WB.IR) &&
+                    lee_Rfte1(ID_EX.IR) &&
+                    MEM_WB.IR.Rdestino == ID_EX.IR.Rfuente1){
+
+                    WBaEXalu_s = SI;
+                        result = wb;
+                }
 
                     /* if (...) {
                             ...
@@ -314,9 +322,16 @@ dword mux_ALUsup(dword npc, dword ra, dword mem, dword wb) {
                      */
 
                     /* MEMtoEX */
-                    
+               /* Ejercicio 2     */ 
               /* INSERTAR CÓDIGO */
+                
+                if(escribe_Rdst(EX_MEM.IR) &&
+                    lee_Rfte1(ID_EX.IR) &&
+                    EX_MEM.IR.Rdestino == ID_EX.IR.Rfuente1){
 
+                        MEMaEXalu_s = SI;
+                        result = mem;
+                }
                     /* if (...) {
                             ...
                             MEMaEXalu_s = SI;
@@ -370,7 +385,8 @@ dword mux_ALUinf(dword rb, dword imm, dword mem, dword wb) {
                         
                         /* WBtoEX */
                         
-              /* INSERTAR CÓDIGO */
+                        /* INSERTAR CÓDIGO */
+                        
 
                         /* if (...) {
                             ...
@@ -698,10 +714,12 @@ void detectar_riesgos_datos(void) {
                     ...
                }
              */
-            
+               /*  Ejercicio 1   */
               /* INSERTAR CÓDIGO */
-            if(escribe_Rdst(ID_EX.IR) && lee_Rfte1(IF_ID.IR) 
-              && (ID_EX.IR.Rdestino == IF_ID.IR.Rfuente1 || ID_EX.IR.Rdestino == IF_ID.IR.Rfuente2 )){
+            if(escribe_Rdst(ID_EX.IR) &&
+               lee_Rfte1(IF_ID.IR) &&
+                 (ID_EX.IR.Rdestino == IF_ID.IR.Rfuente1 ||
+                  ID_EX.IR.Rdestino == IF_ID.IR.Rfuente2 )){
                 
                 IFstall = SI;
                 IDstall = SI;
@@ -716,9 +734,12 @@ void detectar_riesgos_datos(void) {
                }
              */
             
+               /*  Ejercicio 1   */
               /* INSERTAR CÓDIGO */
-            if(escribe_Rdst(EX_MEM.IR) && lee_Rfte1(IF_ID.IR) 
-              && (EX_MEM.IR.Rdestino == IF_ID.IR.Rfuente1 || EX_MEM.IR.Rdestino == IF_ID.IR.Rfuente2 )){
+            if(escribe_Rdst(EX_MEM.IR) &&
+               lee_Rfte1(IF_ID.IR) &&
+                (EX_MEM.IR.Rdestino == IF_ID.IR.Rfuente1 ||
+                 EX_MEM.IR.Rdestino == IF_ID.IR.Rfuente2 )){
                 
                 IFstall = SI;
                 IDstall = SI;
