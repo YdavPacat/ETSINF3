@@ -1,5 +1,5 @@
 const zmq = require('zeromq')
-const nick='Ana'
+const nick= process.argv[2]
 let sub = zmq.socket('sub') 
 let psh = zmq.socket('push')
 sub.connect('tcp://127.0.0.1:9998')
