@@ -1,6 +1,6 @@
 public class Area{
     private string nombre;
-    private ICollection <Collection> financiadaPor;
+    private ICollection <Colectivo> financiadaPor;
     public Area(string m, Colectivo c){
         this.nombre = m;
         this.financiadaPor = new List<Colectivo>();
@@ -42,8 +42,8 @@ public class Recurso{
 }
 
 public class Organizacion {
-    private stirng nombre;
-    private stirng acronimo;
+    private string nombre;
+    private string acronimo;
     private ICollection<Area> cubre;
     private ICollection<Resurso> disponeDe;
     private ICollection<Rol> roles;
