@@ -370,7 +370,7 @@ WHERE atr.fecha_nac = (SELECT MIN(atr2.fecha_nac)
 SELECT p.cod_pais, p.nombre
 FROM Pais p
 WHERE p.cod_pais IN (SELECT a.cod_pais FROM Actor a) AND NOT EXISTS (SELECT a1.cod_pais FROM Actor a1 WHERE NOT (EXTRACT (YEAR FROM a1.fecha_nac)) BETWEEN 1900 AND 1999 AND p.cod_pais = a1.cod_pais) 
-#end_src
+#+end_src
 
 *** 33. Obtener el código y el nombre de los actores tales que todos los papeles que han tenido son de ‘Secundario’. Sólo interesan aquellos actores que hayan actuado en alguna película.
 
@@ -378,7 +378,7 @@ WHERE p.cod_pais IN (SELECT a.cod_pais FROM Actor a) AND NOT EXISTS (SELECT a1.c
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE atr.cod_act IN (SELECT act.cod_act FROM Actua act) AND NOT EXISTS (SELECT act1.cod_peli FROM Actua act1 WHERE act1.papel <> 'Secundario' AND atr.cod_act = act1.cod_act)
-#end_src
+#+end_src
 
 *** 34. Obtener el código y el nombre de los actores que han aparecido en todas las películas del director ‘Guy Ritchie’ (sólo si ha dirigido al menos una).
 
@@ -386,7 +386,7 @@ WHERE atr.cod_act IN (SELECT act.cod_act FROM Actua act) AND NOT EXISTS (SELECT 
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND EXISTS (SELECT act.cod_act FROM Actua act WHERE atr.cod_act = act.cod_act AND NOT EXISTS(SELECT p.cod_peli FROM Pelicula p WHERE p.director <> 'Guy Ritchie' AND act.cod_peli = p.cod_peli))
-#end_src
+#+end_src
 
 *** 35. Resolver la consulta anterior pero para el director de nombre ‘John Steel’.
 
@@ -394,7 +394,7 @@ WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND EXISTS (SELECT act.cod_act FROM Actua act WHERE atr.cod_act = act.cod_act AND NOT EXISTS(SELECT p.cod_peli FROM Pelicula p WHERE p.director <> 'John Steel' AND act.cod_peli = p.cod_peli))
-#end_src
+#+end_src
 
 *** 36. Obtener el código y el título de las películas de menos de 100 minutos en las que todos los actores que han actuado son de un mismo país.
 
@@ -427,7 +427,7 @@ WHERE duracion < 100
                                    )
                             )
                  )
-#end_src
+#+end_src
 
 *** 37. Obtener el código, el título y el año de las películas en las que haya actuado algún actor si se cumple que todos los actores que han actuado en ella han nacido antes del año 1943 (hasta el 31/12/1942).
 
@@ -437,7 +437,7 @@ FROM Pelicula p
 WHERE EXISTS (SELECT * FROM Actua ac WHERE p.cod_peli = ac.cod_peli) AND NOT EXISTS 
             (SELECT act.cod_peli FROM Actua act WHERE act.cod_peli = p.cod_peli AND EXISTS 
             (SELECT atr.cod_act FROM Actor atr WHERE atr.fecha_nac >= '31/12/1942' AND atr.cod_act = act.cod_act))
-#end_src
+#+end_src
 
 *** 38. Obtener el código y el nombre de cada país si se cumple que todos sus actores han actuado en al menos una película de más de 120 minutos. (Ordenados por nombre).
 
@@ -466,7 +466,7 @@ NOT EXISTS (
               )
         )
 ORDER BY p.nombre
-#end_src
+#+end_src
 
 * Base de Datos MÚSICA
 
