@@ -1,6 +1,6 @@
 const zmq = require('zeromq')
 let pub = zmq.socket('pub')
-let port = process.argv[2]
+const port = process.argv[2]
 let numMensajes = process.argv[3]
 let msg = process.argv.slice(4)
 let contardor = 1;
