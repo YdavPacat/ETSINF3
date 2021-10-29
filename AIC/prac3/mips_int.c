@@ -758,10 +758,17 @@ void detectar_riesgos_datos(void) {
             }
              */
             
+               /*  Ejercicio 2.2   */
               /* INSERTAR CÓDIGO */
-
-
-                        break;
+            if(es_load(ID_EX.IR) &&
+                lee_Rfte1(IF_ID.IR) &&
+                (ID_EX.IR.Rdestino == IF_ID.IR.Rfuente1 ||
+                 ID_EX.IR.Rdestino == IF_ID.IR.Rfuente2 )){
+                 IFstall = SI;
+                 IDstall = SI;
+            }        
+                 
+            break;
         default:
             break;
 
