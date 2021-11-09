@@ -736,3 +736,52 @@ SELECT l.titulo, l.id_lib
 FROM Libro l, Esta_en e1, Esta_en e2
 WHERE l.titulo IS NOT NULL AND l.id_lib = e1.id_lib AND l.id_lib = e2.id_lib AND e1.cod_ob <> e2. cod_ob;
 #+end_src
+
+** Consultas con subconsultas
+*** 14. Obtener el título de las obras escritas sólo por un autor si éste es de nacionalidad “Francesa” indicando también el nombre del autor.
+//REVISAR
+#+begin_src sql
+SELECT o.titulo, a.nombre
+FROM Obra o, Autor a
+WHERE a.nacionalidad = 'Francesa' AND 1 = (SELECT COUNT(*) FROM Escribir e WHERE o.cod_ob = e.cod_ob AND a.autor_id = e.autor_id);
+#+end_src
+
+*** 15. ¿Cuántos autores hay en la base de datos de los que no se tiene ninguna obra?
+
+#+begin_src sql
+SELECT COUNT(*)
+FROM Autor a
+WHERE a.autor_id NOT IN (SELECT e.autor_id FROM Escribir e WHERE e.cod_ob IS NOT NULL);
+#+end_src
+
+*** 16. Obtener el nombre de esos autores.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.autor_id NOT IN (SELECT e.autor_id FROM Escribir e WHERE e.cod_ob IS NOT NULL);
+#+end_src
+
+*** 17. Obtener el nombre de los autores de nacionalidad “Española” que han escrito dos o más obras.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.nacionalidad = 'Española' AND 1 < (SELECT COUNT(*) FROM Escribir e WHERE e.autor_id = a.autor_id);
+#+end_src
+
+*** 18. Obtener el nombre de los autores de nacionalidad “Española” que han escrito alguna obra que está en dos o más libros.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.nacionalidad = 'Española' AND EXISTS (SELECT * FROM Escribir e WHERE e.autor_id = a.autor_id AND 1 < (SELECT COUNT(*) FROM Esta_en ee WHERE e.cod_ob = ee.cod_ob));
+#+end_src
+
+*** 19. Obtener el título y el código de las obras que tengan más de un autor.
+
+#+begin_src sql
+SELECT o.titulo, o.cod_ob
+FROM Obra o
+WHERE 1 < (SELECT COUNT(e.autor_id) FROM Escribir e WHERE o.cod_ob = e.cod_ob);
+#+end_src
