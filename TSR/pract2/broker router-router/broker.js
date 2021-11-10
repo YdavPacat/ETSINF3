@@ -1,9 +1,13 @@
 const zmq = require('zeromq')
+const portFrontend = process.argv[2]
+const portBackend = process.argv[3]
 let cli=[], req=[], workers=[]
 let sc = zmq.socket('router') // frontend
 let sw = zmq.socket('router') // backend
-sc.bind('tcp://*:9998')
-sw.bind('tcp://*:9999')
+let peticionCount = 0;
+let workersCount = {}
+sc.bind('tcp://*:' + portFrontend)
+sw.bind('tcp://*:' + portBackend)
 sc.on('message',(c,sep,m)=> {
 	if (workers.length==0) { 
 		cli.push(c); req.push(m)
@@ -19,5 +23,22 @@ sw.on('message',(w,sep,c,sep2,r)=> {
 	} else {
 		workers.push(w)
 	}
-	sc.send([c,'',r])
+
+	if (workersCount[w]) {
+		workersCount[w]++
+	}
+	else{
+		workersCount[w] = 1
+	}
+	++peticionCount
+	let algo = ' ' + peticionCount
+	sc.send([c,'',r + algo])
 })
+
+setInterval(() =>{ 
+	console.log("Numero de peticiones totales: " + peticionCount)
+    for(const w in workersCount){
+		console.log("\t-El " + w + " ha realizado " + workersCount[w] + " peticiones")
+	}
+	console.log()
+}, 5000)
