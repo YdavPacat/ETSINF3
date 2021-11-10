@@ -630,6 +630,9 @@ AND NOT EXISTS (SELECT * FROM Disco d1 WHERE c.cod <> d1.cod_comp AND d1.cod_gru
 
 * Base de Datos BIBLIOTECA 
 
+#+NAME: Base de datos BIBLIOTECA
+[[./BIBLIOTECA.PNG]]
+
 ** Consultas sobre una sola relación
 *** 1. Obtener el nombre de los autores de nacionalidad ‘Argentina’.
 
