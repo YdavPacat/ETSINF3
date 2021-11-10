@@ -735,7 +735,7 @@ WHERE e.autor_id = 'RUKI' AND e.cod_ob = l.cod_ob AND l.num = am.num;
 *** 13. Obtener el título y el identificador de los libros que tengan título y más de una obra. Resolver este ejercicio sin utilizar el atributo num_obras.
 
 #+begin_src sql
-SELECT l.titulo, l.id_lib
+SELECT DISTINCT l.id_lib, l.titulo
 FROM Libro l, Esta_en e1, Esta_en e2
 WHERE l.titulo IS NOT NULL AND l.id_lib = e1.id_lib AND l.id_lib = e2.id_lib AND e1.cod_ob <> e2. cod_ob;
 #+end_src
