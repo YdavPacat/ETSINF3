@@ -115,7 +115,15 @@ void fase_busqueda(
         case pnt3:
             
               /* INSERTAR CÓDIGO */
-
+            if (EX_MEM.cond) {
+                SaltoEfectivo = SI;
+                PCn = EX_MEM.ALUout;
+                IFnop = SI;
+                IDnop = SI;
+                EXnop = SI;
+            } else {
+                PCn = PC + 4;
+            }
             break;
 
         case pnt2:
