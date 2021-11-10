@@ -34,7 +34,7 @@ WHERE nombre LIKE '%John%'
 
 #+begin_src sql
 SELECT cod_peli, titulo
-FROM peliculatr2
+FROM pelicula
 WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
