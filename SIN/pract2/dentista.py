@@ -9,4 +9,4 @@ Pd1c1 = np.sum(T[np.where((T[:,0]==1)&(T[:,1]==1))[0],-1])
 Pd1Dc1 = Pd1c1/Pc1
 
 Pc1Dd1 = Pc1 * (Pd1Dc1 / Pd1)
-print(Pc1Dd1)
+print("La probabilidad de caries si hay dolor es de %.2f%c" % (Pc1Dd1 * 100, chr(37)))
