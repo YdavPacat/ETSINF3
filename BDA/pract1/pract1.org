@@ -483,30 +483,32 @@ GROUP BY l.cod_lib, l.titulo
 *** 40. Obtener para cada género en el que se han clasificado más de 5 películas, el código y el nombre del género indicando la cantidad de películas del mismo y duración media de sus películas. (Ordenados por nombre).
 
 #+begin_src sql
-SELECT g.cod_gen, g.nombre, COUNT(p.cod_peli), AVG(p.duracion)
-FROM Genero g, Pelicula p
-WHERE 5 < (SELECT COUNT(*) FROM Clasificacion c WHERE p.cod_peli = c.cod_peli)
+SELECT g.cod_gen, g.nombre, COUNT(distinct c.cod_peli), ROUND(AVG(p.duracion))
+FROM Genero g, Clasificacion c, Pelicula p
+WHERE c.cod_gen = g.cod_gen AND p.cod_peli = c.cod_peli
 GROUP BY g.cod_gen, g.nombre
+HAVING count(c.cod_peli) > 5
+ORDER BY g.nombre
 #+end_src
 
 *** 41. Obtener el código y el título de las películas de año posterior al 2000 junto con el número de géneros en que están clasificadas, si es que están en alguno. (Ordenadas por título).
 
 #+begin_src sql
-SELECT g.cod_gen, g.nombre, COUNT(p.cod_peli), AVG (p.duracion)
-FROM Genero g, Pelicula p, clasificacion c1
-WHERE 5 < (SELECT COUNT(*) 
-           FROM Clasificacion c 
-           WHERE c.cod_peli = p.cod_peli) 
-    AND c1.cod_gen = g.cod_gen AND c1.cod_peli = p.cod_peli
-GROUP BY g.cod_gen, g.nombre
-ORDER BY g.nombre;
-
+SELECT p.cod_peli, p.titulo, COUNT(DISTINCT c.cod_gen)
+FROM Pelicula p, Clasificacion c
+WHERE p.anyo > 2000 AND p.cod_peli = c.cod_peli
+GROUP BY p.cod_peli, p.titulo
+ORDER BY p.titulo
 #+end_src
 
 *** 42. Obtener los directores que tienen la cadena ‘George’ en su nombre y que han dirigido exactamente dos películas.
 
 #+begin_src sql
-
+SELECT p.director
+FROM Pelicula p
+WHERE p.director LIKE '%George%'
+GROUP BY p.director
+HAVING COUNT(*) = 2
 #+end_src
 
 *** 43. Obtener para cada película clasificada exactamente en un género y en la que haya actuado algún actor, el código, el título y la cantidad de actores que actúan en ella.
@@ -522,13 +524,26 @@ ORDER BY p.titulo
 *** 44. Obtener el código y el nombre de todos los países con actores indicando cuántos actores de cada país han actuado en al menos una película de la década de los 60.
 
 #+begin_src sql
-
+SELECT p.cod_pais, p.nombre, COUNT(DISTINCT a.cod_act)
+FROM Pais p, Actor a, Actua ac, Pelicula pe
+WHERE pe.anyo BETWEEN 1960 AND 1969 AND p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND ac.cod_peli = pe.cod_peli
+GROUP BY p.cod_pais, p.nombre
+HAVING COUNT(a.cod_act) > 0
+ORDER BY p.nombre
 #+end_src
 
 *** 45. Obtener el código, el nombre del género en el que hay clasificadas más películas (puede haber más de uno).
 
 #+begin_src sql
-
+SELECT g.cod_gen, g.nombre
+FROM Genero g, Clasificacion c
+WHERE c.cod_gen = g.cod_gen
+GROUP BY g.cod_gen, g.nombre
+HAVING count(c.cod_peli) = (SELECT MAX(COUNT(distinct c2.cod_peli))
+                           FROM Genero g2, Clasificacion c2
+                           WHERE c2.cod_gen = g2.cod_gen
+                           GROUP BY g2.cod_gen, g2.nombre)
+ORDER BY g.nombre
 #+end_src
 
 *** 46. Obtener el código, el título y el autor del libro en el que se han basado más películas (puede haber más de uno).
@@ -540,6 +555,12 @@ ORDER BY p.titulo
 *** 47. Obtener el código y el nombre del país que más actores tiene que hayan participado exactamente en 2 películas
 
 #+begin_src sql
+-- TODO
+SELECT p.cod_pais, p.nombre, count(distinct ac.cod_act)
+FROM pais p, actor a, actua ac
+WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT 
+                                                                  FORM actua ac2, actor a2
+GROUP BY p.cod_pais, p.nombre
 
 #+end_src
 
@@ -547,6 +568,44 @@ ORDER BY p.titulo
 
 #+begin_src sql
 
+#+end_src
+
+*** 50. Obtener para todos los países que hay en la base de datos, el código, el nombre y la cantidad de actores que hay de ese país.
+
+#+begin_src sql
+SELECT p.cod_pais, p.nombre, count(a.cod_act)
+FROM Pais p LEFT JOIN Actor a ON p.cod_pais = a.cod_pais
+GROUP BY p.cod_pais, p.nombre
+ORDER BY p.nombre
+#+end_src
+
+*** 51. Obtener el código y el título de todos los libros de la base de datos de año posterior a 1980 junto con la cantidad de películas a que han dado lugar.
+
+#+begin_src sql
+SELECT l.cod_lib, l.titulo, count(p.cod_peli)
+FROM libro_peli l LEFT JOIN pelicula p ON l.cod_lib = p.cod_lib
+WHERE l.anyo > 1980
+GROUP BY l.cod_lib, l.titulo
+#+end_src
+
+*** 52. Obtener para todos los países que hay en la base de datos, el código, el nombre y la cantidad de actores que hay de ese país.
+
+#+begin_src sql
+
+SELECT p.cod_pais, p.nombre, count(DISTINCT a.cod_act)
+FROM Pais p LEFT JOIN (Actor a JOIN Actua ac ON a.cod_act = ac.cod_act AND ac.papel = 'Secundario') ON p.cod_pais = a.cod_pais
+GROUP BY p.cod_pais, p.nombre
+ORDER BY p.nombre
+#+end_src
+
+*** 53. Obtener para cada película que hay en la base de datos que dure más de 140 minutos, el código, el título, la cantidad de géneros en los que está clasificado y la cantidad de actores que han actuado en ella
+
+#+begin_src sql
+SELECT p.cod_peli, p.titulo, COUNT(DISTINCT c.cod_gen), COUNT(DISTINCT a.cod_act)
+FROM (Pelicula p LEFT JOIN Actua a ON p.cod_peli = a.cod_peli) LEFT JOIN Clasificacion c ON p.cod_peli = c.cod_peli
+WHERE p.duracion > 140
+GROUP BY p.cod_peli, p.titulo
+ORDER BY p.titulo
 #+end_src
 
 * Base de Datos MÚSICA
