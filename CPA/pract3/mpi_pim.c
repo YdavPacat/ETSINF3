@@ -24,7 +24,7 @@ int main(int argc,char *argv[])
     x = h * ((double)i - 0.5);
     sum += (4.0 / (1.0 + x*x));
   }
-  mypi = h * sum;
+  pi = h * sum;
 
   if(myid == 0)
   for(i=1; i<numprocs; i++){
