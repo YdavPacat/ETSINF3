@@ -12,6 +12,7 @@ char buf[NMAX];
 int main(int argc,char *argv[])
 {
   int n, myid, numprocs;
+  double f1, f2;
 
   MPI_Init(&argc,&argv);
   MPI_Comm_size(MPI_COMM_WORLD,&numprocs);
@@ -25,6 +26,7 @@ int main(int argc,char *argv[])
 
   /* COMPLETE: Get current time, using MPI_Wtime() */
 
+   f1 = MPI_Wtime();
 
   /* COMPLETE: loop of NREPS iterations.
      In each iteration, P0 sends a message of n bytes to P1, and P1 sends the same
@@ -34,6 +36,7 @@ int main(int argc,char *argv[])
 
   /* COMPLETE: Get current time, using MPI_Wtime() */
 
+   f2 = MPI_Wtime();
 
   /* COMPLETE: Only in process 0.
      Compute the time of transmission of a single message (in milliseconds) and print it.

@@ -6,8 +6,9 @@
 int main(int argc,char *argv[])
 {
   int    n, myid, numprocs, i;
-  double mypi, pi, h, sum, x;
+  double mypi, pi, h, sum, x, s;
 
+  MPI_Status status;
   MPI_Init(&argc,&argv);
   MPI_Comm_size(MPI_COMM_WORLD,&numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD,&myid);
@@ -24,8 +25,18 @@ int main(int argc,char *argv[])
     sum += (4.0 / (1.0 + x*x));
   }
   mypi = h * sum;
+
+  if(myid == 0)
+  for(i=1; i<numprocs; i++){
+    MPI_Recv(&s, 1, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &status);
+    pi += s;
+  }
+  else{
+    MPI_Send(&pi, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+  }
+
   /* Reducción: el proceso 0 obtiene la suma de todos los resultados */
-  MPI_Reduce(&mypi, &pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+  /*MPI_Reduce(&mypi, &pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD); */
 
   if (myid==0) {
     printf("Cálculo de PI con %d procesos\n",numprocs);
