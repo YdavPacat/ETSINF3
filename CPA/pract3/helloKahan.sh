@@ -6,3 +6,4 @@
 #SBATCH --output=out_hello.txt 
 
 mpiexec ./hello
+mpiexec ./helloEj2

@@ -19,7 +19,7 @@
     (posiciones p 5 6 p 2 3 p 2 2)
 
     ;; Atributos dinámicos
-    (problema pos 2 3 latas l 3 3 l 3 1 l 6 4 l 5 3 l 7 3 prof 0)
+    (problema pos 2 2 latas l 3 3 l 3 1 l 6 4 l 5 3 l 7 3 prof 0)
 )
 
 (deffunction inicio ()
