@@ -474,7 +474,7 @@ ORDER BY p.nombre
 SELECT l.cod_lib, l.titulo, COUNT(*)
 FROM Libro_peli l, Pelicula p1
 WHERE 1 < (SELECT COUNT(*)
-           FROM pelicuala p
+           FROM pelicula p
            WHERE p.cod_lib = l.cod_lib)
       AND L.cod_lib = p1.cod_lib
 GROUP BY l.cod_lib, l.titulo
@@ -549,26 +549,59 @@ ORDER BY g.nombre
 *** 46. Obtener el código, el título y el autor del libro en el que se han basado más películas (puede haber más de uno).
 
 #+begin_src sql
+SELECT l.cod_lib, l.titulo, l.autor
+FROM Libro_peli l, Pelicula p 
+WHERE l.cod_lib = p.cod_lib
+GROUP BY l.cod_lib, l.titulo, l.autor
+HAVING COUNT(p.cod_peli) = (SELECT MAX(COUNT(p2.cod_peli))
+                            FROM Libro_peli l2, Pelicula p2 
+                            WHERE l2.cod_lib = p2.cod_lib
+                            GROUP BY l2.cod_lib)
 
 #+end_src
 
 *** 47. Obtener el código y el nombre del país que más actores tiene que hayan participado exactamente en 2 películas
 
 #+begin_src sql
--- TODO
-SELECT p.cod_pais, p.nombre, count(distinct ac.cod_act)
+
+SELECT p.cod_pais, p.nombre
 FROM pais p, actor a, actua ac
-WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT 
-                                                                  FORM actua ac2, actor a2
+WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT count(*)
+                                                                  FROM actua ac2, actor a2
+                                                                  WHERE a.cod_act = a2.cod_act AND ac2.cod_act = a.cod_act)
 GROUP BY p.cod_pais, p.nombre
+HAVING count(distinct ac.cod_act) = (SELECT MAX(count(distinct ac1.cod_act))
+                                     FROM pais p1, actor a1, actua ac1
+                                     WHERE p1.cod_pais = a1.cod_pais AND a1.cod_act = ac1.cod_act AND 2 = (SELECT count(*)
+                                                                                                       FROM actua ac21, actor a21
+                                                                                                       WHERE a1.cod_act = a21.cod_act AND ac21.cod_act = a1.cod_act)
+                                     GROUP BY p1.cod_pais, p1.nombre)
 
 #+end_src
 
 *** 48. Obtener el año o años en el que nacieron más de 3 actores indicando cuántos nacieron exactamente.
 
 #+begin_src sql
+SELECT EXTRACT(YEAR FROM fecha_nac), COUNT(fecha_nac)
+FROM Actor
+GROUP BY EXTRACT(YEAR FROM fecha_nac)
+HAVING COUNT(fecha_nac) > 3
 
 #+end_src
+
+*** 49. Obtener el código y el título de las películas de menos de 100 minutos en las que todos los actores que han actuado son de un mismo país.
+
+#+begin_src sql
+
+SELECT p.cod_peli, p.titulo
+FROM pelicula p, actor a, actua ac
+WHERE p.cod_peli = ac.cod_peli AND a.cod_act = ac.cod_act AND p.duracion < 100
+GROUP BY p.cod_peli, p.titulo
+HAVING count(distinct a.cod_pais) = 1
+
+#+end_src
+
+** 3.6 Consultas con concatenación
 
 *** 50. Obtener para todos los países que hay en la base de datos, el código, el nombre y la cantidad de actores que hay de ese país.
 
