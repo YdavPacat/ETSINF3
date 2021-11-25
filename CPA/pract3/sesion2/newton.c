@@ -164,7 +164,7 @@ int fractal_newton(double x1, double x2, double y1, double y2,
       /* Receive a computed row from any process */
      // MPI_Recv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD  &status);
 
-      MPI_Irecv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+      MPI_Irecv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &request);
       MPI_Test(&request ,&received, &status);
 
       while (!received && next_row < h){
