@@ -1,4 +1,5 @@
 const net = require('net');
+const ip = require('./node_modules/ip')
 const fs = require('fs');
 const server = net.createServer(
     function(c) { //connection listener
@@ -10,7 +11,10 @@ const server = net.createServer(
         c.on('data',
         function(data) {
             //c.write('Hello\r\n'+ data.toString()); // send resp
-            c.write(getLoad() + ''); // send resp
+            let load = getLoad();
+            let myIp = ip.address();
+            let res = `{"res":{"ip": "${myIp}" ,"load": "${load}" }}`;
+            c.write(res); // send resp
             
             c.end(); // close socket
         });

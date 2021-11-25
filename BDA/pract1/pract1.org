@@ -34,7 +34,7 @@ WHERE nombre LIKE '%John%'
 
 #+begin_src sql
 SELECT cod_peli, titulo
-FROM peliculatr2
+FROM pelicula
 WHERE duracion > 120 AND anyo BETWEEN 1980 AND 1989
 ORDER BY titulo;
 #+end_src
@@ -370,7 +370,7 @@ WHERE atr.fecha_nac = (SELECT MIN(atr2.fecha_nac)
 SELECT p.cod_pais, p.nombre
 FROM Pais p
 WHERE p.cod_pais IN (SELECT a.cod_pais FROM Actor a) AND NOT EXISTS (SELECT a1.cod_pais FROM Actor a1 WHERE NOT (EXTRACT (YEAR FROM a1.fecha_nac)) BETWEEN 1900 AND 1999 AND p.cod_pais = a1.cod_pais) 
-#end_src
+#+end_src
 
 *** 33. Obtener el código y el nombre de los actores tales que todos los papeles que han tenido son de ‘Secundario’. Sólo interesan aquellos actores que hayan actuado en alguna película.
 
@@ -378,7 +378,7 @@ WHERE p.cod_pais IN (SELECT a.cod_pais FROM Actor a) AND NOT EXISTS (SELECT a1.c
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE atr.cod_act IN (SELECT act.cod_act FROM Actua act) AND NOT EXISTS (SELECT act1.cod_peli FROM Actua act1 WHERE act1.papel <> 'Secundario' AND atr.cod_act = act1.cod_act)
-#end_src
+#+end_src
 
 *** 34. Obtener el código y el nombre de los actores que han aparecido en todas las películas del director ‘Guy Ritchie’ (sólo si ha dirigido al menos una).
 
@@ -386,7 +386,7 @@ WHERE atr.cod_act IN (SELECT act.cod_act FROM Actua act) AND NOT EXISTS (SELECT 
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND EXISTS (SELECT act.cod_act FROM Actua act WHERE atr.cod_act = act.cod_act AND NOT EXISTS(SELECT p.cod_peli FROM Pelicula p WHERE p.director <> 'Guy Ritchie' AND act.cod_peli = p.cod_peli))
-#end_src
+#+end_src
 
 *** 35. Resolver la consulta anterior pero para el director de nombre ‘John Steel’.
 
@@ -394,7 +394,7 @@ WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND
 SELECT atr.cod_act, atr.nombre
 FROM Actor atr
 WHERE 0 < (SELECT COUNT(*) FROM Pelicula p WHERE p.director = 'Guy Ritchie') AND EXISTS (SELECT act.cod_act FROM Actua act WHERE atr.cod_act = act.cod_act AND NOT EXISTS(SELECT p.cod_peli FROM Pelicula p WHERE p.director <> 'John Steel' AND act.cod_peli = p.cod_peli))
-#end_src
+#+end_src
 
 *** 36. Obtener el código y el título de las películas de menos de 100 minutos en las que todos los actores que han actuado son de un mismo país.
 
@@ -427,7 +427,7 @@ WHERE duracion < 100
                                    )
                             )
                  )
-#end_src
+#+end_src
 
 *** 37. Obtener el código, el título y el año de las películas en las que haya actuado algún actor si se cumple que todos los actores que han actuado en ella han nacido antes del año 1943 (hasta el 31/12/1942).
 
@@ -437,7 +437,7 @@ FROM Pelicula p
 WHERE EXISTS (SELECT * FROM Actua ac WHERE p.cod_peli = ac.cod_peli) AND NOT EXISTS 
             (SELECT act.cod_peli FROM Actua act WHERE act.cod_peli = p.cod_peli AND EXISTS 
             (SELECT atr.cod_act FROM Actor atr WHERE atr.fecha_nac >= '31/12/1942' AND atr.cod_act = act.cod_act))
-#end_src
+#+end_src
 
 *** 38. Obtener el código y el nombre de cada país si se cumple que todos sus actores han actuado en al menos una película de más de 120 minutos. (Ordenados por nombre).
 
@@ -466,7 +466,147 @@ NOT EXISTS (
               )
         )
 ORDER BY p.nombre
-#end_src
+#+end_src
+
+*** 39. Obtener el código y el título del libro o libros en que se ha basado más de una película, indicando cuántas películas se han hecho sobre él.
+
+#+begin_src sql
+SELECT l.cod_lib, l.titulo, COUNT(*)
+FROM Libro_peli l, Pelicula p1
+WHERE 1 < (SELECT COUNT(*)
+           FROM pelicuala p
+           WHERE p.cod_lib = l.cod_lib)
+      AND L.cod_lib = p1.cod_lib
+GROUP BY l.cod_lib, l.titulo
+#+end_src
+
+*** 40. Obtener para cada género en el que se han clasificado más de 5 películas, el código y el nombre del género indicando la cantidad de películas del mismo y duración media de sus películas. (Ordenados por nombre).
+
+#+begin_src sql
+SELECT g.cod_gen, g.nombre, COUNT(distinct c.cod_peli), ROUND(AVG(p.duracion))
+FROM Genero g, Clasificacion c, Pelicula p
+WHERE c.cod_gen = g.cod_gen AND p.cod_peli = c.cod_peli
+GROUP BY g.cod_gen, g.nombre
+HAVING count(c.cod_peli) > 5
+ORDER BY g.nombre
+#+end_src
+
+*** 41. Obtener el código y el título de las películas de año posterior al 2000 junto con el número de géneros en que están clasificadas, si es que están en alguno. (Ordenadas por título).
+
+#+begin_src sql
+SELECT p.cod_peli, p.titulo, COUNT(DISTINCT c.cod_gen)
+FROM Pelicula p, Clasificacion c
+WHERE p.anyo > 2000 AND p.cod_peli = c.cod_peli
+GROUP BY p.cod_peli, p.titulo
+ORDER BY p.titulo
+#+end_src
+
+*** 42. Obtener los directores que tienen la cadena ‘George’ en su nombre y que han dirigido exactamente dos películas.
+
+#+begin_src sql
+SELECT p.director
+FROM Pelicula p
+WHERE p.director LIKE '%George%'
+GROUP BY p.director
+HAVING COUNT(*) = 2
+#+end_src
+
+*** 43. Obtener para cada película clasificada exactamente en un género y en la que haya actuado algún actor, el código, el título y la cantidad de actores que actúan en ella.
+
+#+begin_src sql
+SELECT p.cod_peli, p.titulo, COUNT(a.cod_act)
+FROM Pelicula p, Actua a
+WHERE 1 = (SELECT COUNT(c.cod_gen) FROM Clasificacion c WHERE c.cod_peli = p.cod_peli) AND a.cod_peli = p.cod_peli AND a.cod_act IS NOT NULL
+GROUP BY p.cod_peli, p.titulo
+ORDER BY p.titulo
+#+end_src
+
+*** 44. Obtener el código y el nombre de todos los países con actores indicando cuántos actores de cada país han actuado en al menos una película de la década de los 60.
+
+#+begin_src sql
+SELECT p.cod_pais, p.nombre, COUNT(DISTINCT a.cod_act)
+FROM Pais p, Actor a, Actua ac, Pelicula pe
+WHERE pe.anyo BETWEEN 1960 AND 1969 AND p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND ac.cod_peli = pe.cod_peli
+GROUP BY p.cod_pais, p.nombre
+HAVING COUNT(a.cod_act) > 0
+ORDER BY p.nombre
+#+end_src
+
+*** 45. Obtener el código, el nombre del género en el que hay clasificadas más películas (puede haber más de uno).
+
+#+begin_src sql
+SELECT g.cod_gen, g.nombre
+FROM Genero g, Clasificacion c
+WHERE c.cod_gen = g.cod_gen
+GROUP BY g.cod_gen, g.nombre
+HAVING count(c.cod_peli) = (SELECT MAX(COUNT(distinct c2.cod_peli))
+                           FROM Genero g2, Clasificacion c2
+                           WHERE c2.cod_gen = g2.cod_gen
+                           GROUP BY g2.cod_gen, g2.nombre)
+ORDER BY g.nombre
+#+end_src
+
+*** 46. Obtener el código, el título y el autor del libro en el que se han basado más películas (puede haber más de uno).
+
+#+begin_src sql
+
+#+end_src
+
+*** 47. Obtener el código y el nombre del país que más actores tiene que hayan participado exactamente en 2 películas
+
+#+begin_src sql
+-- TODO
+SELECT p.cod_pais, p.nombre, count(distinct ac.cod_act)
+FROM pais p, actor a, actua ac
+WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT 
+                                                                  FORM actua ac2, actor a2
+GROUP BY p.cod_pais, p.nombre
+
+#+end_src
+
+*** 48. Obtener el año o años en el que nacieron más de 3 actores indicando cuántos nacieron exactamente.
+
+#+begin_src sql
+
+#+end_src
+
+*** 50. Obtener para todos los países que hay en la base de datos, el código, el nombre y la cantidad de actores que hay de ese país.
+
+#+begin_src sql
+SELECT p.cod_pais, p.nombre, count(a.cod_act)
+FROM Pais p LEFT JOIN Actor a ON p.cod_pais = a.cod_pais
+GROUP BY p.cod_pais, p.nombre
+ORDER BY p.nombre
+#+end_src
+
+*** 51. Obtener el código y el título de todos los libros de la base de datos de año posterior a 1980 junto con la cantidad de películas a que han dado lugar.
+
+#+begin_src sql
+SELECT l.cod_lib, l.titulo, count(p.cod_peli)
+FROM libro_peli l LEFT JOIN pelicula p ON l.cod_lib = p.cod_lib
+WHERE l.anyo > 1980
+GROUP BY l.cod_lib, l.titulo
+#+end_src
+
+*** 52. Obtener para todos los países que hay en la base de datos, el código, el nombre y la cantidad de actores que hay de ese país.
+
+#+begin_src sql
+
+SELECT p.cod_pais, p.nombre, count(DISTINCT a.cod_act)
+FROM Pais p LEFT JOIN (Actor a JOIN Actua ac ON a.cod_act = ac.cod_act AND ac.papel = 'Secundario') ON p.cod_pais = a.cod_pais
+GROUP BY p.cod_pais, p.nombre
+ORDER BY p.nombre
+#+end_src
+
+*** 53. Obtener para cada película que hay en la base de datos que dure más de 140 minutos, el código, el título, la cantidad de géneros en los que está clasificado y la cantidad de actores que han actuado en ella
+
+#+begin_src sql
+SELECT p.cod_peli, p.titulo, COUNT(DISTINCT c.cod_gen), COUNT(DISTINCT a.cod_act)
+FROM (Pelicula p LEFT JOIN Actua a ON p.cod_peli = a.cod_peli) LEFT JOIN Clasificacion c ON p.cod_peli = c.cod_peli
+WHERE p.duracion > 140
+GROUP BY p.cod_peli, p.titulo
+ORDER BY p.titulo
+#+end_src
 
 * Base de Datos MÚSICA
 
@@ -626,4 +766,165 @@ SELECT c.nombre, c.dir
 FROM Companyia c
 WHERE EXISTS (SELECT * FROM Disco d WHERE c.cod = d.cod_comp
 AND NOT EXISTS (SELECT * FROM Disco d1 WHERE c.cod <> d1.cod_comp AND d1.cod_gru = d.cod_gru))
+#+end_src
+
+* Base de Datos BIBLIOTECA 
+
+#+NAME: Base de datos BIBLIOTECA
+[[./BIBLIOTECA.PNG]]
+
+** Consultas sobre una sola relación
+*** 1. Obtener el nombre de los autores de nacionalidad ‘Argentina’.
+
+#+begin_src sql
+SELECT nombre
+FROM Autor
+WHERE nacionalidad = 'Argentina';
+#+end_src
+
+*** 2. Obtener los títulos de las obras que contengan la palabra ‘mundo’
+
+#+begin_src sql
+SELECT titulo
+FROM Obra
+WHERE titulo LIKE '%mundo%';
+#+end_src
+
+*** 3. Obtener el identificador de los libros anteriores a 1990 y que contengan más de una obra indicando el número de obras que contiene.
+
+#+begin_src sql
+SELECT id_lib, num_obras
+FROM Libro
+WHERE año < 1990 AND num_obras > 1;
+#+end_src
+
+*** 4. ¿Cuántos libros hay de los que se conozca el año de publicación?
+
+#+begin_src sql
+SELECT COUNT(*)
+FROM Libro
+WHERE año IS NOT NULL;
+#+end_src
+
+*** 5. ¿Cuántos libros tienen más de una obra? Resolver este ejercicio utilizando el atributo num_obras.
+
+#+begin_src sql
+SELECT COUNT(*)
+FROM Libro
+WHERE num_obras > 1;
+#+end_src
+
+*** 6. Obtener el identificador de los libros del año 1997 que no tienen título.
+
+#+begin_src sql
+SELECT id_lib
+FROM Libro
+WHERE año = 1997 AND titulo IS NULL;
+#+end_src
+
+*** 7. Mostrar todos los títulos de los libros que tienen título en orden alfabético descendente.
+
+#+begin_src sql
+SELECT titulo
+FROM Libro
+WHERE titulo IS NOT NULL
+ORDER BY titulo DESC;
+#+end_src
+
+*** 8. Obtener cuántas obras hay en los libros publicados entre 1990 y 1999.
+
+#+begin_src sql
+SELECT SUM(num_obras)
+FROM Libro
+WHERE año BETWEEN 1990 AND 1999;
+#+end_src
+
+** Consultas sobre varias relaciones
+*** 9. Obtener cuántos autores han escrito alguna obra con la palabra “ciudad” en su título.
+
+#+begin_src sql
+SELECT COUNT(e.autor_id)
+FROM Escribir e, Obra o
+WHERE o.cod_ob = e.cod_ob AND o.titulo LIKE '% ciudad %';
+#+end_src
+
+*** 10. Obtener el título de todas las obras escritas por el autor de nombre ‘Camús, Albert’.
+
+#+begin_src sql
+SELECT o.titulo
+FROM Obra o, Escribir e, Autor a
+WHERE a.nombre = 'Camús, Albert' AND a.autor_id = e.autor_id AND e.cod_ob = o.cod_ob;
+#+end_src
+
+*** 11. ¿Quién es el autor de la obra de título ‘La tata’?
+
+#+begin_src sql
+SELECT a.nombre
+FROM Obra o, Escribir e, Autor a
+WHERE o.titulo = 'La tata' AND o.cod_ob = e.cod_ob AND e.autor_id = a.autor_id;
+#+end_src
+
+*** 12. Obtener el nombre de los amigos que han leído alguna obra del autor de identificador ‘RUKI’.
+
+#+begin_src sql
+SELECT DISTINCT am.nombre
+FROM Amigo am, Leer l, Escribir e
+WHERE e.autor_id = 'RUKI' AND e.cod_ob = l.cod_ob AND l.num = am.num;
+#+end_src
+
+*** 13. Obtener el título y el identificador de los libros que tengan título y más de una obra. Resolver este ejercicio sin utilizar el atributo num_obras.
+
+#+begin_src sql
+SELECT DISTINCT l.id_lib, l.titulo
+FROM Libro l, Esta_en e1, Esta_en e2
+WHERE l.titulo IS NOT NULL AND l.id_lib = e1.id_lib AND l.id_lib = e2.id_lib AND e1.cod_ob <> e2. cod_ob;
+#+end_src
+
+** Consultas con subconsultas
+*** 14. Obtener el título de las obras escritas sólo por un autor si éste es de nacionalidad “Francesa” indicando también el nombre del autor.
+//REVISAR
+#+begin_src sql
+SELECT o.titulo, a.nombre
+FROM Obra o, Autor a
+WHERE a.nacionalidad = 'Francesa' AND 1 = (SELECT COUNT(*) FROM Escribir e WHERE o.cod_ob = e.cod_ob AND a.autor_id = e.autor_id);
+#+end_src
+
+*** 15. ¿Cuántos autores hay en la base de datos de los que no se tiene ninguna obra?
+
+#+begin_src sql
+SELECT COUNT(*)
+FROM Autor a
+WHERE a.autor_id NOT IN (SELECT e.autor_id FROM Escribir e WHERE e.cod_ob IS NOT NULL);
+#+end_src
+
+*** 16. Obtener el nombre de esos autores.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.autor_id NOT IN (SELECT e.autor_id FROM Escribir e WHERE e.cod_ob IS NOT NULL);
+#+end_src
+
+*** 17. Obtener el nombre de los autores de nacionalidad “Española” que han escrito dos o más obras.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.nacionalidad = 'Española' AND 1 < (SELECT COUNT(*) FROM Escribir e WHERE e.autor_id = a.autor_id);
+#+end_src
+
+*** 18. Obtener el nombre de los autores de nacionalidad “Española” que han escrito alguna obra que está en dos o más libros.
+
+#+begin_src sql
+SELECT a.nombre
+FROM Autor a
+WHERE a.nacionalidad = 'Española' AND EXISTS (SELECT * FROM Escribir e WHERE e.autor_id = a.autor_id AND 1 < (SELECT COUNT(*) FROM Esta_en ee WHERE e.cod_ob = ee.cod_ob));
+#+end_src
+
+*** 19. Obtener el título y el código de las obras que tengan más de un autor.
+
+#+begin_src sql
+SELECT o.titulo, o.cod_ob
+FROM Obra o
+WHERE 1 < (SELECT COUNT(e.autor_id) FROM Escribir e WHERE o.cod_ob = e.cod_ob);
 #+end_src

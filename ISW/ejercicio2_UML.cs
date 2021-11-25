@@ -37,5 +37,6 @@ public class ClassF: ClassD{
 
 public class ClassG{
     private string g1;
-    public ClassG(string g1){}
+    private ClassD agregacionDG;
+    public ClassG(string g1, ClassD agregacionDG){}
 }
