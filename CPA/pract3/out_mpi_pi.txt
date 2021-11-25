@@ -1,0 +1,8 @@
+mpi_pi
+Cálculo de PI con 6 procesos
+Con 100 intervalos, PI es aproximadamente 3.1416009869231241 (error = 0.0000083333333309)
+
+mpi_pim
+Cálculo de PI con 6 procesos
+Con 100 intervalos, PI es aproximadamente 3.1416009869231249 (error = 0.0000083333333318)
+
