@@ -165,8 +165,9 @@ int fractal_newton(double x1, double x2, double y1, double y2,
      // MPI_Recv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD  &status);
 
       MPI_Irecv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-      while (MPI_Test(&request ,&received, &status), !received && next_row < h){
-        num_row = next_row;
+      MPI_Test(&request ,&received, &status);
+
+      while (!received && next_row < h){
 
         for ( j = 0 ; j < w ; j++ ) {
           z0 = (x1 + ix*j) + (y1 + iy*num_row)*I;
@@ -177,11 +178,11 @@ int fractal_newton(double x1, double x2, double y1, double y2,
 
         next_row++;
         rows_done++;
-        
+        MPI_Test(&request ,&received, &status);
       }
 
-      if(MPI_Test(&request ,&received, &status), !received){
-         MPI_Recv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+      if(!received){
+         MPI_Wait(&request, &status);
       }
 
       /* Get the process index and the row number */
