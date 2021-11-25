@@ -180,7 +180,7 @@ int fractal_newton(double x1, double x2, double y1, double y2,
         
       }
 
-      if(!received){
+      if(MPI_Test(&request ,&received, &status), !received){
          MPI_Recv(B, w, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
       }
 
