@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Tema 3.- Middleware. ZeroMQ</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				# Tema 3.- Middleware. ZeroMQ
+#### TSR 2021. Juansa Sendra, grupo B
+
+---
+#HSLIDE
+
+## Introducción
+
+- Desarrollamos componentes de un sistema distribuido $\rightarrow$ deben cooperar entre sí
+ - Ej. servicio planificación de rutas: depende de servicio GIS (información distancias)
+ - Ej. sistema de autorización: necesita servicio de reconocimiento biométrico
+- Complicado
+ - Pueden desarrollarse por programadores diferentes, con entornos de programación distintos
+ - Muchos detalles a considerar, especialmente para solicitar servicios
+  - ¿Cómo localizar al servidor correcto? ¿Cuál es el API de un servicio? ¿Cómo construir/interpretar peticiones de servicio? ¿Cómo asociar a cliente la respuesta correcta? ...
+ - Depuración compleja
+ - ¿Seguridad?
+ - ¿Gestión de fallos?
+
+
+---
+#HSLIDE
+
+## Introducción.- Soluciones para reducir la complejidad
+
+- Utilización de estándards
+ - Facilitan la interoperabilidad
+ - Introducen formas racionales de hacer las cosas
+ - Proporcionan funcionalidad de alto nivel
+- Reutilización de soluciones o componentes previos
+ - Menos código que escribir
+ - Mas garantías
+- Middleware
+ - Nivel de software y servicios entre las aplicaciones y el S.O.
+ - Introduce transparencia de ... (ubicación, replicación, fallos, ...)
+
+
+---
+#HSLIDE
+
+## Middleware
+
+- Perspectiva del programador
+ - Implantación sencilla (conceptos claros y bien definidos)
+ - Resultado fiable (proporciona metodologia de desarrollo estandarizada y bien definida)
+ - Simplifica mantenimento (revisiones APIs)
+- Perspectiva del administrador
+ - Simplifica instalación, configuración, actualización
+ - Facilita interoperabilidad (con productos de terceras partes)
+
+
+---
+#HSLIDE
+
+## Middleware orientado a comunicaciones (mensajería)
+
+- Comunicación flexible
+ - Transmisión atómica (todo o nada)
+ - Tamaño arbitrario, mensajes estructurados
+ - Gestión de colas, con ciertas garantías de orden
+- No impone visión de estado compartido
+ - El estado compartido escala mal y puede provocar problemas de concurrencia
+ - Acoplamiento débil
+- Encaja con el modelo &#39;dirigido por eventos&#39;
+ - Implícitamente asincrónico (desacopla emisor/receptor)
+- Clasificación de los sistemas de mensajeria
+ - Persistentes.- buffers para mensajes. No requieren receptor activo
+ - No persistentes.- el receptor ha de estar activo para transmitir el mensaje
+  - Con gestor (ej. AMQP, JMS), o sin (ej. 0MQ) $\downarrow$ garantías $\uparrow$ escalable.
+
+
+---
+#HSLIDE
+
+## ZeroMQ.- Middleware de comunicaciones ...
+
+- Simple
+ - URLs para identificar a los &#39;endpoints&#39;
+ - API similar a los sockets BSD (familiar): bind/connect, send/receive, ..
+  - Muchos tipos de sockets, para implantar varios patrones de comunicación
+ - Únicamente es una biblioteca (no es necesario arrancar ningún servidor, etc.)
+  - instalar: `npm install zeromq@5` utilizar: `const zmq = require(&#39;zeromq&#39;)`
+ - Modelo Entrada/salida asincrónica (dirigida por eventos)
+- Àmplia disponibilidad (para muchos SO, lenguajes, entornos de programación)
+- Soporta los principales patrones de interacción $\rightarrow$ curva de aprendizaje rápida
+- Eficiente (compromiso fiabilidad/eficiencia) $\rightarrow$ colas en memoria (en emisor/receptor)
+- Reutilizable. Mismo código para comunicar (cambiando solo las URL)
+ - Hilos en un proceso, procesos en una máquina, ordenadores en red (TCP/IP)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Tipos de Sockets y patrones de conexión
+
+- El tipo de socket a utilizar depende de los patrones de conexión
+ - cada patrón tiene necesidades diferents (utiliza sockets diferentes)
+- Client/Server (sincrónico): req/rep
+![](imagZmq/reqRepConex.png)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Tipos de Sockets y patrones de conexión
+
+- Pipeline (unidireccional): push/pull
+![](imagZmq/pushPullConex.png)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Tipos de Sockets y patrones de conexión
+
+- Publicación/subscripción (multienvío de mensajes, porque los receptores pueden decidir a qué mensajes se suscriben): pub/sub
+![](imagZmq/pubSub.png)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Tipos de Sockets y patrones de conexión
+
+- Otros patrones (ej. broker/workers): router/dealer
+![](imagZmq/brokerConex2.png)
+-  0MQ proporciona otros tipos (pair, xsub, xpub), pero NO los estudiamos 
+
+
+---
+#HSLIDE
+
+## 0MQ.- Mensajes
+
+- Contenido de los mensajes transparente para 0MQ
+ - Soporta serialización (marshalling) y reconstrucción (unmarshalling) de cadenas (tiras de caracteres)
+ - El programador decide cómo estructurar el contenido del mensaje
+  - Cadena (lo que no sean cadenas se convierten primero a cadena)
+   - Las cadenas se convierten a buffers utilizando UTF8
+   - Luego las volvemos a convertir en cadenas (toString)
+  - Podemos utilizar estandards como JSON o XML
+- Los mensajes se entregan de forma atómica (entrega todas las partes o ninguna)
+- Envio y recepción asincrónicos (no bloqueantes)
+ - Internamente 0MQ gestiona el flujo de mensajes entre colas de los procesos
+- Gestión de conexió/reconexió entre agentes automática
+
+
+---
+#HSLIDE
+
+## 0MQ.- Mensajes multisegmento
+
+- Los mensajes pueden ser multisegmento
+ - `socket.send(&quot;text&quot;) // 4text  (1 segmento)`
+ - `socket.send([&quot;Hola&quot;, &quot;&quot;, &quot;Ana&quot;]) // 4Hola03Ana (3 segmentos)`
+  - En la recepción podemos extraer los segmentos automáticamente (los argumentos del callback contienen los segmentos del mensaje)
+`sock.on(&#39;message&#39;, function(s1,s2,s3) {..})`
+  - O los recogemos en un vector
+`sock.on(&#39;message&#39;, function(...msg) {for (let seg of msg) {..}})`
+ - Podemos utilizar cada segmento para una pieza de información diferente
+  - Ej. [nombreAPI, versionAPI, operación, arg, ..]
+ - Denominamos &#39;delimitador&#39; al primer segmento vacío (&quot;&quot;)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Pasos para desarrollar una solución (ej. chat)
+
+- Identificamos los patrones de interacción (de donde derivamos qué tipos de sockets necessitamos, y dónde ubicarlos). Un chat combina:
+ - Pipeline (clientes push, servidor pull)
+  - Cada cliente envia msg al servidor cuando el usuario introduce una frase
+ - Difusión (clientes sub, servidor pub)
+  - El servidor difunde a todos los clientes cada nueva frase
+![](imagZmq/chatPatrones.png)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Pasos para desarrollar una solución (ej. chat)
+
+- Define el formato de los mensajes a intercambiar
+ - Cliente a servidor:  [remitente (autor de la frase = nick), text]
+  - texto &#39;HI&#39; para darse de alta, texto &#39;BYE&#39; para darse de baja
+ - servidor a clientes: [autor de la frase(= nick), text]
+  - nick **server** si la frase la genera el servidor (ej. para avisar alta o baja de un cliente)
+![](imagZmq/chatFormato.png)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Pasos para desarrollar una solución (ej. chat)
+
+- Define las respuestas de cada agente ante los eventos generados por los diferentes sockets
+ - Cliente
+  - `process.stdin.on(&#39;data&#39;,(str)=&gt;{psh.send([nick,str])}) //frase stdin`
+  - `process.stdin.on(&#39;end&#39;,()=&gt;{psh.send([nick,&#39;BYE&#39;])}) //cierre stdin`
+  - `sub.on(&#39;message&#39;, (nick,m) =&gt; {..}) //recibe mensaje del servidor`
+ - Servidor
+  - `pull.on(&#39;message&#39;, (nick,m) =&gt; {..}) //recibe mensaje del cliente`
+
+
+---
+#HSLIDE
+
+## 0MQ.- Establecimiento connexión (bind/connect sobre TCP)
+
+- Gestión de conexión/reconexión entre agentes automática
+- Un proceso (el que debería llegar primero y marcharse el último) realiza un **bind**
+ - `sock.bind(&#39;tcp://*:5555&#39;, function(err) {..})` [5555]
+- Otros procesos ($\ge 1$) realizan un **connect** (usando la IP y socket del que hace **bind**)
+ - `sock.connect(&#39;tcp://10.0.0.1:5555&#39;, function(err) {..})`
+- Cuando un agente acaba ejecuta **close** implicito. Podemos invocarlo de forma explícita
+ - `sock.close()`
+- Además de comunicación 1:1
+ - N:1 $\rightarrow$ N clientes (cada uno 1 connect), 1 servidor (bind)
+ -  1:N $\rightarrow$ 1 cliente (N connect, uno a cada servidor), N servidores (cada uno 1 bind)
+
+
+---
+#HSLIDE
+
+## 0MQ.- Establecimiento connexión (bind/connect)
+
+- No es obligatorio un orden entre bind y connect. El primero que llega espera
+- Podemos establecer conexiones 1:1, 1:N, N:1
+ - Servidor 1
+  `sock.bind(&#39;tcp://*:5555&#39;, function(err) {...})` [5555]
+ - Servidor 2: 
+  `sock.bind(&#39;tcp://*:5556&#39;, function(err) {...})` [5556]
+ - Cliente 1: 
+  `sock1.connect(&#39;tcp://10.0.0.1:5555&#39;, function(err) {...}) //a servidor 1`
+  `sock1.connect(&#39;tcp://10.0.0.1:5556&#39;, function(err) {...}) //a servidor 2`
+ - Cliente 2: 
+  `sock2.connect(&#39;tcp://10.0.0.1:5555&#39;, function(err) {...}) //a servidor 1`
+ - Cliente 3: 
+  `sock3.connect(&#39;tcp://10.0.0.1:5556&#39;, function(err) {...}) //a servidor 2`
+
+
+---
+#HSLIDE
+
+## 0MQ en node
+```js
+const zmq = require('zeromq') // importa biblioteca
+let zsock = zmq.socket('tipusSocket')// creación socket (existen varios tipos)
+zsock.bind("tcp://*:5555") // bind en el port 5555
+zsock.connect("tcp://10.0.0.1:5555") // o connect (host 10.0.0.1, port 5555)
+zsock.send([..,..]) // envio
+zsock.on("message", callback) // recepción
+zsock.on("close", callback) // respuesta al cierre de la conexión
+```
+
+---
+#HSLIDE
+
+## 0MQ.- código ejemplo servidor chat
+```js
+const zmq = require('zeromq')
+let pub = zmq.socket('pub')
+let pull= zmq.socket('pull')
+pub.bind ('tcp://*:9998')
+pull.bind('tcp://*:9999')
+
+pull.on('message', (id,txt) => {
+   switch (txt.toString()) {
+     case 'HI' : pub.send(['server',id+' connected']);    break
+     case 'BYE': pub.send(['server',id+' disconnected']); break
+     default   : pub.send([id,txt])
+   }
+})
+```
+
+---
+#HSLIDE
+
+## 0MQ.- código ejemplo cliente chat
+```js
+const zmq = require('zeromq')
+const nick='Ana'
+let sub = zmq.socket('sub')
+let psh = zmq.socket('push')
+sub.connect('tcp://127.0.0.1:9998')
+psh.connect('tcp://127.0.0.1:9999')
+sub.subscribe('') // subscrit a tots el missatges
+
+sub.on('message', (nick,m) => {console.log('['+nick+']'+m)})
+
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
+process.stdin.on('data' ,(str)=> {psh.send([nick, str.slice(0,-1)])})
+process.stdin.on('end',()=> {psh.send([nick, 'BYE']); sub.close(); psh.close()})
+process.on('SIGINT',()=> {process.stdin.end()})
+
+psh.send([nick,'HI'])
+```
+
+---
+#HSLIDE
+
+## 0MQ.- Colas y opciones
+
+- Los sockets pueden tener colas de mensajes asociadas
+ - De entrada (recepción), para mantener los mensajes que llegan
+  - generan eventos &#39;message&#39; cuando llega un mensaje
+ - De salida (envío), para mantener los mensajes a enviar a otros
+- Podemos asociar algunas **opciones** a los sockets. Estudiamos únicamente 2:
+ - **identity**.- Fija identidad del agente que se conecta a un router
+ - **subscribe**.- Fija el filtro de prefijos aplicado al socket &#39;pub&#39;
+- Router es el único que puede enviar mensaje a un destino concreto, y sabe quién le ha enviado un mensaje
+
+
+---
+#HSLIDE
+
+## 0MQ.- Colas y opciones
+|  Socket |  Cola entrada |  Cola salida |  opciones |  send |  receive | 
+|--|--|--|--|--|--|
+|  req |  1 |  1 |  identity |  m$\rightarrow$[delim,m] |  [delim,m]$\rightarrow$m | 
+|  rep |  1 |  1 |  identity |  m$\rightarrow$[a,delim,m] |  [a,delim,b]$\rightarrow$b | 
+|  push |   |  1 |  identity |   | 
+|  pull |  1 |   |  identity |   | 
+|  pub |   |  1 |   |   | 
+|  sub |  1 |   |  subscribe |   | 
+|  router |  1 por conex. |  1 por conex. |   |  [destino,m]$\rightarrow$m |  m$\rightarrow$[emisor,m] | 
+|  dealer |  1 |  1 |   | 
+
+
+---
+#HSLIDE
+
+## Otros middleware
+
+- Gestión de eventos (ej. JINI)
+ - Se incluye con frecuencia en sistemes de mensajería
+  - Patrón publicador/subscriptor
+- Seguridad
+ - Autenticación (ej. OpenID)
+  - Una tercera parte garantiza la identidad de un agente
+ - Autorización (ej. OAuth)
+  - Una tercera parte autoriza una petición
+ - Integración con otros protocolos (ej. SSL/ TLS y HTTPS)
+- Soporte transaccional
+ - Coordinación de modificaciones del estado distribuido (modificaciones atómicas)
+  - Soporta las situaciones de fallo
+
+
+---
+#HSLIDE
+
+## Conclusiones
+
+- Para gestionar la complejidad de los sistemes distribuidos
+ - Gestión adecuada del código y de los servicios
+ - Utilización de estandards
+ - Utilización middleware
+- Principales objetivos middleware
+ - Tareas de comunicaciones
+ - Petición de servicios
+- Principales variantes middleware orientado a comunicaciones
+ - Gestión mensajes persistente SI/NO
+ - Basados en gestor/sin gestor
+- Otros middleware
+ - Seguridad
+ - Transacciones
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>
