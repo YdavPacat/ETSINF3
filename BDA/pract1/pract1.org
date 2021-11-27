@@ -645,7 +645,6 @@ ORDER BY p.titulo
 
 ** Consultas conjuntistas
 *** 54. Obtener los años, ordenados ascendentemente, que aparecen en la base de datos como año en el que se editó un libro o se filmó una película. Sólo interesan años en los que no aparezca el dígito 9. 
--- Ejercicio 54
 #+begin_src sql
 SELECT l.anyo
 FROM libro_peli l
