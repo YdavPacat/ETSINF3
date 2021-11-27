@@ -565,17 +565,19 @@ HAVING COUNT(p.cod_peli) = (SELECT MAX(COUNT(p2.cod_peli))
 #+begin_src sql
 
 SELECT p.cod_pais, p.nombre
-FROM pais p, actor a, actua ac
-WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT count(*)
-                                                                  FROM actua ac2, actor a2
-                                                                  WHERE a.cod_act = a2.cod_act AND ac2.cod_act = a.cod_act)
+FROM Pais p, Actor a
+WHERE p.cod_pais = a.cod_pais AND a.cod_act IN (SELECT (ac1.cod_act) 
+                                                FROM Actua ac1 
+                                                GROUP BY ac1.cod_act 
+                                                HAVING COUNT(ac1.cod_peli) = 2)
 GROUP BY p.cod_pais, p.nombre
-HAVING count(distinct ac.cod_act) = (SELECT MAX(count(distinct ac1.cod_act))
-                                     FROM pais p1, actor a1, actua ac1
-                                     WHERE p1.cod_pais = a1.cod_pais AND a1.cod_act = ac1.cod_act AND 2 = (SELECT count(*)
-                                                                                                       FROM actua ac21, actor a21
-                                                                                                       WHERE a1.cod_act = a21.cod_act AND ac21.cod_act = a1.cod_act)
-                                     GROUP BY p1.cod_pais, p1.nombre)
+HAVING COUNT(*) = (SELECT MAX(COUNT(*))
+                   FROM Pais p1, Actor a1
+                   WHERE p1.cod_pais = a1.cod_pais AND a1.cod_act IN (SELECT (ac1.cod_act) 
+                                                                      FROM Actua ac1 
+                                                                      GROUP BY ac1.cod_act 
+                                                                      HAVING COUNT(ac1.cod_peli) = 2) 
+                   GROUP BY p1.cod_pais);
 
 #+end_src
 
