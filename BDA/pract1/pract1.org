@@ -646,6 +646,7 @@ ORDER BY p.titulo
 ** Consultas conjuntistas
 *** 54. Obtener los años, ordenados ascendentemente, que aparecen en la base de datos como año en el que se editó un libro o se filmó una película. Sólo interesan años en los que no aparezca el dígito 9. 
 -- Ejercicio 54
+#+begin_src sql
 SELECT l.anyo
 FROM libro_peli l
 WHERE l.anyo NOT LIKE '%9%'
@@ -653,8 +654,10 @@ UNION
 (SELECT p.anyo
 FROM pelicula p
 WHERE p.anyo NOT LIKE '%9%');
+#+end_src
 
 *** 55. Obtener el nombre del género (o de los géneros) a los que pertenece la película de duración máxima.
+#+begin_src sql
 SELECT g.cod_gen, g.nombre
 FROM genero g
 WHERE g.cod_gen IN (SELECT c.cod_gen
@@ -663,9 +666,11 @@ WHERE g.cod_gen IN (SELECT c.cod_gen
                                         FROM pelicula p 
                                         WHERE p.duracion = (SELECT MAX (p2.duracion)
                                                           FROM pelicula p2)));
+#+end_src
                                                           
 
 *** 56. Obtener, para cada actor nacido antes de 1948 y que haya actuado en al menos 2 películas en cualquier papel, el código, el nombre y la fecha de nacimiento indicando en cuántas películas ha actuado con el papel de ‘Principal’
+#+begin_src sql
 SELECT a.cod_act, a.nombre, a.fecha_nac, COUNT(act.cod_peli)
 FROM actor a LEFT JOIN actua act ON a.cod_act = act.cod_act AND act.papel = 'Principal'
 WHERE a.cod_act IN (SELECT a2.cod_act
@@ -676,9 +681,11 @@ WHERE a.cod_act IN (SELECT a2.cod_act
      AND extract (year from a.fecha_nac ) < 1948 
 GROUP BY a.cod_act, a.nombre, a.fecha_nac
 ORDER BY a.nombre;
+#+end_src
 
 *** 57. Obtener el código y el nombre de los actores que sólo han actuado en películas posteriores a 1994.
 
+#+begin_src sql
 SELECT a.cod_act, a.nombre
 FROM actor a
 WHERE NOT EXISTS (SELECT *
@@ -692,6 +699,8 @@ WHERE NOT EXISTS (SELECT *
               FROM actua ac
               WHERE ac.cod_act = a.cod_act)
 ORDER BY a.nombre              
+
+#+end_src
 
 
 
