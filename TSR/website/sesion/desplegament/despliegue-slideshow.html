@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Despliegue de Servicios. Docker</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: gaia
+_paginate: false 
+-->
+#HSLIDE
+
+# Despliegue de Servicios. Docker
+#### TSR 2021, Juansa Sendra, Grupo B
+<!-- paginate: true -->
+
+---
+#HSLIDE
+
+## Componentes e instancias, dependencias
+
+- Aplicación distribuida = colección de componentees heterogéneos dispersos sobre una red de computadores
+ - Ejemplo.- 1 componentee cliente con varias instáncias, 1 componentee broker con una instancia, 1 componentee workers con varias instancias
+ - Cada instancia
+  - puede iniciarse/detenerse/reiniciarse de manera independiente
+  - falla de forma independente al resto
+  - posee una ubicación propia (independente)
+- Los componentees cooperan $\rightarrow$ existen dependencias = valores que debe conocer un componentee pero dependen de otro(s)
+ - Ejemplo.- los clientes deben tener identidad única y conocer el frontend, los workers deben tener identidad única y conocer el backend
+
+
+---
+#HSLIDE
+
+## Requisitos ejecución
+
+- Los nodos pueden ser heterogéneos (diferentes equipos, SO, etc.)
+ - Cada componentee tendrá ciertos requisitos para su ejecución
+ - Nota.- en nuestro caso utilizamos nodeJS y 0MQ para todos los componentees, pero podríamos desarrollar cada componentee con distintos lenguajes, bibliotecas, etc.
+- Podemos tener requisitos adicionales de seguridad (privacidad, autenticación, etc.)
+
+
+---
+#HSLIDE
+
+## Despliegue = preparación de un sofware para su utilización
+
+- Ejecución del software
+ - Instalación.- resolver dependencias del software (ej. bibliotecas), configurar (ej. versiones compatibles), determinar número de instancias de cada componentee y la forma de repartirlas entre los nodos
+ - Activación.- establecer el orden en que arrancan los componentees
+- Desactivación.- detener el sistema de forma ordenada
+- Actualización.- reemplazar componentees (ej. nueva versión)
+- Adaptación.- recuperación de errores, cambios en la configuración de los agentes, escalado (reacción ante cambios en la carga)
+
+
+---
+#HSLIDE
+
+## Despliegue manual. Ejemplo
+
+- Garantizar que cada nodo dispone de la instalación base
+ - NodeJS, ZeroMQ (con las versiones correctas)
+- Copiar el código fuente de cada componentee (client, broker, worker) al nodo adecuado
+- Lanzar los componentees en el orden correcte (y con los args. correctos en línea de órdenes)
+ - `node broker frontend backend`
+ - para cada worker: `node worker id backend`
+ - para cada client: `node client id frontend`
+- ¿Qué pasa si tenemos 12 workers y 80 clientes? ¿Y si modificamos el código cliente?
+ - Necesitamos automatizar el despliegue
+
+
+---
+#HSLIDE
+
+## Despliegue de servicios = instalación, activación, actualitzación y adaptación del servicio
+
+- Desarrollamos aplicaciones distribuidas para proporcionar servicios (funcionalidad, Ej. DropBox, Wikipedia, ...) a clientes remotos con garantías de escalabilidad y disponibilidad
+ - servicio = Aplicación + despliegue (únicamente resulta utilizable una vez desplegado)
+- Un servicio extablece un SLA (Service Level Agreement)
+ - Definición funcional (qué hace)
+ - Rendimiento (cantidad de clients que soporta, tiempo de respuesta esperado)
+ - Disponibilidad (% del tiempo que garantizamos servicio disponible)
+  - Nos centramos en servicios persistentes (disponibilidad continua)
+
+
+---
+#HSLIDE
+
+## Automatización del despliegue
+
+- Configuración para cada componentee
+ - Fichero con una lista de parámetros de configuración y descripciones de dependencias
+ - La herramienta genera una configuración específica para a cada instancia del componentee
+ - Ejemplo (a partir de aquí le llamamos CBW (client/Broker/Workers)
+  - para client: args id y frontend, dependencia respecto a broker
+  - para broker: args frontend y backend
+  - para worker: args id y backend, dependencia respecto a broker
+
+
+---
+#HSLIDE
+
+## Automatización del despliegue
+
+- Plan de configuración global
+ - Plan de conexión entre componentees (lista de endpoints expuestos, lista de dependencias)
+  - En CBW los endpoints son frontend y backend
+  - Podríamos leer los datos de un fichero, recibir datos en un socket, etc.
+  - Pero utilizaremos **Inyección de dependencias**
+   - El código de la aplicación expone nombres
+   - Una herramienta asocia las variables con instancias de objectes
+ - Decidimos donde colocar cada instancia y el orden de arranque
+  - En CBW orden broker, workers, clients
+ - Enlace (&#39;binding&#39;) de dependencias (empareja los endpoints, incluyendo dependencias de servicios externos)
+  - En CBW no hay dependencias externas
+
+
+---
+#HSLIDE
+
+## Despliegue en la nube (IaaS)
+
+- Se basa en virtualización
+ - Máquinas virtuales de distintos tamaños
+ - Flexibilidad en la asignación de recursos
+- Presenta limitaciones en el despliegue
+ - Decisiones de asignación no automáticas (bajo nivel)
+  - Número de instancias por componente, ubicación, tipos de MV
+ - No permite elegir características de la red (retardo, ancho de banda)
+ - Modelo de fallos insuficiente
+  - Los modos de fallo no son realmente independientes
+  - Ayuda limitada para la recuperación tras un fallo
+
+
+---
+#HSLIDE
+
+## Despliegue en la nube (PaaS)
+
+- SLA como element central $\rightarrow$ parámetros del SLA para todos los componentes
+ - Se persigue la automatización del despliegue
+  - Planes de despliegue a partir del SLA
+  - Planes para actualización/configuración
+ - Situación actual
+  - El grado de automatización ha mejorado en los últimos años
+   - Incluye el despliegue inicial y el autoescalado de servicios sencillos
+   - Todavía no garantiza la actualización de los servicios respecto a su SLA
+  - Microsoft Azure es uno de los mas evolucionados
+
+
+---
+#HSLIDE
+
+## Automatización del despliegue.- contenedores
+
+- Aprovisionamiento = reservar la infraestructura necesaria
+ - recursos para intercomunicación entre instancies
+ - recursos para cada instancia (procesador, memoria, ..). Alternativas:
+![contenedorMV](container.png)
+
+
+---
+#HSLIDE
+
+## Contenedor vs MV
+
+- Menor flexibilidad
+ - El software de la instancia ha de ser compatible con el SO anfitrión
+ - El aislamiento entre contenedores no es perfecto
+- Ligero (utiliza muchos menos recursos)
+ - Ej.: desplegamos 100 instancias de un componente cuya ejecución requiere 900MB (SO) + 100MB (resto)
+  - con MV: 100*(900MB + 100MB) = 100GB
+  - con contenedores: 900MB + 100*100MB = 10.9GB
+  - Ahorramos espacio y tiempo (ej. para instalar la imagen)
+ - Mayor facilidad de despliegue (fichero de configuración)
+ - Aplicable en casi todos los escenarios
+
+
+---
+#HSLIDE
+
+## Contenedores.- Docker
+
+- El fichero de configuración Dockerfile automatiza el despliegue de cada instancia
+- Soporta control de versiones (Git)
+- Además del sistema de ficheros nativo, define un sistema de ficheros de solo lectura para compartición entre contenedores
+- Permite cooperación en el desarrollo mediante depósitos públicos
+
+NOTA.-Asumimos que el SO anfitrión es Linux (aunque existe Docker para Windows)
+
+
+---
+#HSLIDE
+
+## Componentes Docker
+
+- Imagen = plantilla de solo lectura con las instrucciones para crear un contenedor (cómo llegar a un contexto de ejecución determinado)
+ - Ej.-podemos crear una imagen para proporcionar Linux+NodeJS+zmq, a la cual denominamos centos-zmq
+ - Podemos construir las imagen que necesitamos. Al final tenemos que definir una imagen por componente (ej. imágenes para client, broker, worker)
+- contenedor = Conjunto de recursos que necesita una instancia para ejecutarse. Se crea al ejecutar una imagen
+ - Ej.-para probar el código de la práctica 2, ejecutamos cada instancia sobre un contenedor creado a partir de centos-zmq
+- Depósito = lugar donde podemos dejar/obtener imágenes (espacio para compartir imágenes)
+ - Ex.-Podemos subirr la imagen centos-zmq, y cualquiera puede bajarla y usarla para crear contenedores
+
+
+---
+#HSLIDE
+
+## Creación de una imagen
+
+- En el depósito tenemos imágenes predefinidas para las distintas distribuciones Linux
+ - Ej. imagen centos:7.4.1708
+- Nuevas imágenes = imagen base + instrucciones
+ - A partir de centos:7.4.1708 + instrucciones para instalar nodeJS $\rightarrow$ centos-nodejs
+ - A partir de centos-nodejs + instrucciones para instalar zmq $\rightarrow$ centos-zmq
+ - A partir de centos-zmq + ... $\rightarrow$ client
+ - A partir de centos-zmq + ... $\rightarrow$ broker
+ - A partir de centos-zmq + ... $\rightarrow$ worker
+
+
+---
+#HSLIDE
+
+## Creación de una imagen (2 alternativas)
+1 Manual
+
+
+- cargar una imagen base existente y crea un contenedor interactivo (terminal) a partir de esa imagen
+- introducir instrucciones a mano desde consola (modificar contenedor)
+- crear nuevo imagen a partir del estat actual del contenedor
+ 2 Automática
+- Crear fichero de texto con instrucciones $\rightarrow$ llamado Dockerfile
+- dar la orden para construir la imagen a partir del Dockerfile
+
+
+---
+#HSLIDE
+
+## Creación de una imagen.- ejemplo alternativa manual
+
+- cargar una imagen base existente y crear un contenedor interactivo (terminal) a partir de esa imagen
+`$ docker run -i -t centos:7.4.1708 bash`
+- introducir instrucciones a mano desde consola (modificar contenedor)
+```
+$ curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -
+$ yum install -y nodejs
+$ yum install -y epel-release
+$ yum install -y zero-devel
+$ yum install -y make python gcc-c++
+$ rpm install zeromq@5
+$ exit
+```
+- crear nueva imagen a partir del estado actual del contenedor```
+$ docker ps -a
+$ docker commit idcontenedor centos-zmq
+```
+
+
+---
+#HSLIDE
+
+## Creación de una imagen.- ejemplo alternativa automática (Dockerfile)
+
+- Crear fichero de texto con instrucciones $\rightarrow$ llamado Dockerfile```
+FROM centos:7.4.1708
+RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -
+RUN yum install -y nodejs
+RUN yum install -y epel-release
+RUN yum install -y zeromq-devel make python gcc-c++
+RUN npm install zeromq@5
+```
+- dar la orden para construir la imagen a partir del Dockerfile
+ - asumiendo que estamos en el directorio donde está el Dockerfile```
+$ docker build -t tsr1718/centos-zmq .
+```
+
+
+---
+#HSLIDE
+
+## Docker.- órdenes (acciones)
+
+- Docker utiliza órdenes desde consola: `$ docker acción opciones argumentos`
+- Podemos agrupar las diferentes acciones en grupos (NO estudiamos todas las acciones)
+ - Operaciones sobre contenedores (ciclo de vida): `run, build, commit, start, stop`
+ - Operaciones informativas: `ps, info, images, history`
+ - Acceso al depósito: `pull, push`
+ - Otras: `cp, export`
+
+
+---
+#HSLIDE
+
+## Docker.- órdenes principales (1)
+
+- `docker run -i -t imagenBase progInicial`
+ - crea un contenedor interactivo a partir de imagenBase, arranca progInicial
+- `docker commit idcontenedor nombreNuevaimagen`
+ - guarda el estado actual del contenedor como una nueva imagen
+- `docker build -t nombreNuevaimagen pathDockerfile`
+ - guarda el estado del contenedor como una nueva imagen
+- `docker start idcontenedor`
+ - arranca la ejecución del contenedor
+- `docker stop idcontenedor`
+ - detiene la ejecución del contenedor
+
+
+---
+#HSLIDE
+
+## Docker.- órdenes principales (2)
+
+- `docker ps -a`
+ - lista todos los contenedores y su estado
+- `docker images`
+ - lista de todas las imágenes a nivel local
+- `docker history idImage`
+ - muestra la historia de una imagen
+- `docker pull idimagen`
+ - obtiene copia local de una imagen que está en el depósito
+- `docker push idimagen`
+ - deja en el depósito copia de una imagen local
+
+
+---
+#HSLIDE
+
+## Docker.- Fichero Dockerfile (para automatizar la creación de una imagen)
+
+- La primera línea debe ser: `FROM imagenBase`
+- Otras líneas tienen la estructura: `acción argumentos`
+ - `RUN orden` ejecuta la orden en el shell
+ - `ADD origen destino` copia ficheros desde la máquina anfitrión al contenedor
+  - Si el origen es un directorio, lo copia completo. Si es un fichero comprimido, lo expande al copiar
+ - `COPY origen destino` idem ADD, pero no expande los ficheros comprimidos
+ - `EXPOSE port` indica un port en el cual el contenedor atenderá peticiones
+
+
+---
+#HSLIDE
+
+## Docker.- Fichero Dockerfile (cont)
+
+- `WORKDIR path` indica directorio de trabajo para las órdenes RUN, CMD, ENTRYPOINT
+- `ENV variable valor` asigna valor a una variable de entorno (accesible para los programes dentro del contenedor)
+- `CMD orden args` proporciona valores por defecto para la ejecución del contenedor
+- `ENTRYPOINT orden args` ejecuta esta orden al crear el contenedor
+ - Si tenemos varias órdenes CMD o ENTRYPOINT, sólo ejecuta la última
+
+
+---
+#HSLIDE
+
+## Ejemplo broker/workers.- Alternativas para organizar los componentes
+![organizacomponentees](tsrT4.png)
+
+
+---
+#HSLIDE
+
+## Entorno de pruebas.- varios componentes en el mismo nodo
+
+- Interacción entre componentes en una misma máquina (como en el laboratorio)
+- Debemos definir una imagen por componente, y crear un contenedor por instancia
+- Estudiamos 2 alternativas (y luego nos centramos en la primera)
+ - todos los componentes (client, broker, worker) en la misma máquina
+ - broker y workers en un máquina, clientes remotos en otras máquinas
+
+
+---
+#HSLIDE
+
+## Ejemplo CBW.- patrón broker/worker
+
+- componente broker (broker.js)
+ - `node broker portFront portBack` (per defecte 9998 9999)
+- componente worker (worker.js)
+ - `node worker urlBack` (per defecte tcp://localhost:9999)
+ - normalmente tendremos varias instancias
+- componente client (client.js)
+ - `node client urlFront` (per defecte tcp://localhost:9998)
+ - normalmente tendremos varias instancias
+
+
+---
+#HSLIDE
+
+## Ejemplo con todos los componentes en un nodo
+
+- Organizamos la siguiente estructura de directorios```
+CBW/
+docker-compose.yml
+client/
+  client.js
+  Dockerfile
+broker/
+  broker.js
+  Dockerfile
+worker/
+  worker.js
+  Dockerfile
+```
+- Los ficheros Dockerfile permiten crear las imágenes que permiten lanzar contenedores
+- El fichero docker-compose.yml es un plan global de despliegue
+
+
+---
+#HSLIDE
+
+## Todos los componentes en un nodo ... ¿dependencias?
+
+- broker/Dockerfile
+```
+FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+```
+- IP del broker = asociada al contenedor del broker, desconocida hasta ejecutarlo
+- worker/Dockerfile. worker debe conocer la URL (IP y port) del backend
+```
+FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker tcp://????:9999
+```
+- client/Dockerfile. client debe conocer la URL (IP y port) del frontend
+```
+FROM tsr2021/ubuntu-zmq
+COPY ./client.js client.js
+CMD node client tcp://????:9998
+```
+
+
+---
+#HSLIDE
+
+## Todos los componentes en un nodo ...  ¿dependencias?
+
+- lanzamos el broker en su contenedor (desde el directorio broker)
+ - `docker build -t broker .` crea la imagen
+ - `docker run -d broker` lanza el contenedor
+- obtenemos la IP de ese contenedor
+ - `docker ps -a` para conocer la ID del contenedor
+ - `docker inspect IDcontenedor` per a llegir la IP (ex. 192.154.3.12)
+- modificamos el valor de la IP en el Dockerfile de worker
+ - linia `CMD node worker tcp://192.154.3.12:9999`
+ - `docker build -t worker .` crea la imagen
+- modificamos el valor de la IP en el Dockerfile de worker
+ - línea `CMD node client tcp://192.154.3.12:9998`
+ - `docker build -t client .` crea la imagen
+
+
+---
+#HSLIDE
+
+## Todos los componentes en un nodo ...  ¿dependencias?
+
+- lanzamos workers y clients
+ - `docker run -d worker` lanza el contenedor
+  - ... (una vez por instancia)
+ - `docker run -d client` lanza el contenedor
+  - ... (una vez por instancia)
+
+
+---
+#HSLIDE
+
+## Ejemplo con todos los componentes en un nodo. Automatización (variables)
+
+- broker/Dockerfile```
+FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+```
+- worker/Dockerfile (variable $BACKEND_URL)```
+FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker $BACKEND_URL
+```
+- client/Dockerfile (variable $FRONTEND_URL)```
+FROM tsr2021/ubuntu-zmq
+COPY ./client.js client.js
+CMD node client $FRONTEND_URL
+```
+
+
+---
+#HSLIDE
+
+## Componentes en un nodo. Automatización (plan global)
+`docker-compose.yml` describe componentes, propiedades, relaciones 
+
+```
+version: '2'
+services:
+   cli:
+      image: client
+      build: ./client/
+      links:
+        - bro
+      environment:
+        - FRONTEND_URL=tcp://bro:9998
+   bro:
+      image: broker
+      build: ./broker/
+      expose:
+        - "9998"
+        - "9999"
+   wor:
+      image: worker
+      build: ./worker/
+      links:
+        - bro
+      environment:
+        - BACKEND_URL=tcp://bro:9999
+```
+
+---
+#HSLIDE
+
+## Componentes en un nodo. Automatización (plan global)
+
+- A partir del plan global podemos levantar el sistema con una orden única
+- `docker-compose up -d --scale worker=4 --scale client=7`
+ - permite otras opciones (se describen en la guia del alumno)
+
+
+---
+#HSLIDE
+
+## Ejemplo con clientes remotos
+
+- Organizamos la siguiente estructura de directorios```
+CBW/
+docker-compose.yml
+broker/
+  broker.js
+  Dockerfile
+worker/
+  worker.js
+  Dockerfile
+```
+- Los ficheros Dockerfile son para crear les imágeness que permiten lanzar contenedores
+- El fichero docker-compose.yml es un plan global de despliegue (para la automatización)
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- manual
+
+- broker/Dockerfile```
+FROM tsr2021/ubuntu-zmq
+COPY ./broker.js broker.js
+EXPOSE 9998 9999
+CMD node broker
+```
+- IP del broker = asociada al contenedor del broker, desconocida hasta ejecutarlo
+- worker/Dockerfile. worker debe conocer la URL (IP y port) del backend```
+FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker tcp://????:9999
+```
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- manual
+
+- Lanzamos el broker en su contenedor (desde el directorio broker)
+ - `docker build -t broker .` crea la imagen
+ - `docker run -p 8000:9998 -d broker` lanza el contenedor
+  - La opción `-p portAmfitrió:portcontenedor` permite acceso al frontend desde el exterior (port 8000 del anfitrión)
+  - La opción `-d` lanza el contenedor en segundo plano
+- obtenemos la IP de ese contenedor
+ - `docker ps -a` para conocer la ID del contenedor
+ - `docker inspect IDcontenedor` para leer la IP (ex. 192.154.3.12)
+- modificamos el valor de la IP en el Dockerfile de worker
+ - linia `CMD node worker tcp://192.154.3.12:9999`
+ - `docker build -t worker .` crea la imagen
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- manual
+
+- lanzamos workers
+ - `docker run -d worker` lanza el contenedor
+ - ... (una vez por instancia)
+- lanzamos clientes (desde las máquinas correspondientes)
+ - No es necesario gestionar los clientes con contenedores
+ - Han de conectar con tcp://ipDelAnfitrión:8000
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- automatización
+
+- Variable de entorno en worker/Dockerfile```
+FROM tsr2021/ubuntu-zmq
+COPY ./worker.js worker.js
+CMD node worker $BACKEND
+```
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- automatización
+
+- plan global de despliegue```
+version: '2'
+services:
+ bro:
+    image: broker
+    build: ./broker/
+    ports:
+       - "8000:9998"
+    expose:
+       - "9999"
+ wor:
+    image: worker
+    build: ./worker/
+    links:
+       - bro
+    environment:
+       - BACKEND=tcp://bro:9999
+```
+
+
+---
+#HSLIDE
+
+## Clientes remotos.- automatización
+
+- orden (para 3 workers) `docker-compose up --scale worker=3`
+- lanzamos clientes (desde las máquinas correspondientes)
+ - No es necesario gestionar los clientes con contenedores
+ - Han de connectar a `tcp://ipDelAnfitrión:8000`
+
+
+---
+#HSLIDE
+
+## Producción.- componentes repartidos en distintos nodos
+
+- La propuesta mas conocida es kubernetes
+ - Es un orquestador de contenedores, pero no depende de Docker
+ - la guía del tema proporciona una descripción general de sus elementos
+- Elementos principales de kubernetes
+ - Cluster y node (físico o virtual)
+ - Pod: menor unidad desplegable
+  - incluye contenedores que comparten espacios de nombres y volumenes
+ - Controladores de replicación: encargados del cicle de vida de un grupo de pods
+  - escala, replica y recupera pods para asegurar N instancies en ejecución
+ - Controladores de despliegue: actualizan la aplicación distribuida
+ - servicio: define un conjunto de pods y la forma de acceso
+ - Secretos (gestión de credenciales)
+ - Volúmenes (persistencia)
+
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

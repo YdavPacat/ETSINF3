@@ -565,17 +565,19 @@ HAVING COUNT(p.cod_peli) = (SELECT MAX(COUNT(p2.cod_peli))
 #+begin_src sql
 
 SELECT p.cod_pais, p.nombre
-FROM pais p, actor a, actua ac
-WHERE p.cod_pais = a.cod_pais AND a.cod_act = ac.cod_act AND 2 = (SELECT count(*)
-                                                                  FROM actua ac2, actor a2
-                                                                  WHERE a.cod_act = a2.cod_act AND ac2.cod_act = a.cod_act)
+FROM Pais p, Actor a
+WHERE p.cod_pais = a.cod_pais AND a.cod_act IN (SELECT (ac1.cod_act) 
+                                                FROM Actua ac1 
+                                                GROUP BY ac1.cod_act 
+                                                HAVING COUNT(ac1.cod_peli) = 2)
 GROUP BY p.cod_pais, p.nombre
-HAVING count(distinct ac.cod_act) = (SELECT MAX(count(distinct ac1.cod_act))
-                                     FROM pais p1, actor a1, actua ac1
-                                     WHERE p1.cod_pais = a1.cod_pais AND a1.cod_act = ac1.cod_act AND 2 = (SELECT count(*)
-                                                                                                       FROM actua ac21, actor a21
-                                                                                                       WHERE a1.cod_act = a21.cod_act AND ac21.cod_act = a1.cod_act)
-                                     GROUP BY p1.cod_pais, p1.nombre)
+HAVING COUNT(*) = (SELECT MAX(COUNT(*))
+                   FROM Pais p1, Actor a1
+                   WHERE p1.cod_pais = a1.cod_pais AND a1.cod_act IN (SELECT (ac1.cod_act) 
+                                                                      FROM Actua ac1 
+                                                                      GROUP BY ac1.cod_act 
+                                                                      HAVING COUNT(ac1.cod_peli) = 2) 
+                   GROUP BY p1.cod_pais);
 
 #+end_src
 
@@ -640,6 +642,66 @@ WHERE p.duracion > 140
 GROUP BY p.cod_peli, p.titulo
 ORDER BY p.titulo
 #+end_src
+
+** Consultas conjuntistas
+*** 54. Obtener los años, ordenados ascendentemente, que aparecen en la base de datos como año en el que se editó un libro o se filmó una película. Sólo interesan años en los que no aparezca el dígito 9. 
+#+begin_src sql
+SELECT l.anyo
+FROM libro_peli l
+WHERE l.anyo NOT LIKE '%9%'
+UNION 
+(SELECT p.anyo
+FROM pelicula p
+WHERE p.anyo NOT LIKE '%9%');
+#+end_src
+
+*** 55. Obtener el nombre del género (o de los géneros) a los que pertenece la película de duración máxima.
+#+begin_src sql
+SELECT g.cod_gen, g.nombre
+FROM genero g
+WHERE g.cod_gen IN (SELECT c.cod_gen
+                    FROM clasificacion c
+                    WHERE c.cod_peli = (SELECT p.cod_peli
+                                        FROM pelicula p 
+                                        WHERE p.duracion = (SELECT MAX (p2.duracion)
+                                                          FROM pelicula p2)));
+#+end_src
+                                                          
+
+*** 56. Obtener, para cada actor nacido antes de 1948 y que haya actuado en al menos 2 películas en cualquier papel, el código, el nombre y la fecha de nacimiento indicando en cuántas películas ha actuado con el papel de ‘Principal’
+#+begin_src sql
+SELECT a.cod_act, a.nombre, a.fecha_nac, COUNT(act.cod_peli)
+FROM actor a LEFT JOIN actua act ON a.cod_act = act.cod_act AND act.papel = 'Principal'
+WHERE a.cod_act IN (SELECT a2.cod_act
+                    FROM actor a2
+                    WHERE 2 < (SELECT count(*)
+                               FROM actua act2
+                               WHERE act2.cod_act = a2.cod_act)) 
+     AND extract (year from a.fecha_nac ) < 1948 
+GROUP BY a.cod_act, a.nombre, a.fecha_nac
+ORDER BY a.nombre;
+#+end_src
+
+*** 57. Obtener el código y el nombre de los actores que sólo han actuado en películas posteriores a 1994.
+
+#+begin_src sql
+SELECT a.cod_act, a.nombre
+FROM actor a
+WHERE NOT EXISTS (SELECT *
+                  FROM actua ac
+                  WHERE ac.cod_act = a.cod_act 
+                    AND EXISTS (SELECT *
+                                    FROM pelicula p 
+                                    WHERE p.cod_peli = ac.cod_peli
+                                      AND p.anyo <= 1994))
+  AND EXISTS (SELECT *
+              FROM actua ac
+              WHERE ac.cod_act = a.cod_act)
+ORDER BY a.nombre              
+
+#+end_src
+
+
 
 * Base de Datos MÚSICA
 
@@ -799,6 +861,128 @@ SELECT c.nombre, c.dir
 FROM Companyia c
 WHERE EXISTS (SELECT * FROM Disco d WHERE c.cod = d.cod_comp
 AND NOT EXISTS (SELECT * FROM Disco d1 WHERE c.cod <> d1.cod_comp AND d1.cod_gru = d.cod_gru))
+#+end_src
+
+** Consultas agrupadas
+*** 20. Obtener el nombre de los grupos que sean de España y la suma de sus fans.
+#+begin_src sql
+SELECT g.nombre, SUM(c.num)
+FROM Grupo g, Club c
+WHERE g.cod = c.cod_gru AND g.pais = 'España'
+GROUP BY g.nombre;
+#+end_src
+
+*** 21. Obtener para cada grupo con más de dos componentes el nombre y el número de componentes del grupo.
+#+begin_src sql
+SELECT g.nombre, COUNT(p.dni)
+FROM Grupo g, Pertenece p
+WHERE g.cod = p.cod 
+GROUP BY g.nombre
+HAVING COUNT(p.dni) > 2;
+#+end_src
+
+*** 22. Obtener el número de discos de cada grupo.
+#+begin_src sql
+SELECT g.nombre, COUNT(d.cod)
+FROM Grupo g, Disco d
+WHERE g.cod = d.cod_gru
+GROUP BY g.nombre;
+#+end_src
+
+*** 23. Obtener el número de canciones que ha grabado cada compañía discográfica y su dirección.
+#+begin_src sql
+SELECT c.nombre, COUNT(e.can), c.dir
+FROM Companyia c LEFT JOIN (Disco d JOIN Esta e ON d.cod = e.cod) ON c.cod = d.cod_comp
+GROUP BY c.nombre, c.dir
+ORDER BY c.nombre;
+#+end_src
+
+
+
+** Consultas generales
+
+*** 24. Obtener los nombre de los artistas de grupos con clubes de fans de más de 500 personas y que el grupo sea de Inglaterra.
+
+#+begin_src sql
+SELECT DISTINCT a.nombre
+FROM Artista a, Pertenece p, Grupo g, Club c
+WHERE a.dni = p.dni AND p.cod = g.cod AND g.cod = c.cod_gru AND c.num > 500 AND g.pais = 'Inglaterra'
+ORDER BY a.nombre;
+#+end_src
+
+
+*** 25. Obtener el título de las canciones de todos los discos del grupo U2.
+#+begin_src sql
+SELECT DISTINCT c.titulo
+FROM Grupo G, Disco D, Esta e, Cancion c
+WHERE g.cod = d.cod_gru AND d.cod = e.cod AND e.can = c.cod AND g.nombre = 'U2'
+ORDER BY c.titulo;
+#+end_src
+
+
+*** 26. El dúo dinámico por fin se jubila; para sustituirles se pretende hacer una selección sobre todos los pares de artistas de grupos españoles distintos tales que el primero sea voz y el segundo guitarra. Obtener dicha selección
+
+#+begin_src sql
+SELECT a1.nombre, a2.nombre
+FROM Artista a1, Artista a2, Pertenece p1, Pertenece p2, Grupo g1, Grupo g2 
+WHERE     p1.cod <> p2.cod 
+      AND a1.dni = p1.dni 
+      AND p1.funcion = 'voz' 
+      AND a2.dni = p2.dni 
+      AND p2.funcion = 'guitarra' 
+      AND p1.cod = g1.cod 
+      AND p2.cod = g2.cod 
+      AND g1.pais = 'España'
+      AND g2.pais = 'España';
+#+end_src
+
+*** 28. Obtener el título de la canción de mayor duración si es única. 
+#+begin_src sql
+SELECT C.titulo
+FROM Cancion c
+WHERE c.duracion = (SELECT MAX(duracion) 
+                    FROM Cancion) 
+      AND NOT EXISTS (SELECT * 
+                      FROM Cancion c1
+                      WHERE c.duracion = c1.duracion AND c.cod <> c1.cod);
+#+end_src
+
+*** 29. Obtener el décimo (debe haber sólo 9 por encima de él) club con mayor número de fans indicando ese número
+
+#+begin_src sql
+SELECT c1.nombre, c1.num
+FROM Club c1
+WHERE 10 = (SELECT COUNT(c2.cod) FROM Club c2 WHERE c2.num >= c1.num);
+#+end_src
+
+*** 30. Obtener el nombre de los artistas que tengan la función de bajo en un único grupo y que además éste tenga más de dos miembros
+#+begin_src sql
+SELECT a.nombre
+FROM Artista a, Pertenece p1
+WHERE    a.dni = p1.dni 
+     AND p1.funcion = 'bajo' 
+     AND NOT EXISTS (SELECT * 
+                       FROM Pertenece p2 
+                     WHERE    p1.dni = p2.dni 
+                          AND p1.cod <> p2.cod 
+                          AND p2.funcion = 'bajo')
+     AND p1.cod IN (SELECT p.cod 
+                    FROM Pertenece p 
+                    GROUP BY p.cod 
+                    HAVING COUNT(p.dni) > 2);
+#+end_src
+
+*** 31. ¿Cuál es la compañía discográfica que más canciones ha grabado?
+
+#+begin_src sql
+SELECT c.nombre, COUNT(DISTINCT e.can)
+FROM Companyia c, Disco d, Esta e
+WHERE c.cod = d.cod_comp AND d.cod = e.cod 
+GROUP BY c.nombre
+HAVING COUNT(DISTINCT e.can) = (SELECT MAX(COUNT (DISTINCT e.can)) 
+                                FROM Companyia c, Disco d, Esta e 
+                                WHERE c.cod = d.cod_comp AND d.cod = e.cod 
+                                GROUP BY c.cod);
 #+end_src
 
 * Base de Datos BIBLIOTECA 
