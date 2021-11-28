@@ -879,6 +879,7 @@ FROM Grupo g, Pertenece p
 WHERE g.cod = p.cod 
 GROUP BY g.nombre
 HAVING COUNT(p.dni) > 2;
+#+end_src
 
 *** 22. Obtener el número de discos de cada grupo.
 #+begin_src sql
@@ -901,7 +902,7 @@ ORDER BY c.nombre;
 ** Consultas generales
 
 *** 24. Obtener los nombre de los artistas de grupos con clubes de fans de más de 500 personas y que el grupo sea de Inglaterra.
-/*ejercicio 24*/
+
 #+begin_src sql
 SELECT DISTINCT a.nombre
 FROM Artista a, Pertenece p, Grupo g, Club c
@@ -911,7 +912,6 @@ ORDER BY a.nombre;
 
 
 *** 25. Obtener el título de las canciones de todos los discos del grupo U2.
-/*ejercicio 25*/
 #+begin_src sql
 SELECT DISTINCT c.titulo
 FROM Grupo G, Disco D, Esta e, Cancion c
