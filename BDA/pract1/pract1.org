@@ -961,3 +961,298 @@ SELECT o.titulo, o.cod_ob
 FROM Obra o
 WHERE 1 < (SELECT COUNT(e.autor_id) FROM Escribir e WHERE o.cod_ob = e.cod_ob);
 #+end_src
+
+*** 20. Obten el nombre de los amigos que han leído todas las obras del autor del indentidicador 'RUKI'
+
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE NOT EXISTS (SELECT *
+                 FROM escribir e
+                 WHERE e.autor_id = 'RUKI'
+                       AND e.cod_ob NOT IN (SELECT o.cod_ob
+                                       FROM leer l, obra o
+                                       WHERE  a.num = l.num 
+                                          AND l.cod_ob = o.cod_ob)) 
+     AND EXISTS (SELECT *
+                 FROM escribir
+                 WHERE autor_id = 'RUKI')
+#+end_src
+
+
+*** 21.
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE NOT EXISTS (SELECT *
+                 FROM escribir e
+                 WHERE e.autor_id = 'GUAP'
+                       AND e.cod_ob NOT IN (SELECT o.cod_ob
+                                       FROM leer l, obra o
+                                       WHERE  a.num = l.num 
+                                          AND l.cod_ob = o.cod_ob)) 
+     AND EXISTS (SELECT *
+                 FROM escribir
+                 WHERE autor_id = 'GUAP')
+#+end_src
+
+*** 22 
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE EXISTS (SELECT *
+              FROM  autor aut
+              WHERE NOT EXISTS (SELECT *
+                                FROM escribir e
+                                WHERE e.autor_id = aut.autor_id 
+                                  AND e.cod_ob NOT IN(SELECT l2.cod_ob
+                                                      FROM leer l2
+                                                      WHERE l2.num = a.num)) 
+                     AND EXISTS (SELECT *
+                                FROM escribir e
+                                WHERE e.autor_id = aut.autor_id ))
+#+end_src
+
+*** 23 
+#+begin_src sql
+SELECT a.nombre, aut.nombre
+FROM amigo a, autor aut
+               WHERE NOT EXISTS (SELECT *
+                                FROM escribir e
+                                WHERE e.autor_id = aut.autor_id 
+                                  AND e.cod_ob NOT IN(SELECT l2.cod_ob
+                                                      FROM leer l2
+                                                      WHERE l2.num = a.num)) 
+                     AND EXISTS (SELECT *
+                                FROM escribir e
+                                WHERE e.autor_id = aut.autor_id ))
+#+end_src
+
+*** 24 
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE NOT EXISTS 
+    (SELECT *
+    FROM leer l
+    WHERE l.num = a.num
+        AND NOT EXISTS
+            (SELECT *
+            FROM escribir e
+            WHERE e.cod_ob = l.cod_ob
+                AND e.autor_id = 'CAMA')
+    )
+    AND EXISTS 
+        (SELECT *
+        FROM leer l1
+        WHERE l1.num = a.num)
+#+end_src
+
+*** 25 
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE NOT EXISTS 
+    (SELECT *
+    FROM leer l
+    WHERE l.num = a.num
+        AND NOT EXISTS
+            (SELECT *
+            FROM escribir e
+            WHERE e.cod_ob = l.cod_ob
+                AND e.autor_id = 'GUAP'))
+    AND EXISTS 
+        (SELECT *
+        FROM leer l1
+        WHERE l1.num = a.num)
+#+end_src
+
+*** 26 
+#+begin_src sql
+SELECT a.nombre
+FROM amigo a
+WHERE EXISTS
+    (SELECT *
+    FROM autor au
+    WHERE NOT EXISTS 
+        (SELECT *
+        FROM leer l
+        WHERE l.num = a.num
+        AND NOT EXISTS
+            (SELECT *
+            FROM escribir e
+            WHERE e.cod_ob = l.cod_ob
+                AND e.autor_id = au.autor_id)
+        )
+    AND EXISTS 
+        (SELECT *
+        FROM leer l1
+        WHERE l1.num = a.num)
+    )
+#+end_src
+
+*** 27 
+#+begin_src sql
+SELECT a.nombre , au.nombre
+FROM amigo a ,autor au
+    WHERE NOT EXISTS 
+        (SELECT *
+        FROM leer l
+        WHERE l.num = a.num
+        AND NOT EXISTS
+            (SELECT *
+            FROM escribir e
+            WHERE e.cod_ob = l.cod_ob
+                AND e.autor_id = au.autor_id)
+        )
+    AND EXISTS 
+        (SELECT *
+        FROM leer l1
+        WHERE l1.num = a.num)
+    
+#+end_src
+
+*** 28 
+#+begin_src sql
+SELECT a.nombre, au.nombre
+FROM amigo a, autor au
+WHERE NOT EXISTS (SELECT *
+                  FROM escribir e
+                  WHERE e.autor_id = au.autor_id
+                  AND e.cod_ob NOT IN (SELECT l.cod_ob
+                                       FROM leer l
+                                       WHERE a.num = l.num ))
+    AND EXISTS (SELECT *
+                FROM escribir e
+                WHERE e.autor_id = au.autor_id)
+    AND NOT EXISTS 
+        (SELECT *
+        FROM leer l
+        WHERE l.num = a.num
+        AND l.cod_ob NOT IN (SELECT e.cod_ob
+                             FROM escribir e
+                             WHERE e.autor_id = au.autor_id)
+        )
+    AND EXISTS 
+        (SELECT *
+        FROM leer l1
+        WHERE l1.num = a.num)
+#+end_src
+
+** Consultas agrupadas
+
+*** 29 
+#+begin_src sql
+SELECT l.id_lib, l.titulo
+FROM libro l, esta_en es
+WHERE l.id_lib = es.id_lib AND l.titulo is not null
+GROUP BY l.id_lib, l.titulo
+HAVING count(cod_ob) > 1
+#+end_src
+
+*** 30 
+#+begin_src sql
+SELECT a.nombre, count(l.cod_ob)
+FROM amigo a, leer l
+WHERE a.num = l.num 
+GROUP BY a.num, a.nombre
+HAVING count(l.cod_ob) > 3
+#+end_src
+
+*** 31 
+#+begin_src sql
+SELECT t.tematica, count(o.cod_ob)
+FROM tema t, obra o 
+WHERE t.tematica = o.tematica
+GROUP BY t.tematica 
+ORDER BY t.tematica
+#+end_src
+
+*** 32 
+#+begin_src sql
+SELECT t.tematica, count(o.cod_ob)
+FROM tema t LEFT JOIN obra o ON t.tematica = o.tematica
+GROUP BY t.tematica 
+ORDER BY t.tematica
+#+end_src
+
+*** 33 
+#+begin_src sql
+SELECT aut.nombre
+FROM autor aut, escribir es 
+WHERE aut.autor_id = es.autor_id
+GROUP BY aut.nombre, aut.autor_id
+HAVING count(es.cod_ob) = (SELECT (MAX (count (es2.cod_ob)))
+                           FROM autor aut2, escribir es2
+                           WHERE aut2.autor_id = es2.autor_id
+                           GROUP BY aut2.autor_id)
+#+end_src
+
+*** 34 
+#+begin_src sql
+SELECT aut.nacionalidad
+FROM autor aut
+GROUP BY aut.nacionalidad
+HAVING count(aut.autor_id) = (SELECT MIN (count(aut.autor_id))
+                              FROM autor aut
+                              GROUP BY aut.nacionalidad)
+
+#+end_src
+
+
+*** 35 
+#+begin_src sql
+
+SELECT a.nombre
+FROM amigo a, leer l
+WHERE a.num = l.num 
+GROUP BY a.num, a.nombre
+HAVING count(l.cod_ob) =(SELECT MAX (count(l.cod_ob))
+                         FROM amigo a, leer l
+                         WHERE a.num = l.num 
+                         GROUP BY a.num, a.nombre)
+
+#+end_src
+
+** Consultas generales
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
+
+
+*** 34 
+#+begin_src sql
+
+#+end_src
