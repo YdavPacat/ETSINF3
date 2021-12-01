@@ -1380,7 +1380,7 @@ GROUP BY aut.nacionalidad
 HAVING count(aut.autor_id) = (SELECT MIN (count(aut.autor_id))
                               FROM autor aut
                               GROUP BY aut.nacionalidad)
-
+ 
 #+end_src
 
 
@@ -1400,8 +1400,13 @@ HAVING count(l.cod_ob) =(SELECT MAX (count(l.cod_ob))
 
 ** Consultas generales
 
-*** 34 
+*** 36 
 #+begin_src sql
+SELECT l.id_lib, l.titulo
+FROM libro l, esta es
+WHERE l.id_lib = es.id_lib AND t.tiulo IS NOT NULL
+GROUP BY l.id_lib, l.titulo
+HAVING count(es.cod_ob) = 1
 
 #+end_src
 
