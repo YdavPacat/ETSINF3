@@ -1,6 +1,0 @@
-node broker1 8000 8001 B1 
-node broker2 8002 tcp://localhost:8001 B2
-node worker tcp://localhost:8002 W1 Resp1
-node worker tcp://localhost:8002 W2 Resp2
-node client tcp://localhost:8000 C1 Hello
-node client tcp://localhost:8000 C2 World
