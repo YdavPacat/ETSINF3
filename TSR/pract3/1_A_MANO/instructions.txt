@@ -1,0 +1,4 @@
+broker may be built automatically from the Dockerfile
+While running, broker's IP must be obtained from container's info
+This IP should be included in client's and worker's Dockerfile for these containers to be built and run accordingly
+Workers must be started before clients arrival

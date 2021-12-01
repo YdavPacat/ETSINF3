@@ -1,0 +1,57 @@
+version: '2'
+services:
+  cliA:
+    image: client
+    build: ./client/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9998
+      - CLASSID=A
+  cliB:
+    image: client
+    build: ./client/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9998
+      - CLASSID=B
+  cliC:
+    image: client
+    build: ./client/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9998
+      - CLASSID=C
+      
+  worA:
+    image: worker
+    build: ./worker/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9999
+      - CLASSID=A
+  worB:
+    image: worker
+    build: ./worker/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9999
+      - CLASSID=B
+  worC:
+    image: worker
+    build: ./worker/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9999
+      - CLASSID=C
+  bro:
+    image: broker
+    build: ./broker/
+    expose:
+      - "9998"
+      - "9999"

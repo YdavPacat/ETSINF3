@@ -1,0 +1,4 @@
+El contenido de este ZIP "base" recoge algunos cambios respecto al material utilizado el curso pasado (2020/2021), concretamente:
+1) En los FT brokers se llegaba a dar una excepción al recibir una respuesta del trabajador fuera del plazo establecido. Esa respuesta del trabajador debe ignorarse, sin incluir de nuevo al trabajador en la cola de servidores disponibles. De esa manera, dejará de recibir nuevas peticiones y el servicio lo excluirá a efectos prácticos. Esto ocurría en los directorios 3, 4, 5 y 6.
+2) En el "worcli" externo, se utilizaba setTimeOut en lugar de setTimeout. Se ha corregido ese error en las dos llamadas en las que aparecía. Ocurría en el directorio 6.
+3) En el Dockerfile del directorio 0_PREVIO se ha añadido un "RUN npm init -y" para evitar algunos mensajes de advertencia. Esos mensajes se debían a la falta de inicialización de npm.
