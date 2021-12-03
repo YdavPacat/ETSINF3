@@ -82,7 +82,8 @@ void fase_WB_alum() {
     /*** Volcado de resultados */
     
               /* INSERTAR CÓDIGO */
-
+    BUS.valor = RS[s].resultado;
+    BUS.codigo = RS[s].rob;
 
     /* En caso de que la instrucción fuera un salto o
      * se hubiera producido una excepción, se vuelca por el BUS */
@@ -92,7 +93,7 @@ void fase_WB_alum() {
     /*** Libera la RS */
     
               /* INSERTAR CÓDIGO */
-
+    RS[s].ocupado = NO;
 
     // Una vez liberada, inicializa el estado
     RS[s].estado = PENDIENTE;
@@ -108,10 +109,10 @@ void fase_WB_alum() {
     /*** Lectura de resultados */
 
     // Escritura en el ROB
-
     
               /* INSERTAR CÓDIGO */
-
+    RB[BUS.codigo].valor = BUS.valor;
+    RB[BUS.codigo].completado = SI;
 
     /* Reorder buffer */
     // Situaciones excepcionales: saltos, excepciones, etc.
@@ -135,39 +136,70 @@ void fase_WB_alum() {
 
     /* Estaciones de reserva */
 
-    for (s = INICIO_RS_ENTEROS;
-            s <= FIN_RS_ENTEROS; s++) {
+    for (s = INICIO_RS_ENTEROS; s <= FIN_RS_ENTEROS; s++) {
         
               /* INSERTAR CÓDIGO */
+        if(RS[s].Q1 == BUS.codigo){
+            RS[s].V1 = BUS.valor;
+            RS[s].Q1 = MARCA_NULA;
+        }
 
+        if(RS[s].Q2 == BUS.codigo){
+            RS[s].V2 = BUS.valor;
+            RS[s].Q2 = MARCA_NULA;
+        }
     } /* endfor */
 
-    for (s = INICIO_RS_SUMREST;
-            s <= FIN_RS_SUMREST; s++) {
+    for (s = INICIO_RS_SUMREST; s <= FIN_RS_SUMREST; s++) {
         
               /* INSERTAR CÓDIGO */
+        if(RS[s].Q1 == BUS.codigo){
+            RS[s].V1 = BUS.valor;
+            RS[s].Q1 = MARCA_NULA;
+        }
 
+        if(RS[s].Q2 == BUS.codigo){
+            RS[s].V2 = BUS.valor;
+            RS[s].Q2 = MARCA_NULA;
+        }
     } /* endfor */
 
     for (s = INICIO_RS_MULTDIV;
             s <= FIN_RS_MULTDIV; s++) {
         
               /* INSERTAR CÓDIGO */
+        if(RS[s].Q1 == BUS.codigo){
+            RS[s].V1 = BUS.valor;
+            RS[s].Q1 = MARCA_NULA;
+        }
 
+        if(RS[s].Q2 == BUS.codigo){
+            RS[s].V2 = BUS.valor;
+            RS[s].Q2 = MARCA_NULA;
+        }
     } /* endfor */
 
-    for (s = INICIO_BUFFER_CARGA;
-            s <= FIN_BUFFER_CARGA; s++) {
+    for (s = INICIO_BUFFER_CARGA; s <= FIN_BUFFER_CARGA; s++) {
         
               /* INSERTAR CÓDIGO */
-
+        if(RS[s].Q1 == BUS.codigo){
+            RS[s].V1 = BUS.valor;
+            RS[s].Q1 = MARCA_NULA;
+        }
     } /* endfor */
 
-    for (s = INICIO_BUFFER_ALMACEN;
-            s <= FIN_BUFFER_ALMACEN; s++) {
+    for (s = INICIO_BUFFER_ALMACEN; s <= FIN_BUFFER_ALMACEN; s++) {
         
               /* INSERTAR CÓDIGO */
+        if(SB[s].Q1 == BUS.codigo){
+            SB[s].V1 = BUS.valor;
+            SB[s].Q1 = MARCA_NULA;
+        }
 
+        if(SB[s].Q2 == BUS.codigo){
+            SB[s].V2 = BUS.valor;
+            SB[s].Q2 = MARCA_NULA;
+        }
     } /* endfor */
 
 } /* end fase_WB */
