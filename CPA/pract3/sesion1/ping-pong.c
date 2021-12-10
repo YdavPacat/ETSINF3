@@ -50,7 +50,8 @@ int main(int argc,char *argv[])
      Compute the time of transmission of a single message (in milliseconds) and print it.
      Take into account there have been NREPS repetitions, and each repetition involves 2
      messages. */
-
+  if(myid == 0) printf("El tiempo que tarda el envio de un mensaje es de: %f\n", (f2-f1)/200);
+  
   MPI_Finalize();
   return 0;
 }

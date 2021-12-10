@@ -5,7 +5,7 @@ import numpy as np
 from perceptron import perceptron; 
 from confus import confus
 from linmach import linmach
-
+# python experiment.py datos/OCR_14x14 '.1 1 10 100 1000 10000' '0.1'
 if len(sys.argv)!=4:
   print('Usage: %s <data> <alphas> <bs>' % sys.argv[0]);
   sys.exit(1);
@@ -33,8 +33,8 @@ NTr=int(round(.7*N));
 train=data[:NTr,:]
 M=N-NTr;
 test=data[NTr:,:];
-print('#      a    b   E   k Ete Ete (%)    Ite (%)');
-print('#------- ---- --- --- --- ------- ----------');
+print('#      a      b   E   k Ete Ete (%)    Ite (%)');
+print('# ------ ------ --- --- --- ------- ----------');
 
 for a in alphas:
   for b in bs:
@@ -47,10 +47,20 @@ for a in alphas:
     for m in range(M):
       tem=np.concatenate(([1],test[m,:D]));
       rl[m]=labs[linmach(w,tem)];
-      ner,m=confus(test[:,L-1].reshape(M,1),rl);
-      per=ner/M;
-      r=1.96*math.sqrt(per*(1-per)/M);
-      print('I=[%.3f, %.3f]'%(per-r,per+r),end='');
+
+    ner,m=confus(test[:,L-1].reshape(M,1),rl);
+    per=ner/M;
+
+    r=1.96*math.sqrt(per*(1-per)/M);
+    print('%8.1f'%(a),end='');
+    print('%7.1f'%(b),end='');
+    print('%4d'%(E),end='');
+    print('%4d'%(k),end='');
+    print('%4d'%(ner),end='');
+    print('%8.1f'%(per * 100),end='');
+    print(' [%.1f, %.1f]'%((per-r) * 100,(per+r) * 100),end='');
+    # print(M, ner, per)
+    print("")
 
 
 

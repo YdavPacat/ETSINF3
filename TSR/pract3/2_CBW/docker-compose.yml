@@ -1,0 +1,22 @@
+version: '2'
+services:
+  cli:
+    image: client
+    build: ./client/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9998
+  wor:
+    image: worker
+    build: ./worker/
+    links:
+      - bro
+    environment:
+      - BROKER_URL=tcp://bro:9999
+  bro:
+    image: broker
+    build: ./broker/
+    expose:
+      - "9998"
+      - "9999"
