@@ -10,7 +10,6 @@
 typedef unsigned char Byte;
 
 /* Function: F(z) = z^3 - 1 */
-
 double complex F1(double complex z)
 {
   return z*z*z-1.0;
@@ -31,7 +30,6 @@ double complex F2(double complex z)
 /* Derivative: F'(z) = 4*z^3 */
 double complex D2(double complex z)
 {
-
   return 4.0*z*z*z;
 }
 
@@ -39,6 +37,7 @@ double complex D2(double complex z)
 double complex F3(double complex z)
 {
   double complex z3, z6;
+
   z3 = z*z*z;
   z6 = z3*z3;
 
@@ -57,8 +56,6 @@ double complex D3(double complex z)
   return 6.0*z5+3.0*z2;
 }
 
-
-
 /* Function: F(z) = z^11 - 1 */
 double complex F4(double complex z)
 {
@@ -68,7 +65,6 @@ double complex F4(double complex z)
   z5 = z2*z2*z;
 
   return z5*z5*z-1.0;
-
 }
 
 /* Derivative: F'(z) = 11*z^10 */
@@ -112,9 +108,7 @@ void escribe_pgm(char nom[], int ancho, int alto, Byte *imagen, int max, int col
       if (col < 0) { /* Se utiliza col como semilla para una paleta aleatoria */
         srand(col);
         for (i = 0; i < 256; i++)
-
           for (j = 0; j < 3; j++)
-
             pal[i][j] = rand() & 255;
 
       } else {
@@ -174,18 +168,14 @@ int fractal_newton(double x1, double x2, double y1, double y2,
   MPI_Status status;
   MPI_Request req;
 
-
-
   ix = (x2-x1)/(w-1);
-
   iy = (y2-y1)/(h-1);
-
   max = 0;
 
-
-
   if (me == 0) {
+
     /* CODE FOR THE MASTER */
+    
     /* Initial distribution of work */
     next_row = 0;
 
@@ -218,9 +208,7 @@ int fractal_newton(double x1, double x2, double y1, double y2,
       }
 
       if(!received) {
-
         MPI_Wait(&req, &status);
-
       }
 
       /* Get the process index and the row number */
@@ -403,8 +391,6 @@ int main(int argc, char *argv[])
     /* Liberamos memoria */
     free(A);
   }
-
-
 
   MPI_Finalize();
 
