@@ -5,8 +5,9 @@
 #SBATCH --partition=cpa 
 #SBATCH --output=salida1-8.txt 
 
-mpicc -Wall -o newton ./newton.c
-mpicc -Wall -o newton ./newtonMod.c
-
+mpicc -o newton ./newton.c -lm
+mpicc -o newtonMod ./newtonMod.c -lm
+echo Original
 mpiexec ./newton -c5
+echo Modificado
 mpiexec ./newtonMod -c5

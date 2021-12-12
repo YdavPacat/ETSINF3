@@ -1,0 +1,2 @@
+1-norm (50 iterations): 42393.21405
+Time using 2 processes: 10.06

@@ -5,8 +5,10 @@
 #SBATCH --partition=cpa 
 #SBATCH --output=salida1-2.txt 
 
-mpicc -Wall -o newton ./newton.c
-mpicc -Wall -o newton ./newtonMod.c
+mpicc -o newton ./newton.c -lm
+mpicc -o newtonMod ./newtonMod.c -lm
 
-mpiexec ./newton -c5
-mpiexec ./newtonMod -c5
+echo "Original"
+mpiexec newton -c5
+echo "Modificado"
+mpiexec newtonMod -c5
