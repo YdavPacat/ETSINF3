@@ -1,9 +1,9 @@
 #!/bin/sh
 #SBATCH --nodes=1
-#SBATCH --ntasks=2
+#SBATCH --ntasks=8
 #SBATCH --time=10:00
 #SBATCH --partition=cpa 
-#SBATCH --output=salida1-2.txt 
+#SBATCH --output=salida1-8.txt 
 
 mpicc -Wall -o newton ./newton.c
 mpicc -Wall -o newton ./newtonMod.c
