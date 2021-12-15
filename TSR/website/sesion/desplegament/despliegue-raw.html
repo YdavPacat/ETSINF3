@@ -329,11 +329,11 @@ CMD node client tcp://????:9998
    - `docker run -d broker` lanza el contenedor
 - obtenemos la IP de ese contenedor
    - `docker ps -a` para conocer la ID del contenedor
-   - `docker inspect IDcontenedor` per a llegir la IP (ex. 192.154.3.12)
+   - `docker inspect IDcontenedor` para leer la IP (ej. 192.154.3.12)
 - modificamos el valor de la IP en el Dockerfile de worker
-   - linia `CMD node worker tcp://192.154.3.12:9999`
+   - línea `CMD node worker tcp://192.154.3.12:9999`
    - `docker build -t worker .` crea la imagen
-- modificamos el valor de la IP en el Dockerfile de worker
+- modificamos el valor de la IP en el Dockerfile de client
    - línea `CMD node client tcp://192.154.3.12:9998`
    - `docker build -t client .` crea la imagen
 
@@ -414,7 +414,7 @@ CBW/
     worker.js
     Dockerfile
 ```
-- Los ficheros Dockerfile son para crear les imágeness que permiten lanzar contenedores
+- Los ficheros Dockerfile son para crear les imágenes que permiten lanzar contenedores
 - El fichero docker-compose.yml es un plan global de despliegue (para la automatización)
 
 ---
@@ -444,7 +444,7 @@ CMD node worker tcp://????:9999
    - `docker ps -a` para conocer la ID del contenedor
    - `docker inspect IDcontenedor` para leer la IP (ex. 192.154.3.12)
 - modificamos el valor de la IP en el Dockerfile de worker
-   - linia `CMD node worker tcp://192.154.3.12:9999`
+   - línea `CMD node worker tcp://192.154.3.12:9999`
    - `docker build -t worker .` crea la imagen
 
 ---

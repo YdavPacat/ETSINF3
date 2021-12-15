@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Àrees d&#x27;Aplicació dels Sistemes Distribuïts</title>
+	<link rel="stylesheet" href="../../assets/css/reveal/reveal.css">
+	<link rel="stylesheet" href="../../assets/css/reveal/theme/white.css">
+	<link rel="stylesheet" href="../../assets/css/highlight-hybrid.css">
+	<link rel="stylesheet" href="../../assets/css/slideshow.css">
+	<style>
+	</style>
+	<!--  -->
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown
+			data-separator="(^#HSLIDE$|^#HSLIDE\?.*)"
+			data-separator-vertical="(^#VSLIDE$|^#VSLIDE\?.*)"
+			data-separator-notes="^Presentation note:"
+			data-charset="utf-8">
+			<script type="text/template">
+				<!-- 
+$theme: gaia
+_paginate: false 
+-->
+#HSLIDE
+
+# Àrees d'Aplicació dels Sistemes Distribuïts
+##### TSR 2021 Grupo B. Juansa Sendra
+
+---
+<!-- footer: TSR 2021-22  Secció 1.1 -->
+<!-- paginate: true -->
+
+---
+#HSLIDE
+
+## Entorno de computación actual $\rightarrow$ distribudo e interconectado
+
+- Infinidad de dispositivos interconectats (PCs, portátiles, tabletas, móviles, ...)
+- Que suportan de manera nativa estandards universales.- ethernet, ip, http, html, ...
+
+La idea es aprovechar ese contexto para:
+
+
+1. Ofrecer/consumir servicios remotos y robustos
+ - buscadores, almacenamiento (persistència), redes sociales, aplicaciones online, ...
+ - robustos $\rightarrow$ toleran fallos (alta disponibilidad) y son escalables
+1. Explotar la cooperación entre dispositivos para resolver problemas complejos
+ - ej. sustituir super-ordenadores por la cooperación de varios dispositivos económicos y/o pre-existentes
+1. Desarrollar nuevos escenarios (nueva funcionalidad)
+ - ej. utilizar Mots = ordenadores económicos que pueden incrustarse en otros dispositivos (electrodomésticos, vehículos, etc.)
+
+
+---
+#HSLIDE
+
+## Infraestructura actual.- WWW
+
+- Solicitud/respuesta $\rightarrow$ Cliente/Servidor
+ - cliente = usuario que interactúa (pide documentos) mediante un navegador
+- Compartición de documentos (documentos estáticos)
+
+
+---
+#HSLIDE
+
+## Servicios robustos
+
+---
+#HSLIDE
+
+## Cooperación para resolver problemas complejos
+
+---
+#HSLIDE
+
+## Nueva funcionalidad
+
+			</script>
+		</section>
+	</div>
+</div>
+
+<script src="../../assets/js/reveal/reveal.js"></script>
+<script src="../../assets/js/reveal/lib/head.min.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script>
+Reveal.initialize({
+	embedded: true,
+	margin: 0.0,
+	showNotes: false,
+	transition: 'slide',
+	autoSlide: 0,
+	loop: false,
+	center: true,
+	rtl: false,
+	shuffle: false,
+	mouseWheel: false,
+	history: true,
+
+	// disabled for now
+	// math: {
+	// 	mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+	// 	config: 'TeX-AMS_HTML-full'
+	// },
+
+	dependencies: [
+		{ src: "../../assets/js/reveal/plugin/markdown/marked.js"},
+		{ src: "../../assets/js/reveal/plugin/markdown/markdown.js"},
+		{ src: "../../assets/js/reveal/plugin/notes/notes.js"},
+		// { src: "../../assets/js/reveal/plugin/math/math.js", async: true }
+		{ src: "../../assets/js/reveal/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+
+Reveal.configure({
+	keyboard: {
+		67: function() { // bind "s" key to "select" code block content
+
+		var currentSlide = Reveal.getCurrentSlide();
+		var preBlock = $(currentSlide).find("pre");
+
+		if(preBlock.length > 0) {
+
+			if (window.getSelection) {
+				var range = document.createRange();
+				range.selectNodeContents(preBlock[0]);
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		}
+	}
+}
+});
+
+</script>
+
+</body>
+</html>

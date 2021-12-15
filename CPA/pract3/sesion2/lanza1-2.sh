@@ -5,5 +5,10 @@
 #SBATCH --partition=cpa 
 #SBATCH --output=salida1-2.txt 
 
-mpiexec ./newton -c5
-# Da error
+mpicc -o newton ./newton.c -lm
+mpicc -o newtonMod ./newtonMod.c -lm
+
+echo "Original"
+mpiexec newton -c5
+echo "Modificado"
+mpiexec newtonMod -c5

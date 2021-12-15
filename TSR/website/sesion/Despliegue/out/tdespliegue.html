@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Madoko, version 1.1.4" />
+  <meta name="viewport" content="initial-scale=1.0" />
+  <meta name="author" content="Curso 2018/19" />
+  <title>TSR - Tema 4:  **Despliegue de servicios**</title>
+  <style type="text/css"  class="link">
+  /*# sourceURL=madoko.css */
+  
+  .madoko .toc>.tocblock .tocblock .tocblock {
+    margin-left: 2.25em;
+  }
+  .madoko .toc>.tocblock .tocblock {
+    margin-left: 1.5em;
+  }
+  .madoko .toc-contents>.tocblock>.tocitem {
+    font-weight: bold;
+  }
+  .madoko .toc {
+    margin-top: 1em;
+  }
+  .madoko p.para-continue {
+    margin-bottom: 0pt;
+  }
+  .madoko .para-block+p {
+    margin-top: 0pt;
+  }
+  .madoko ul.para-block, .madoko ol.para-block {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+  }
+  .madoko ul.para-end, .madoko ol.para-end {
+    margin-bottom: 1em;
+  }
+  .madoko dl {
+    margin-left: 0em;
+  }
+  .madoko blockquote {
+    font-style: italic;
+  }
+  .madoko a.localref {
+    text-decoration: none;
+  }
+  .madoko a.localref:hover {
+    text-decoration: underline;
+  }
+  .madoko .footnotes {
+    font-size: smaller;
+    margin-top: 2em;
+  }
+  .madoko .footnotes hr {
+    width: 50%;
+    text-align: left;
+  }
+  .madoko .footnote { 
+    margin-left: 1em;
+  }
+  .madoko .footnote-before {
+    margin-left: -1em;
+    width: 1em;
+    display: inline-block;
+  }
+  .madoko .align-center, .madoko .align-center>p {
+    text-align: center !important;
+  }
+  .madoko .align-center pre {
+    text-align: left;
+  }
+  .madoko .align-center>* {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-left, .madoko .align-left>p {
+    text-align: left !important;
+  }
+  .madoko .align-left>* {
+    margin-left: 0pt !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-right, .madoko .align-right>p {
+    text-align: right !important;
+  }
+  .madoko .align-right>* {
+    margin-left: auto !important;
+    margin-right: 0pt !important;
+  }
+  .madoko .align-center>table,
+  .madoko .align-left>table,
+  .madoko .align-right>table {
+    text-align: left !important;
+  }
+  .madoko .equation-before {
+    float: right;
+  }
+  .madoko .bibitem {
+    font-size: smaller;
+  }
+  .madoko .bibsearch {
+    font-size: x-small;
+    text-decoration:none;
+    color: black;
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  .madoko .block, .madoko .figure, .madoko .bibitem, .madoko .equation, .madoko div.math {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .figure {
+    padding: 0.5em;
+    margin-left: 0pt;
+    margin-right: 0pt;
+  }
+  .madoko .hidden {
+    display: none;
+  }
+  .madoko .invisible {
+    visibility: hidden;
+  }
+  .madoko.preview .invisible {
+    visibility: visible;
+    opacity: 0.5;
+  }
+  .madoko code.code, .madoko span.code {
+    white-space: pre-wrap;
+  }
+  .madoko hr, hr.madoko {
+    border: none;
+    border-bottom: black solid 1px;
+    margin-bottom: 0.5ex;
+  }
+  .madoko .framed>*:first-child {
+    margin-top: 0pt;
+  }
+  .madoko .framed>*:last-child {
+    margin-bottom: 0pt;
+  }
+  .madoko ul.list-style-type-dash {
+      list-style-type: none !important;
+  }
+  .madoko ul.list-style-type-dash > li:before {
+      content: "\2013"; 
+      position: absolute;
+      margin-left: -1em; 
+  }
+  .madoko table.madoko {
+    border-collapse: collapse;
+  }
+  .madoko td, .madoko th {
+    padding: 0ex 0.5ex;
+    margin: 0pt;
+    vertical-align: top;
+  }
+  .madoko .cell-border-left {
+    border-left: 1px solid black;
+  }
+  .madoko .cell-border-right {
+    border-right: 1px solid black;
+  }
+  .madoko thead>tr:first-child>.cell-line,
+  .madoko tbody:first-child>tr:first-child>.cell-line {
+    border-top: 1px solid black;
+    border-bottom: none;
+  }
+  .madoko .cell-line, .madoko .cell-double-line {
+    border-bottom: 1px solid black;
+    border-top: none;
+  }
+  .madoko .cell-double-line {
+    border-top: 1px solid black;
+    padding-top: 1.5px !important;
+  }
+  .madoko .input-mathpre .MathJax_Display {
+    text-align: left !important;
+  }
+  .madoko div.input-mathpre {
+    text-align: left;
+    margin-top: 1.5ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .math-rendering {
+    text-align: left;
+    white-space: pre;
+    color: gray;
+  }
+  .madoko .mathdisplay {
+    text-align: center;
+  }
+  .madoko .pretty table {
+    border-collapse: collapse;
+  }
+  .madoko .pretty td {
+    padding: 0em;
+  }
+  .madoko .pretty td.empty {
+    min-width: 1.5ex;
+  }
+  .madoko .pretty td.expander {
+    width: 100em;
+  }
+  body.madoko, .madoko .serif {
+    font-family: Cambria,"Times New Roman","Liberation Serif","Times",serif;
+  }
+  .madoko .sans-serif {
+    font-family: "Calibri", "Optima", sans-serif;
+  }
+  .madoko .symbol {
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  body.madoko {  
+    -webkit-text-size-adjust: 100%;       
+    text-rendering: optimizeLegibility;
+  }
+  body.madoko {
+    max-width: 88ex; 
+    margin: 1em auto;
+    padding: 0em 2em;  
+  }
+  body.preview.madoko {
+    padding: 0em 1em;
+  }
+  .madoko p {
+    text-align: justify;
+  }
+  .madoko h1, .madoko h2, .madoko h3, .madoko h4 { 
+    margin-top: 1.22em; 
+    margin-bottom: 1ex;
+  }
+  .madoko h1+p, .madoko h2+p, .madoko h3+p, .madoko h4+p, .madoko h5+p  { 
+    margin-top: 1ex;    
+  }
+  .madoko h5, .madoko h6 { 
+    margin-top: 1ex;
+    font-size: 1em;
+  }
+  .madoko h5 { 
+    margin-bottom: 0.5ex;
+  }
+  .madoko h5 + p {
+    margin-top: 0.5ex;
+  }
+  .madoko h6 { 
+    margin-bottom: 0pt;
+  }
+  .madoko h6 + p {
+    margin-top: 0pt;
+  }
+  .madoko pre, .madoko code, .madoko kbd, .madoko samp, .madoko tt, 
+  .madoko .monospace, .madoko .token-indent, .madoko .reveal pre, .madoko .reveal code, .madoko .email {
+    font-family: Consolas,"Andale Mono WT","Andale Mono",Lucida Console,Monaco,monospace,monospace;
+    font-size: 0.85em;
+  }
+  .madoko pre code, .madoko .token-indent {
+    font-size: 0.95em;
+  }
+  .madoko pre code {
+    font-family: inherit !important;
+  }
+  .madoko ol.linenums li {
+    background-color: white;
+    list-style-type: decimal;
+  }
+  .madoko .remote {
+    background-color: #F0FFF0;
+  }
+  .madoko .remote + * {
+    margin-top: 0pt;
+  }
+  @media print {
+    body.madoko {
+      font-size: 10pt;
+    }
+    @page {
+      margin: 1in 1.5in;
+    }
+  }
+  @media only screen and (max-device-width:1024px) {
+    body.madoko {
+      padding: 0em 0.5em;    
+    }
+    .madoko li {
+      text-align: left;
+    }
+  }
+  
+    </style>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/reveal.min.css"  class="link">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/beige.css"  class="link">
+  <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/head.min.js"  class="script preview"></script>
+  <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/js/reveal.js"  class="script preview"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/beige.css" id="theme">    
+      <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/html5shiv.js"></script>
+      <![endif]-->
+      <style>
+      body.madoko {
+        margin: 0pt;
+        padding: 0pt;
+        max-width: 100%;      
+      }
+      .madoko .reveal h1 {
+          font-size: 3.7em;
+      }
+      .madoko .reveal h2 {
+          font-size: 2.1em;
+      }
+      .reveal .authorblock .author {
+          font-size: 120%;
+          margin-bottom: 1ex;
+      }        
+      .reveal table {
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .reveal pre table {
+        margin-left: 0pt;
+      }
+      .madoko .reveal pre.pretty {
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+      }
+      .reveal li p {
+          text-align: left;
+      }
+      .reveal h2 {
+          margin-bottom: 0.7em;
+      }
+      .reveal section ul,
+      .reveal section ol {
+          margin-top: 0.35em;
+          margin-bottom: 0.35em;
+      }
+      .reveal section img.math-display {
+          padding: 1em;
+          box-shadow: none;
+          border: none;
+      }
+      .reveal section img.math-inline {
+          margin: 0pt;
+          padding: 0pt;
+          background-color: none;
+          box-shadow: none;
+          border: none;
+      }
+      .reveal section img {
+          box-shadow: none;
+          border: none;
+      }
+      .madoko .reveal pre {
+          border: 1px solid black;
+          word-wrap: normal;
+          background-color: white;
+          font-size: 0.7em;
+          padding: 0.7em;
+          line-height: 100%;
+          width: 100%;
+      }      
+      .reveal pre code, .reveal code {
+          padding: 0pt;
+      }
+      .reveal nav.toc {
+          line-height: 1em;
+          font-size: 60%;
+          overflow-y: auto;
+      }    
+      .reveal .tocitem {
+          text-align: left;
+      }
+      .reveal .toc>.tocblock .tocblock {
+          margin-left: 0.5em;
+      }   
+      .reveal .toc>.tocblock .tocblock .tocblock {
+          margin-left: 1em;
+      }
+      .reveal .bibliography {
+        height: 18em;
+        overflow-y: auto;
+        font-size: 0.8em;
+        line-height: 1.25;
+      }
+      .reveal section[data-smaller=""],
+      .reveal section[data-smaller="true"] {
+        font-size: 80%;
+        width: 110%;
+      }
+      .reveal .slides>section[data-smaller=""],
+      .reveal .slides>section[data-smaller="true"] {
+        left: -55%;
+      }
+      .reveal .details {
+        display: none;
+      }
+      .reveal[data-details=""] .details,
+      .reveal[data-details="true"] .details {
+        display: initial;
+      }
+      /* Display in the preview window */
+      html, body.madoko.preview, body.madoko.preview-full, .body.madoko {
+        height  : 100% !important;
+        width   : auto!important;
+        padding : 0pt !important;
+        margin  : 0pt !important;
+      }
+      body.madoko.preview, body.madoko.preview-full, .preview .body.madoko {
+        overflow: hidden !important;
+      }
+      body.preview .reveal .slides .fragment {
+        visibility: visible;
+        opacity: 0.5;
+      }
+      body.preview .reveal .slides .fragment.visible {
+        opacity: 1.0;
+      }
+      .preview .reveal div.notes,
+      .preview .reveal aside.notes {
+        display  : block;
+        position : absolute;
+        width    : 30%;
+        left     : 70%;
+        top      : -15%;
+        font-size: 50%;
+        border   : 1px solid black;
+        border-radius   : 10px;
+        background-color: white;
+      }
+      /* 'static' display in the preview window, unused for now */
+      body.preview.static div.reveal, 
+      body.preview.static div.ticreveal .slides, 
+      body.preview.static div.reveal section {
+        display: block !important;
+        position: relative !important;
+        width: auto !important;      
+      }
+      body.preview.static div.reveal section {
+        border: solid 1px black;
+        padding: 1em !important;
+        margin-top: 1em;
+        min-height: 15em;
+        top: 0pt;
+      }
+      body.madoko.preview.static section {
+        font-size: 75%;
+      }
+      body.madoko.preview.static {
+        padding: 0em 1em !important;
+      }
+      body.madoko.preview.static .reveal pre {
+        width: 95%;
+      }    
+      body.preview .reveal[data-details="false"] .details {
+        display: initial;
+        color: gray;
+      }
+      body.preview .reveal[data-long="false"] section[data-long] {
+        border-left: 2px black solid;
+      }
+      </style>
+      <script>    
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      window.revealConfig = {
+          controls: true,
+          progress: true,
+          history: true,
+          center: /^\s*(true|1)\s*$/i.test("true"),
+          slideNumber: /^\s*(true|1)\s*$/i.test("true"),
+          dependencies: [
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          ],
+      };
+      function revealAddFragments() {
+        [].forEach.call(document.querySelectorAll( ".fragmented" ), function(elem0) {
+          var elem = (/^H\d$/.test(elem0.nodeName) ? elem0.parentNode : elem0);
+          [].forEach.call(elem.children, function(item) {
+            if (item==elem0) return;
+            if (item && !/\bfragment(ed)?\b/.test(item.className) && item.nodeType===1) {
+              item.className = item.className + " fragment";
+            }
+          });
+        });
+      }
+      function revealQuotedList(listType) {
+        //compatibility with Rmarkdown slides
+        [].forEach.call( document.querySelectorAll("blockquote>" + listType), function(ul) {
+          if (!/\bfragmented\b/.test(ul.className)) {
+            ul.className = ul.className + " fragmented";
+          }        
+          var quote = ul.parentNode;
+          if (quote.childElementCount===1) {
+            quote.parentNode.replaceChild(ul,quote);
+          }
+        });
+      }
+      function revealBuildToFragmented() {
+        [].forEach.call(document.querySelectorAll( ".build" ), function(elem) {
+          if (elem && !/\bfragmented\b/.test(elem.className) && elem.nodeType===1) {
+            elem.className = elem.className + " fragmented";
+          }
+        });
+      }
+      function revealDivNotesToAside() {
+        [].forEach.call(document.querySelectorAll("div.notes"), function(elem) {
+          var aside = document.createElement("ASIDE");
+          if (elem.id) aside.id = elem.id;
+          aside.className = elem.className;
+          [].forEach.call(elem.attributes, function(attr) {
+            aside.setAttribute( attr.name, attr.value );
+          });
+          aside.innerHTML = elem.innerHTML;
+          elem.parentNode.replaceChild(aside,elem);
+        });
+      }
+      function revealDataQuery() {
+        var reveal = document.querySelector(".reveal");
+        if (!reveal) return;
+        window.location.search.replace(/\bdata-(\w+)(?:=(\w+))?\b/g, function(matched,key,value) {
+          reveal.setAttribute("data-" + key, (value ? value : ""));
+          return matched;
+        });
+      }
+      function revealRemoveLong() {
+        // remove parts for 'long' presentation
+        if (/\bpreview(?![\w\-])/.test(document.body.className)) return;
+        var reveal = document.querySelector(".reveal");
+        if (!reveal) return;
+        var value = reveal.hasAttribute("data-long") ? reveal.getAttribute("data-long") : null;
+        if (value==null || value=="false" || value=="0") {
+          [].forEach.call( document.querySelectorAll("section[data-long]"), function(elem) {
+            elem.parentNode.removeChild(elem);
+          });
+        }
+      }
+      revealConfig.onLoad = function() {
+        revealConfig.getEmbeddedImages();
+        revealDataQuery();
+        revealRemoveLong();
+        revealQuotedList("ul");
+        revealQuotedList("ol");
+        revealBuildToFragmented();
+        revealDivNotesToAside();
+        revealAddFragments();
+      };
+      document.addEventListener("load",revealConfig.onLoad);    
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof Reveal !== "undefined" && !Reveal.isReady()) {
+          revealConfig.onLoad();
+          Reveal.initialize(revealConfig);
+        }
+      });    
+      // add support for printing:
+      // use  ?print-pdf to get a pdf-printable version (in Chrome)
+      // use  ?print-paper to get a paper-printable version.
+      revealConfig.initPrint = function() {
+        var cssLink = null;
+        var bodyClass = null;
+        var cap = window.location.search.match(/\bprint-(\w+)\b/);
+        if (cap) {
+          bodyClass = cap[0];
+          cssLink = "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/print/" + cap[1] + ".css";
+        }
+        if (cssLink) {
+          var link  = document.createElement( "link" );
+          link.rel  = "stylesheet";
+          link.type = "text/css";
+          link.href = cssLink;
+          var head = document.getElementsByTagName( 'head' )[0];
+          if (head) head.appendChild( link );
+        }
+        if (bodyClass) {
+          document.body.className = document.body.className + " " + bodyClass;
+        }
+      };
+      revealConfig.getEmbeddedImages = function() {
+        var images = {};
+        [].forEach.call( document.querySelectorAll("img[data-linkid]"), function(img) {
+          var linkid = img.getAttribute("data-linkid");
+          if (linkid) images["/" + linkid] = img.src;
+          var path = img.getAttribute("data-path");
+          if (path) images["/" + path] = img.src;
+        });     
+        [].forEach.call( document.querySelectorAll("section"), function(slide) {
+          var attrName = "data-background";
+          var image = slide.getAttribute(attrName);
+          if (!image) {
+            attrName = "data-background-image";
+            image = slide.getAttribute(attrName);
+          }
+          if (!image) return;
+          var cap = /^\s*!?\[([^\]]+)\]\s*$/.exec(image);
+          var href = images["/" + (cap ? cap[1] : image)];
+          if (!href) return;
+          if (attrName==="data-background" && /^data:/.test(href)) href = "url(" + href + ")";
+          slide.setAttribute(attrName, href);
+        });
+      };    
+      </script>
+  </head>
+<body class="madoko">
+
+<div class="body madoko" style="line-adjust:0">
+<div class="reveal" data-long="false" data-details="false" data-line="6" style="line-adjust:0">
+<div class="slides" data-line="6" style="line-adjust:0">
+
+<section class="titleblock align-center para-block" data-line="7" style="text-align:center;line-adjust:0">
+<div class="titleheader align-center" data-line="7" style="text-align:center;line-adjust:0">
+<h1 class="title para-block" data-line="7" style="font-weight:bold;margin-bottom:0.5ex;font-size:3em;line-adjust:0"><span data-line="7"></span>TSR - Tema 4:  <strong class="strong-star2">Despliegue de servicios</strong></h1></div>
+<div class="authors align-center" data-line="12" style="text-align:center;width:80%;line-adjust:0"><table class="authorrow columns block" data-line="12" style="margin-top:2ex;width:100%;line-adjust:0">
+<tbody><tr><td class="author column" data-line="12" style="text-align:center;font-size:x-large;line-adjust:0">
+<div class="authorname" data-line="12" style="font-size:1.4em;line-adjust:0"><span data-line="12"></span>Curso 2018/19</div></td></tr></tbody></table></div></section>
+<section class="slide section" data-line="9">
+<ol class="ol compact" data-line="10">
+<li class="li ol-li compact-li" data-line="10"><span data-line="10"></span><strong class="strong-star2">Objetivos</strong><span data-line="10"></span>
+</li>
+<li class="li ol-li compact-li" data-line="11"><span data-line="11"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="12"><span data-line="12"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="13"><span data-line="13"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="14"><span data-line="14"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="15"><span data-line="15"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="16"><span data-line="16"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="17"><span data-line="17"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="18"><span data-line="18"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="19"><span data-line="19"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="20"><span data-line="20"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="21"><span data-line="21"></span>Referencias</li></ol></section>
+<section id="sec-objetivos" class="section section1" data-section-depth="1" data-line="24"><h2 id="heading-sec-objetivos" class="h1" data-heading-depth="1" style="display:block">Objetivos</h2>
+<ul class="ul list-dash compact" data-line="25">
+<li class="li ul-li list-dash-li compact-li" data-line="25"><span data-line="25"></span>Introducir el concepto de despliegue de una aplicación distribuida
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="26"><span data-line="26"></span>Analizar los problemas derivados de la existencia de dependencias
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="27"><span data-line="27"></span>Discutir como tratar el despliegue y sus problemas en un sistema genérico
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="28"><span data-line="28"></span>Proporcionar herramientas para facilitar el despliegue
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="29"><span data-line="29"></span>Aplicación a un caso concreto
+</li></ul>
+</section>
+<section class="slide section" data-line="31">
+<ol class="ol compact" data-line="32">
+<li class="li ol-li compact-li" data-line="32"><span data-line="32"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="33"><span data-line="33"></span><strong class="strong-star2">Concepto de despliegue</strong><span data-line="33"></span>
+</li>
+<li class="li ol-li compact-li" data-line="34"><span data-line="34"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="35"><span data-line="35"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="36"><span data-line="36"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="37"><span data-line="37"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="38"><span data-line="38"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="39"><span data-line="39"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="40"><span data-line="40"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="41"><span data-line="41"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="42"><span data-line="42"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="43"><span data-line="43"></span>Referencias</li></ol></section>
+<section id="sec-concepto-de-despliegue" class="section section1" data-section-depth="1" data-line="46"><h2 id="heading-sec-concepto-de-despliegue" class="h1" data-heading-depth="1" style="display:block">Concepto de despliegue</h2>
+<p class="p noindent" data-line="48"><span data-line="48"></span><strong class="strong-star2">Despliegue</strong><span data-line="48"></span> = actividades que hacen que un sistema soft está preparado para su uso
+</p>
+<p class="p indent" data-line="50"><span data-line="50"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="50"></span> actividades relacionadas con la instalación, activación, actualización y eliminación de componentes o del sistema completo
+</p></section>
+<section id="sec-despliegue-de-una-aplicacin-distribuida" class="section section2" data-section-depth="2" data-line="52"><h3 id="heading-sec-despliegue-de-una-aplicacin-distribuida" class="h2" data-heading-depth="2" style="display:block">Despliegue de una aplicación distribuida</h3>
+<ul class="ul list-dash compact" data-line="53">
+<li class="li ul-li list-dash-li compact-li" data-line="53"><span data-line="53"></span>Una aplicación distribuida es una colección de componentes heterogéneos dispersos sobre una red de computadores
+
+<ul class="ul list-dash compact" data-line="54">
+<li class="li ul-li list-dash-li compact-li" data-line="54"><span data-line="54"></span>Muchos componentes, creados por desarrolladores distintos
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="55">
+<p data-line="55"><span data-line="55"></span>Pueden cambiar de forma rápida e independiente (ej nuevas versiones, etc)
+</p></li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="57"><span data-line="57"></span>Los componentes de la aplicación deben cooperar <span data-line="57"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="57"></span> existen dependencias entre ellos
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="58"><span data-line="58"></span>Los nodos pueden ser heterogéneos (ej distinto hard, SO, etc.), pero cada componente tiene ciertos requisitos para su ejecución
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="59"><span data-line="59"></span>Podemos tener requisitos adicionales de seguridad (privacidad, autenticación, etc.)
+</li></ul>
+</section>
+<section id="sec-ejemplo-de-despliegue" class="section section2" data-section-depth="2" data-line="61"><h3 id="heading-sec-ejemplo-de-despliegue" class="h2" data-heading-depth="2" style="display:block">Ejemplo de despliegue</h3>
+<p class="p noindent" data-line="62"><span data-line="62"></span>Suponemos el patrón broker desarrollado en la práctica 2
+</p>
+<ul class="ul list-dash loose" data-line="64">
+<li class="li ul-li list-dash-li loose-li" data-line="64">
+<p data-line="64"><span data-line="64"></span>Formado por 3 componentes (client, broker, worker) básicamente autónomos
+</p>
+<ul class="ul list-dash compact" data-line="65">
+<li class="li ul-li list-dash-li compact-li" data-line="65"><span data-line="65"></span>Podrían estar desarrollados en lenguajes distintos, por programadores diferentes
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li loose-li" data-line="67">
+<p data-line="67"><span data-line="67"></span>Número variable de instancias de cada componente (ej varios clientes, o varios workers). Cada instancia
+</p>
+<ul class="ul list-dash compact" data-line="68">
+<li class="li ul-li list-dash-li compact-li" data-line="68"><span data-line="68"></span>Puede iniciarse/detenerse/reiniciarse con independencia del resto de instancias
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="69"><span data-line="69"></span>Falla de forma independiente del resto
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="70"><span data-line="70"></span>Tiene una ubicación propia (independiente del resto)
+</li></ul>
+</li></ul>
+</section>
+<section id="sec-ejemplo-de-despliegue--dependencias-y-requisitos" class="section section2" data-section-depth="2" data-line="72"><h3 id="heading-sec-ejemplo-de-despliegue--dependencias-y-requisitos" class="h2" data-heading-depth="2" style="display:block">Ejemplo de despliegue: dependencias y requisitos</h3>
+<ul class="ul list-dash compact" data-line="74">
+<li class="li ul-li list-dash-li compact-li" data-line="74"><span data-line="74"></span>Un client
+
+<ul class="ul list-dash compact" data-line="75">
+<li class="li ul-li list-dash-li compact-li" data-line="75"><span data-line="75"></span>Debe conocer la ubicación del broker (ip y port frontend)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="76"><span data-line="76"></span>Debe poseer una identidad única
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="77"><span data-line="77"></span>Un worker 
+
+<ul class="ul list-dash compact" data-line="78">
+<li class="li ul-li list-dash-li compact-li" data-line="78"><span data-line="78"></span>Debe conocer la ubicación del broker (ip y port backend)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="79"><span data-line="79"></span>Debe poseer una identidad única
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="81"><span data-line="81"></span>Todos los componentes requieren determinado entorno de ejecución (Node y zmq)
+</li></ul>
+</section>
+<section id="sec-ejemplo-de-despliegue--despliegue-manual" class="section section2" data-section-depth="2" data-line="83"><h3 id="heading-sec-ejemplo-de-despliegue--despliegue-manual" class="h2" data-heading-depth="2" style="display:block">Ejemplo de despliegue: despliegue manual</h3>
+<ul class="ul list-dash compact" data-line="84">
+<li class="li ul-li list-dash-li compact-li" data-line="84"><span data-line="84"></span>Copiar el código fuente de cada componente en aquellas máquinas donde debe ejecutarse una instancia
+
+<ul class="ul list-dash compact" data-line="85">
+<li class="li ul-li list-dash-li compact-li" data-line="85"><span data-line="85"></span>Debemos garantizar que en cada uno de esos nodos está correctamente instalado el software base (nodeJS, zmq) con las versiones correctas
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="86"><span data-line="86"></span>Lanzar las instancias de los distintos componentes en el orden correcto (broker, workers, clientes)
+
+<ul class="ul list-dash compact" data-line="87">
+<li class="li ul-li list-dash-li compact-li" data-line="87"><span data-line="87"></span>En la línea de órdenes usada para lanzar cada instancia, indicar los argumentos necesarios (ej host y port para conectar con el broker, identidad, etc.)
+</li></ul></li></ul>
+</section>
+<section class="slide section" data-line="89">
+<ol class="ol compact" data-line="90">
+<li class="li ol-li compact-li" data-line="90"><span data-line="90"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="91"><span data-line="91"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="92"><span data-line="92"></span><strong class="strong-star2">Despliegue de un servicio</strong><span data-line="92"></span>
+</li>
+<li class="li ol-li compact-li" data-line="93"><span data-line="93"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="94"><span data-line="94"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="95"><span data-line="95"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="96"><span data-line="96"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="97"><span data-line="97"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="98"><span data-line="98"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="99"><span data-line="99"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="100"><span data-line="100"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="101"><span data-line="101"></span>Referencias</li></ol></section>
+<section id="sec-despliegue-de-un-servicio" class="section section1" data-section-depth="1" data-line="104"><h2 id="heading-sec-despliegue-de-un-servicio" class="h1" data-heading-depth="1" style="display:block">Despliegue de un servicio</h2>
+<p class="p noindent" data-line="106"><span data-line="106"></span>Desarrollamos sistemas distribuidos para ofrecer <span data-line="106"></span><strong class="strong-star2">servicios</strong><span data-line="106"></span> (funcionalidad) a clientes remotos
+</p>
+<p class="p indent" data-line="108"><span data-line="108"></span>Todo servicio establece un SLA (Service Level Agreement)
+</p>
+<ul class="ul list-dash compact" data-line="110">
+<li class="li ul-li list-dash-li compact-li" data-line="110"><span data-line="110"></span>Definición funcional (qué hace)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="111"><span data-line="111"></span>Rendimiento (qué capacidad tiene, tiempos esperados de respuesta, ..)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="112"><span data-line="112"></span>Disponibilidad (en qué momentos puede accederse al servicio)
+
+<ul class="ul list-dash compact" data-line="113">
+<li class="li ul-li list-dash-li compact-li" data-line="113"><span data-line="113"></span>Aunque existen servicios efímeros (disponibles durante cortos periodos de tiempo), 
+nos centramos en los persistentes (disponibilidad continua) Ej Gmail, DropBox, ..
+</li></ul></li></ul>
+
+<p class="p noindent" data-line="116"><span data-line="116"></span><strong class="strong-star2">Desplegar un servicio</strong><span data-line="116"></span> = instalación, activación, y actualización del servicio 
+</p></section>
+<section id="sec-despliegue-de-un-servicio" class="section section1" data-section-depth="1" data-line="118"><h2 id="heading-sec-despliegue-de-un-servicio" class="h1" data-heading-depth="1" style="display:block">Despliegue de un servicio</h2>
+<ul class="ul list-dash compact" data-line="119">
+<li class="li ul-li list-dash-li compact-li" data-line="119"><span data-line="119"></span>Instalación y activación.- ejecución del software
+
+<ul class="ul list-dash compact" data-line="120">
+<li class="li ul-li list-dash-li compact-li" data-line="120"><span data-line="120"></span>Resolver las dependencias del software (ej bibliotecas, etc)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="121"><span data-line="121"></span>Configurar el software (versiones compatibles, etc)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="122"><span data-line="122"></span>Determinar el número de instancias de cada componente y su reparto entre los distintos nodos
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="123"><span data-line="123"></span>Resolver las dependencias entre agentes (ej. ports)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="124"><span data-line="124"></span>Establecer el orden en que arrancan los componentes
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="125"><span data-line="125"></span>Desactivación.- detener el sistema de forma ordenada
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="126"><span data-line="126"></span>Actualización.- reemplazar componentes (ej nueva versión)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="127"><span data-line="127"></span>Adaptación (sin detener el servicio) tras:
+
+<ul class="ul list-dash compact" data-line="128">
+<li class="li ul-li list-dash-li compact-li" data-line="128"><span data-line="128"></span>Fallo/recuperación de un agente
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="129"><span data-line="129"></span>Cambios en la configuración de los agentes
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="130"><span data-line="130"></span>Escalado (reaccion ante cambios en la carga)
+</li></ul></li></ul>
+</section>
+<section class="slide section" data-line="132">
+<ol class="ol compact" data-line="133">
+<li class="li ol-li compact-li" data-line="133"><span data-line="133"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="134"><span data-line="134"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="135"><span data-line="135"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="136"><span data-line="136"></span><strong class="strong-star2">Automatización del despliegue</strong><span data-line="136"></span>
+</li>
+<li class="li ol-li compact-li" data-line="137"><span data-line="137"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="138"><span data-line="138"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="139"><span data-line="139"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="140"><span data-line="140"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="141"><span data-line="141"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="142"><span data-line="142"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="143"><span data-line="143"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="144"><span data-line="144"></span>Referencias</li></ol></section>
+<section id="sec-automatizacin-del-despliegue" class="section section1" data-section-depth="1" data-line="147"><h2 id="heading-sec-automatizacin-del-despliegue" class="h1" data-heading-depth="1" style="display:block">Automatización del despliegue</h2>
+<p class="p noindent" data-line="149"><span data-line="149"></span>Un despliegue a gran escala no puede hacerse a mano <span data-line="149"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="149"></span> necesitamos automatización (herramienta)
+</p>
+<ul class="ul list-dash compact" data-line="151">
+<li class="li ul-li list-dash-li compact-li" data-line="151"><span data-line="151"></span>Configuración para cada componente
+
+<ul class="ul list-dash compact" data-line="152">
+<li class="li ul-li list-dash-li compact-li" data-line="152"><span data-line="152"></span>Fichero con lista de parámetros de configuración y descripciones de dependencias
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="153"><span data-line="153"></span>La herramienta genera una configuración específica para cada instancia de dicho componente
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="154"><span data-line="154"></span>Plan de configuración global
+
+<ul class="ul list-dash compact" data-line="155">
+<li class="li ul-li list-dash-li compact-li" data-line="155"><span data-line="155"></span>Plan de conexión entre componentes (lista endpoints expuestos, lista dependencias)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="156"><span data-line="156"></span>Decide donde colocar cada instancia
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="157"><span data-line="157"></span>Enlace <span data-line="157"></span>&#8216;binding&#8217;<span data-line="157"></span> de dependencias (asocia entre endpoints, incluyendo dependencias con servicios externos) 
+</li></ul></li></ul>
+</section>
+<section id="sec-ejemplo--patrn-broker" class="section section2" data-section-depth="2" data-line="159"><h3 id="heading-sec-ejemplo--patrn-broker" class="h2" data-heading-depth="2" style="display:block">Ejemplo: patrón broker</h3>
+<ul class="ul list-dash compact" data-line="161">
+<li class="li ul-li list-dash-li compact-li" data-line="161"><span data-line="161"></span>Varias instancias de <span data-line="161"></span><code class="code code1">client</code><span data-line="161"></span>
+
+<ul class="ul list-dash compact" data-line="162">
+<li class="li ul-li list-dash-li compact-li" data-line="162"><span data-line="162"></span>Argumentos <span data-line="162"></span><code class="code code1">frontendURL</code><span data-line="162"></span>, <span data-line="162"></span><code class="code code1">id</code><span data-line="162"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="163"><span data-line="163"></span>Dependencia respecto a <span data-line="163"></span><code class="code code1">broker</code><span data-line="163"></span>
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="164"><span data-line="164"></span>Una instancia de <span data-line="164"></span><code class="code code1">broker</code><span data-line="164"></span>
+
+<ul class="ul list-dash compact" data-line="165">
+<li class="li ul-li list-dash-li compact-li" data-line="165"><span data-line="165"></span>Argumentos <span data-line="165"></span><code class="code code1">frontendPort</code><span data-line="165"></span>, <span data-line="165"></span><code class="code code1">backendPort</code><span data-line="165"></span>
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="166"><span data-line="166"></span>Varias instancias de <span data-line="166"></span><code class="code code1">worker</code><span data-line="166"></span>
+
+<ul class="ul list-dash compact" data-line="167">
+<li class="li ul-li list-dash-li compact-li" data-line="167"><span data-line="167"></span>Argumentos <span data-line="167"></span><code class="code code1">backendURL</code><span data-line="167"></span>, <span data-line="167"></span><code class="code code1">id</code><span data-line="167"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="168"><span data-line="168"></span>Dependencia respecto a <span data-line="168"></span><code class="code code1">broker</code><span data-line="168"></span>
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="169"><span data-line="169"></span>El orden de arranque es broker, workers, clients
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="170"><span data-line="170"></span>Los endpoints son el frontend (externo) y el backend (interno)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="171"><span data-line="171"></span>No hay dependencias respecto a servicios externos
+</li></ul>
+</section>
+<section id="sec-resolucin-de-dependencias--opciones" class="section section2" data-section-depth="2" data-line="173"><h3 id="heading-sec-resolucin-de-dependencias--opciones" class="h2" data-heading-depth="2" style="display:block">Resolución de dependencias: opciones</h3>
+<ol class="ol compact" data-line="175">
+<li class="li ol-li compact-li" data-line="175"><span data-line="175"></span>El código define la forma de resolver las dependencias
+
+<ul class="ul list-dash compact" data-line="176">
+<li class="li ul-li list-dash-li compact-li" data-line="176"><span data-line="176"></span>Ej. leyendo datos de un fichero, o recibiendo datos en un socket
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="177"><span data-line="177"></span>Bajo nivel
+</li></ul>
+</li>
+<li class="li ol-li compact-li" data-line="179"><span data-line="179"></span><strong class="strong-star2">Inyección de dependencias</strong><span data-line="179"></span> (recomendado)
+
+<ul class="ul list-dash compact" data-line="180">
+<li class="li ul-li list-dash-li compact-li" data-line="180"><span data-line="180"></span>El código de la aplicación expone nombres locales para sus interfaces relevantes
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="181"><span data-line="181"></span>El contenedor rellena las variables con instancias de objetos
+
+<ul class="ul list-dash compact" data-line="182">
+<li class="li ul-li list-dash-li compact-li" data-line="182"><span data-line="182"></span>Crea un grafo de las instancias de los componentes del servicio
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="183"><span data-line="183"></span>Los arcos del grafo son enlaces dependencia-endpoint
+</li></ul></li></ul></li></ol>
+</section>
+<section class="slide section" data-line="185">
+<ol class="ol compact" data-line="186">
+<li class="li ol-li compact-li" data-line="186"><span data-line="186"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="187"><span data-line="187"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="188"><span data-line="188"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="189"><span data-line="189"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="190"><span data-line="190"></span><strong class="strong-star2">Despliegue en la nube</strong><span data-line="190"></span>
+</li>
+<li class="li ol-li compact-li" data-line="191"><span data-line="191"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="192"><span data-line="192"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="193"><span data-line="193"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="194"><span data-line="194"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="195"><span data-line="195"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="196"><span data-line="196"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="197"><span data-line="197"></span>Referencias</li></ol></section>
+<section id="sec-despliegue-en-la-nube--iaas-infraestructure-as-a-service" class="section section1" data-section-depth="1" data-line="200"><h2 id="heading-sec-despliegue-en-la-nube--iaas-infraestructure-as-a-service" class="h1" data-heading-depth="1" style="display:block">Despliegue en la nube: IaaS (Infraestructure as a Service)</h2>
+<ul class="ul list-dash loose" data-line="202">
+<li class="li ul-li list-dash-li loose-li" data-line="202">
+<p data-line="202"><span data-line="202"></span>Se basa en virtualización 
+</p>
+<ul class="ul list-dash compact" data-line="203">
+<li class="li ul-li list-dash-li compact-li" data-line="203"><span data-line="203"></span>Máquinas virtuales de distintos tamaños
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="204"><span data-line="204"></span>Flexibilidad en la asignación de recursos
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li loose-li" data-line="206">
+<p data-line="206"><span data-line="206"></span>Presenta limitaciones en el despliegue
+</p>
+<ul class="ul list-dash compact" data-line="208">
+<li class="li ul-li list-dash-li compact-li" data-line="208"><span data-line="208"></span>Decisiones de asignación no automáticas (bajo nivel)
+
+<ul class="ul list-dash compact" data-line="209">
+<li class="li ul-li list-dash-li compact-li" data-line="209"><span data-line="209"></span>Num instancias por componente, ubicación, tipo de MV
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="210"><span data-line="210"></span>No permite elegir características red (latencia, throughput)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="211"><span data-line="211"></span>Modelo de fallo insuficiente
+
+<ul class="ul list-dash compact" data-line="212">
+<li class="li ul-li list-dash-li compact-li" data-line="212"><span data-line="212"></span>Los modos de fallo no son realmente independientes
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="213"><span data-line="213"></span>Ayuda limitada a la recuperación
+</li></ul></li></ul>
+</li></ul>
+</section>
+<section id="sec-despliegue-en-la-nube--paas-platform-as-a-service" class="section section1" data-section-depth="1" data-line="215"><h2 id="heading-sec-despliegue-en-la-nube--paas-platform-as-a-service" class="h1" data-heading-depth="1" style="display:block">Despliegue en la nube: PaaS (Platform as a Service)</h2>
+<p class="p noindent" data-line="217"><span data-line="217"></span>SLA como elemento central <span data-line="217"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="217"></span> parámetros del SLA para todos los componentes
+</p>
+<ul class="ul list-dash loose" data-line="219">
+<li class="li ul-li list-dash-li loose-li" data-line="219">
+<p data-line="219"><span data-line="219"></span>Se persigue la automatización del despliegue
+</p>
+<ul class="ul list-dash compact" data-line="220">
+<li class="li ul-li list-dash-li compact-li" data-line="220"><span data-line="220"></span>Planes de despliegue a partir del SLA
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="221"><span data-line="221"></span>Planes para actualización/configuración
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li loose-li" data-line="223">
+<p data-line="223"><span data-line="223"></span>Situación actual
+</p>
+<ul class="ul list-dash compact" data-line="224">
+<li class="li ul-li list-dash-li compact-li" data-line="224"><span data-line="224"></span>Automatización limitada (despliegue inicial, pero no gestión del SLA ni actualizaciones)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="225"><span data-line="225"></span>Microsoft Azure es uno de los mas evolucionados
+</li></ul>
+</li></ul>
+</section>
+<section class="slide section" data-line="227">
+<ol class="ol compact" data-line="228">
+<li class="li ol-li compact-li" data-line="228"><span data-line="228"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="229"><span data-line="229"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="230"><span data-line="230"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="231"><span data-line="231"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="232"><span data-line="232"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="233"><span data-line="233"></span><strong class="strong-star2">Contenedores</strong><span data-line="233"></span>
+</li>
+<li class="li ol-li compact-li" data-line="234"><span data-line="234"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="235"><span data-line="235"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="236"><span data-line="236"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="237"><span data-line="237"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="238"><span data-line="238"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="239"><span data-line="239"></span>Referencias</li></ol></section>
+<section id="sec-contenedores" class="section section1" data-section-depth="1" data-line="242"><h2 id="heading-sec-contenedores" class="h1" data-heading-depth="1" style="display:block">Contenedores</h2>
+<p class="p noindent" data-line="244"><span data-line="244"></span><strong class="strong-star2">Aprovisionamiento</strong><span data-line="244"></span> = reservar la infraestructura necesarias para una aplic distribuida
+</p>
+<ul class="ul list-dash compact" data-line="246">
+<li class="li ul-li list-dash-li compact-li" data-line="246"><span data-line="246"></span>Recursos para intercomunicación entre instancias
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="247"><span data-line="247"></span>Recursos para cada instancia (procesador, memoria, ..). Alternativas
+
+<ul class="ul list-dash compact" data-line="248">
+<li class="li ul-li list-dash-li compact-li" data-line="248"><span data-line="248"></span>instancia sobre <span data-line="248"></span><strong class="strong-star2">MV</strong><span data-line="248"></span> <span data-line="248"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="248"></span> SO+Bibliotecas
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="249"><span data-line="249"></span>instancia sobre <span data-line="249"></span><strong class="strong-star2">contenedor</strong><span data-line="249"></span> (versión ligera de la MV) <span data-line="249"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="249"></span> Bibliotecas
+
+<ul class="ul list-dash compact" data-line="250">
+<li class="li ul-li list-dash-li compact-li" data-line="250"><span data-line="250"></span>Usa el SO del anfitrión
+</li></ul></li></ul></li></ul>
+</section>
+<section id="sec-contenedores" class="section section1" data-section-depth="1" data-line="252"><h2 id="heading-sec-contenedores" class="h1" data-heading-depth="1" style="display:block">Contenedores</h2>
+<p class="p noindent" data-line="253"><span data-line="253"></span>Suponemos el uso de contenedores en lugar de MV
+</p>
+<ul class="ul list-dash compact" data-line="255">
+<li class="li ul-li list-dash-li compact-li" data-line="255"><span data-line="255"></span>Menor flexibilidad
+
+<ul class="ul list-dash compact" data-line="256">
+<li class="li ul-li list-dash-li compact-li" data-line="256"><span data-line="256"></span>El soft de la instancia ha de ser compatible con SO anfitrion
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="257"><span data-line="257"></span>El aislamiento entre contenedores no es perfecto
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="258"><span data-line="258"></span>Utiliza muchos menos recursos
+
+<ul class="ul list-dash compact" data-line="259">
+<li class="li ul-li list-dash-li compact-li" data-line="259"><span data-line="259"></span>Ej desplegamos 100 instancias de un componente cuya ejecución requiere 900MB (SO)<span data-line="259"></span> <span data-line="259"></span>+ 100MB (resto)
+
+<ul class="ul list-dash compact" data-line="260">
+<li class="li ul-li list-dash-li compact-li" data-line="260"><span data-line="260"></span>con MV: 100<span data-line="260"></span>*<span data-line="260"></span>(900MB<span data-line="260"></span> <span data-line="260"></span>+ 100MB) = 100GB
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="261"><span data-line="261"></span>con contenedores: 900MB<span data-line="261"></span> <span data-line="261"></span>+ 100<span data-line="261"></span>*<span data-line="261"></span>100MB = 10.9GB
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="262"><span data-line="262"></span>Ahorramos espacio y tiempo (ej para instalar la imagen)
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="263"><span data-line="263"></span>Mayor facilidad de despliegue (fichero de configuración)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="264"><span data-line="264"></span>Aplicable en casi todos los escenarios
+</li></ul>
+</section>
+<section id="sec-contenedores--herramienta---docker--" class="section section1" data-section-depth="1" data-line="266"><h2 id="heading-sec-contenedores--herramienta---docker--" class="h1" data-heading-depth="1" style="display:block">Contenedores: herramienta <strong class="strong-star2">Docker</strong></h2>
+<ul class="ul list-dash compact" data-line="268">
+<li class="li ul-li list-dash-li compact-li" data-line="268"><span data-line="268"></span>El fichero de configuración <span data-line="268"></span><code class="code code1">Dockerfile</code><span data-line="268"></span> automatiza el despliegue de cada instancia
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="269"><span data-line="269"></span>Soporta control de versiones (<span data-line="269"></span><code class="code code1">Git</code><span data-line="269"></span>)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="270"><span data-line="270"></span>Además del sistema de ficheros nativo, define un sistema ficheros de sólo lectura para compartición entre contenedores
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="271"><span data-line="271"></span>Permite cooperación en el desarrollo mediante depósitos públicos
+</li></ul>
+
+<p class="p noindent" data-line="273"><span data-line="273"></span>NOTA.- Asumimos que el SO del huesped es Linux (aunque existe Docker para Windows)
+</p></section>
+<section class="slide section" data-line="275">
+<ol class="ol compact" data-line="276">
+<li class="li ol-li compact-li" data-line="276"><span data-line="276"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="277"><span data-line="277"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="278"><span data-line="278"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="279"><span data-line="279"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="280"><span data-line="280"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="281"><span data-line="281"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="282"><span data-line="282"></span><strong class="strong-star2">Docker</strong><span data-line="282"></span>
+</li>
+<li class="li ol-li compact-li" data-line="283"><span data-line="283"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="284"><span data-line="284"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="285"><span data-line="285"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="286"><span data-line="286"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="287"><span data-line="287"></span>Referencias</li></ol></section>
+<section id="sec-docker--componentes" class="section section1" data-section-depth="1" data-line="290"><h2 id="heading-sec-docker--componentes" class="h1" data-heading-depth="1" style="display:block">Docker: componentes</h2>
+<ul class="ul list-dash compact" data-line="291">
+<li class="li ul-li list-dash-li compact-li" data-line="291"><span data-line="291"></span><strong class="strong-star2">Imagen</strong><span data-line="291"></span>.- plantilla de sólo lectura con las instrucciones para crear un contenedor
+
+<ul class="ul list-dash compact" data-line="292">
+<li class="li ul-li list-dash-li compact-li" data-line="292"><span data-line="292"></span>Ej.- podemos crear una imagen para proporcionar Linux+NodeJS+zmq, a la que denominamos <span data-line="292"></span><code class="code code1">centos-zmq</code><span data-line="292"></span>
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="293"><span data-line="293"></span><strong class="strong-star2">Contenedor</strong><span data-line="293"></span>.- Conjunto de recursos que necesita una instancia para ejecutarse. Se crea al ejecutar una imagen
+
+<ul class="ul list-dash compact" data-line="294">
+<li class="li ul-li list-dash-li compact-li" data-line="294"><span data-line="294"></span>Ej.- para probar el código de la práctica 2, ejecuta cada instancia sobre un contenedor creado desde <span data-line="294"></span><code class="code code1">centos-zmq</code><span data-line="294"></span>
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="295"><span data-line="295"></span><strong class="strong-star2">Depósito</strong><span data-line="295"></span>.- lugar donde podemos dejar/obtener imágenes (espacio para compartir imágenes)
+
+<ul class="ul list-dash compact" data-line="296">
+<li class="li ul-li list-dash-li compact-li" data-line="296"><span data-line="296"></span>Ej.- Podemos subir la imagen <span data-line="296"></span><code class="code code1">centos-zmq</code><span data-line="296"></span>, y cualquiera puede bajarla y usarla para crear contenedores
+</li></ul></li></ul>
+</section>
+<section id="sec-docker--imagen" class="section section1" data-section-depth="1" data-line="298"><h2 id="heading-sec-docker--imagen" class="h1" data-heading-depth="1" style="display:block">Docker: Imagen</h2>
+<ul class="ul list-dash loose" data-line="299">
+<li class="li ul-li list-dash-li loose-li" data-line="299">
+<p data-line="299"><span data-line="299"></span>En el depósito existen imágenes predefinidas para las distintas distribuciones Linux (ej imagen <span data-line="299"></span><code class="code code1">Centos:7.4.1708</code><span data-line="299"></span>)
+</p></li>
+<li class="li ul-li list-dash-li loose-li" data-line="300">
+<p data-line="300"><span data-line="300"></span>Nueva imagen = imagenBase<span data-line="300"></span> <span data-line="300"></span>+ instrucciones. Ejemplo:
+</p>
+<ul class="ul list-dash compact" data-line="302">
+<li class="li ul-li list-dash-li compact-li" data-line="302"><span data-line="302"></span><code class="code code1">Centos:7.4.1708</code><span data-line="302"></span> <span data-line="302"></span>+ instr. para instalar node <span data-line="302"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="302"></span> <span data-line="302"></span><code class="code code1">centos-nodejs</code><span data-line="302"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="303"><span data-line="303"></span><code class="code code1">centos-nodejs</code><span data-line="303"></span> <span data-line="303"></span>+ instr. para instalar zmq <span data-line="303"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="303"></span> <span data-line="303"></span><code class="code code1">centos-zmq</code><span data-line="303"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="304"><span data-line="304"></span><code class="code code1">centos-zmq</code><span data-line="304"></span> <span data-line="304"></span>+ <span data-line="304"></span>&#8230;<span data-line="304"></span> <span data-line="304"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="304"></span> creamos imágenes para cada componente (client,broker,worker)
+</li></ul>
+</li></ul>
+
+<p class="p noindent" data-line="306"><span data-line="306"></span>Docker utiliza órdenes desde consola
+</p>
+<ul class="ul list-dash compact" data-line="308">
+<li class="li ul-li list-dash-li compact-li" data-line="308"><span data-line="308"></span>Estructura general: <span data-line="308"></span><code class="code code1">docker accion opciones argumentos</code><span data-line="308"></span>
+
+<ul class="ul list-dash compact" data-line="309">
+<li class="li ul-li list-dash-li compact-li" data-line="309"><span data-line="309"></span>Información sobre las imágenes a nivel local: <span data-line="309"></span><code class="code code1">docker images</code><span data-line="309"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="310"><span data-line="310"></span>Información sobre una imagen: <span data-line="310"></span><code class="code code1">docker history nombreImag</code><span data-line="310"></span>
+</li></ul></li></ul>
+</section>
+<section id="sec-docker--contenedor" class="section section1" data-section-depth="1" data-line="312"><h2 id="heading-sec-docker--contenedor" class="h1" data-heading-depth="1" style="display:block">Docker: Contenedor</h2>
+<ul class="ul list-dash compact" data-line="313">
+<li class="li ul-li list-dash-li compact-li" data-line="313"><span data-line="313"></span>Crear e iniciar contenedor desde imagen
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="314" data-line-first="315" style="display:block"><code data-line="315">docker run opciones imagen progInicial</code></pre>
+<ul class="ul list-dash compact" data-line="317">
+<li class="li ul-li list-dash-li compact-li" data-line="317"><span data-line="317"></span>Ej <span data-line="317"></span><code class="code code1">docker run -i -t centos bash</code><span data-line="317"></span> descarga la imagen <span data-line="317"></span><code class="code code1">centos</code><span data-line="317"></span>, crea el contenedor, reserva sistema de ficheros, reserva interfaz de red y dirección IP interna, y ejecuta <span data-line="317"></span><code class="code code1">bash</code><span data-line="317"></span>
+
+<ul class="ul list-dash compact" data-line="318">
+<li class="li ul-li list-dash-li compact-li" data-line="318"><span data-line="318"></span>Las opciones <span data-line="318"></span><code class="code code1">-i -t</code><span data-line="318"></span> indican modo interactivo (la consola queda abierta y conectada al contenedor)
+</li></ul></li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="319"><span data-line="319"></span>Modificamos el contenedor mediante órdenes en modo interactivo desde consola
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="320"><span data-line="320"></span>Crear nueva imagen a partir del estado actual del contenedor 
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="321" data-line-first="322" style="display:block"><code data-line="322">docker commit nombreContenedor nombreImagen</code></pre></li></ul>
+</section>
+<section id="sec-docker--contenedor" class="section section1" data-section-depth="1" data-line="325"><h2 id="heading-sec-docker--contenedor" class="h1" data-heading-depth="1" style="display:block">Docker: Contenedor</h2>
+<ul class="ul list-dash compact" data-line="326">
+<li class="li ul-li list-dash-li compact-li" data-line="326"><span data-line="326"></span>Arrancar (<span data-line="326"></span><code class="code code1">start</code><span data-line="326"></span>), detener (<span data-line="326"></span><code class="code code1">stop</code><span data-line="326"></span>), o reiniciar (<span data-line="326"></span><code class="code code1">restart</code><span data-line="326"></span>) la ejecución del contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="327"><span data-line="327"></span>Eliminar un contenedor ya detenido: <span data-line="327"></span><code class="code code1">docker rm idContenedor</code><span data-line="327"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="328"><span data-line="328"></span>Obtener info. sobre los contenedores activos: <span data-line="328"></span><code class="code code1">docker ps</code><span data-line="328"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="329"><span data-line="329"></span>Obtener info. sobre un contenedor: <span data-line="329"></span><code class="code code1">docker inspect idContenedor</code><span data-line="329"></span>
+</li></ul>
+
+<p class="p noindent" data-line="331"><span data-line="331"></span>Un contenedor puede acceder a recursos del anfitrión
+</p>
+<ul class="ul list-dash compact" data-line="333">
+<li class="li ul-li list-dash-li compact-li" data-line="333"><span data-line="333"></span>Sistema de ficheros
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="334" data-line-first="335" style="display:block"><code data-line="335">docker run ... -v pathAnfitrion:pathContenedor</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="337"><span data-line="337"></span>Puerto
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="338" data-line-first="339" style="display:block"><code data-line="339">docker run ... -p portAnfitrion:portContenedor</code></pre></li></ul>
+</section>
+<section id="sec-docker--depsito" class="section section1" data-section-depth="1" data-line="342"><h2 id="heading-sec-docker--depsito" class="h1" data-heading-depth="1" style="display:block">Docker: Depósito</h2>
+<ul class="ul list-dash compact" data-line="343">
+<li class="li ul-li list-dash-li compact-li" data-line="343"><span data-line="343"></span>Bajar imagen desde el depósito <span data-line="343"></span><code class="code code1">docker pull imagen</code><span data-line="343"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="344"><span data-line="344"></span>Subir imagen al depósito <span data-line="344"></span><code class="code code1">docker push imagen</code><span data-line="344"></span>
+</li></ul>
+</section>
+<section class="slide section" data-line="346">
+<ol class="ol compact" data-line="347">
+<li class="li ol-li compact-li" data-line="347"><span data-line="347"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="348"><span data-line="348"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="349"><span data-line="349"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="350"><span data-line="350"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="351"><span data-line="351"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="352"><span data-line="352"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="353"><span data-line="353"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="354"><span data-line="354"></span><strong class="strong-star2">Creación de una imagen</strong><span data-line="354"></span>
+</li>
+<li class="li ol-li compact-li" data-line="355"><span data-line="355"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="356"><span data-line="356"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="357"><span data-line="357"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="358"><span data-line="358"></span>Referencias</li></ol></section>
+<section id="sec-creacin-de-una-imagen" class="section section1" data-section-depth="1" data-line="361"><h2 id="heading-sec-creacin-de-una-imagen" class="h1" data-heading-depth="1" style="display:block">Creación de una imagen</h2>
+<p class="p noindent" data-line="362"><span data-line="362"></span>Dos alternativas para crear una imagen:
+</p>
+<ol class="ol loose" data-line="364">
+<li class="li ol-li loose-li" data-line="364">
+<p data-line="364"><span data-line="364"></span>Interactivamente
+</p>
+<ul class="ul list-dash compact" data-line="365">
+<li class="li ul-li list-dash-li compact-li" data-line="365"><span data-line="365"></span>Tomar una imagen base y crear el contenedor: <span data-line="365"></span><code class="code code1">docker run imagen -i -t progInicial</code><span data-line="365"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="366"><span data-line="366"></span>Modificar interactivamente el contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="367"><span data-line="367"></span>Guardar ese estado como una nueva imagen: <span data-line="367"></span><code class="code code1">docker commit idContenedor nuevaImagen</code><span data-line="367"></span>
+</li></ul>
+</li>
+<li class="li ol-li loose-li" data-line="369">
+<p data-line="369"><span data-line="369"></span>Crear una nueva imagen a partir de las instrucciones de un fichero de texto denominado Dockerfile
+</p>
+<pre class="para-block pre-fenced pre-fenced3" data-line="370" data-line-first="371" style="display:block"><code data-line="371">docker build -t nombreNuevaImagen pathDockerfile</code></pre></li></ol>
+</section>
+<section id="sec-ejemplo-creacin-imagen-interact" class="section section1" data-section-depth="1" data-line="374"><h2 id="heading-sec-ejemplo-creacin-imagen-interact" class="h1" data-heading-depth="1" style="display:block">Ejemplo creación imagen (interact.)</h2>
+<p class="p noindent" data-line="375"><span data-line="375"></span>Imagen que permite ejecutar programas nodejs usando zmq
+</p>
+<ul class="ul list-dash compact" data-line="377">
+<li class="li ul-li list-dash-li compact-li" data-line="377"><span data-line="377"></span><code class="code code1">docker run -i -t centos:7.4.1708 bash</code><span data-line="377"></span> 
+
+<ul class="ul list-dash compact" data-line="378">
+<li class="li ul-li list-dash-li compact-li" data-line="378"><span data-line="378"></span>crea contenedor con centos, ejecuta bash, espera órdenes
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="379"><span data-line="379"></span>Lanzamos las siguientes órdenes de forma interactiva
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="380" data-line-first="381" style="display:block"><code data-line="381">curl --silent --location  https://rpm.nodesource.com/setup_8.x | bash
+yum install -y nodejs
+yum install -y epel-release
+yum install -y zeromq-devel make python gcc-c++
+yum install -y zmq
+exit</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="388"><span data-line="388"></span>Desde línea de órdenes del anfitrión, obtenemos el nombre e ID del contenedor: <span data-line="388"></span><code class="code code1">docker ps -a</code><span data-line="388"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="389"><span data-line="389"></span>Creamos la nueva imagen: <span data-line="389"></span><code class="code code1">docker commit contenedor imagen</code><span data-line="389"></span>
+</li></ul>
+</section>
+<section id="sec-ejemplo-creacin-imagen-dockerfile" class="section section1" data-section-depth="1" data-line="391"><h2 id="heading-sec-ejemplo-creacin-imagen-dockerfile" class="h1" data-heading-depth="1" style="display:block">Ejemplo creación imagen (Dockerfile)</h2>
+<ul class="ul list-dash compact" data-line="392">
+<li class="li ul-li list-dash-li compact-li" data-line="392"><span data-line="392"></span>Escribimos el fichero texto llamado Dockerfile
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="393" data-line-first="394" style="display:block"><code data-line="394">FROM centos:7.4.1708
+RUN curl --silent --location  https://rpm.nodesource.com/setup_8.x | bash
+RUN yum install -y nodejs
+RUN yum install -y epel-release
+RUN yum install -y zeromq-devel make python gcc-c++
+RUN yum install -y zmq</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="401"><span data-line="401"></span>Nos situamos en en directorio donde está Dockerfile
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="402"><span data-line="402"></span>Ejecutamos <span data-line="402"></span><code class="code code1">docker build -t tsr1718/centos-zmq .</code><span data-line="402"></span>
+</li></ul>
+</section>
+<section id="sec-docker--fichero-dockerfile" class="section section1" data-section-depth="1" data-line="404"><h2 id="heading-sec-docker--fichero-dockerfile" class="h1" data-heading-depth="1" style="display:block">Docker.- fichero Dockerfile</h2>
+<ul class="ul list-dash compact" data-line="405">
+<li class="li ul-li list-dash-li compact-li" data-line="405"><span data-line="405"></span>Cada línea empieza con una instrucción en mayúsculas
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="406"><span data-line="406"></span>La primera instrucción (primera línea) debe ser <span data-line="406"></span><code class="code code1">FROM imagenBase</code><span data-line="406"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="407"><span data-line="407"></span><code class="code code1">RUN orden</code><span data-line="407"></span> ejecuta dicha orden en el shell
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="408"><span data-line="408"></span><code class="code code1">ADD origen destino</code><span data-line="408"></span>    <span data-line="408"></span> <span data-line="408"></span> 
+
+<ul class="ul list-dash compact" data-line="409">
+<li class="li ul-li list-dash-li compact-li" data-line="409"><span data-line="409"></span>Copia ficheros de un lugar (URL, directorio, o archivo) a un path en el contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="410"><span data-line="410"></span>Si el origen es un directorio, lo copia completo. Si es un fichero comprimido, lo expande al copiar
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="411"><span data-line="411"></span><code class="code code1">COPY origen destino</code><span data-line="411"></span> es igual que <span data-line="411"></span><code class="code code1">ADD</code><span data-line="411"></span>, pero no expande los ficheros comprimidos
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="412"><span data-line="412"></span><code class="code code1">EXPOSE puerto</code><span data-line="412"></span> indica el puerto en el que el contenedor atenderá peticiones
+</li></ul>
+</section>
+<section id="sec-docker--fichero-dockerfile" class="section section1" data-section-depth="1" data-line="414"><h2 id="heading-sec-docker--fichero-dockerfile" class="h1" data-heading-depth="1" style="display:block">Docker.- fichero Dockerfile</h2>
+<ul class="ul list-dash compact" data-line="415">
+<li class="li ul-li list-dash-li compact-li" data-line="415"><span data-line="415"></span><code class="code code1">WORKDIR path</code><span data-line="415"></span> indica el directorio de trabajo para las órdenes <span data-line="415"></span><code class="code code1">RUN, CMD, ENTRYPOINT</code><span data-line="415"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="416"><span data-line="416"></span><code class="code code1">ENV variable valor</code><span data-line="416"></span> asigna valor a una variable de entorno accesible por los programas dentro del contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="417"><span data-line="417"></span><code class="code code1">CMD orden arg1 arg2</code><span data-line="417"></span> proporciona valores por defecto para la ejecución del contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="418"><span data-line="418"></span><code class="code code1">ENTRYPOINT orden arg1 arg2</code><span data-line="418"></span> ejecuta dicha al crear el contenedor (termina al finalizar la orden)
+</li></ul>
+
+<p class="p noindent" data-line="420"><span data-line="420"></span>Sólo debería haber como máximo una orden <span data-line="420"></span><code class="code code1">CMD</code><span data-line="420"></span> o <span data-line="420"></span><code class="code code1">ENTRYPOINT</code><span data-line="420"></span> (si hay mas, sólo ejecuta la última)
+</p></section>
+<section class="slide section" data-line="422">
+<ol class="ol compact" data-line="423">
+<li class="li ol-li compact-li" data-line="423"><span data-line="423"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="424"><span data-line="424"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="425"><span data-line="425"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="426"><span data-line="426"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="427"><span data-line="427"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="428"><span data-line="428"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="429"><span data-line="429"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="430"><span data-line="430"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="431"><span data-line="431"></span><strong class="strong-star2">Múltiples componentes en un nodo</strong><span data-line="431"></span>
+</li>
+<li class="li ol-li compact-li" data-line="432"><span data-line="432"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="433"><span data-line="433"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="434"><span data-line="434"></span>Referencias</li></ol></section>
+<section id="sec-mltiples-componentes-en-un-nodo" class="section section1" data-section-depth="1" data-line="437"><h2 id="heading-sec-mltiples-componentes-en-un-nodo" class="h1" data-heading-depth="1" style="display:block">Múltiples componentes en un nodo</h2>
+<p class="p noindent" data-line="439"><span data-line="439"></span>Si hay varios componentes aparecen dependencias
+</p>
+<ul class="ul list-dash compact" data-line="441">
+<li class="li ul-li list-dash-li compact-li" data-line="441"><span data-line="441"></span>El cliente necesita conocer la URL del frontend (IP y port)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="442"><span data-line="442"></span>El worker necesita conocer la URL del backend (IP y port)
+</li></ul>
+
+<p class="p noindent" data-line="444"><span data-line="444"></span>Pero no conocemos la IP hasta lanzar el contenedor del broker
+</p><table class="columns block" data-line="446">
+<tbody><tr><td class="column" data-line="447" style="width:50%;font-size:x-large">
+<p class="p noindent" data-line="448"><span data-line="448"></span>Alternativa manual
+</p>
+<ol class="ol compact" data-line="450">
+<li class="li ol-li compact-li" data-line="450"><span data-line="450"></span>Una vez lanzado el broker en su contenedor, obtenemos la IP del contenedor
+</li>
+<li class="li ol-li compact-li" data-line="451"><span data-line="451"></span>Modificamos manualmente esos valores en los Dockerfile de clientes y Workers para crear correctamente sus imágenes
+</li>
+<li class="li ol-li compact-li" data-line="452"><span data-line="452"></span>Lanzamos workers y clientes
+</li></ol>
+</td><td class="column" data-line="456" style="width:50%;font-size:x-large">
+<p class="p noindent" data-line="457"><span data-line="457"></span>Automatización:
+</p>
+<ul class="ul list-dash compact" data-line="459">
+<li class="li ul-li list-dash-li compact-li" data-line="459"><span data-line="459"></span>Definimos un Plan de trabajo = Descripción de componentes, propiedades y relaciones
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="460"><span data-line="460"></span>Usamos una herramienta que hace el despliegue a partir del plan de trabajo</li></ul></td></tr></tbody></table></section>
+<section id="sec-ejemplo-mtodo-manual--broker" class="section section2" data-section-depth="2" data-line="464"><h3 id="heading-sec-ejemplo-mtodo-manual--broker" class="h2" data-heading-depth="2" style="display:block">Ejemplo método manual: broker</h3>
+<ul class="ul list-dash compact" data-line="465">
+<li class="li ul-li list-dash-li compact-li" data-line="465"><span data-line="465"></span>En un directorio copiamos <span data-line="465"></span><code class="code code1">broker.js</code><span data-line="465"></span> y el siguiente Dockerfile
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="466" data-line-first="467" style="display:block"><code data-line="467">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./broker.js /zmq/broker.js
+WORKDIR /zmq
+EXPOSE 8059 8060
+CMD node broker</code></pre>
+<ul class="ul list-dash compact" data-line="474">
+<li class="li ul-li list-dash-li compact-li" data-line="474"><span data-line="474"></span>El frontend es el port 8059 y el backend el 8060
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="475"><span data-line="475"></span>Ejecutamos: <span data-line="475"></span><code class="code code1">docker build -t broker .</code><span data-line="475"></span> <span data-line="475"></span> 
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="476"><span data-line="476"></span>Lanzamos el broker <span data-line="476"></span><code class="code code1">docker run -d broker</code><span data-line="476"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="477"><span data-line="477"></span>Averiguamos la URL del contenedor que ejecuta el broker
+
+<ul class="ul list-dash compact" data-line="478">
+<li class="li ul-li list-dash-li compact-li" data-line="478"><span data-line="478"></span><code class="code code1">docker ps -a</code><span data-line="478"></span>    para conocer el ID del contenedor
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="479"><span data-line="479"></span><code class="code code1">docker inspect ID</code><span data-line="479"></span>   para obtener su dirección IP
+</li></ul></li></ul>
+</section>
+<section id="sec-ejemplo-mtodo-manual--worker" class="section section2" data-section-depth="2" data-line="481"><h3 id="heading-sec-ejemplo-mtodo-manual--worker" class="h2" data-heading-depth="2" style="display:block">Ejemplo método manual: worker</h3>
+<ul class="ul list-dash compact" data-line="482">
+<li class="li ul-li list-dash-li compact-li" data-line="482"><span data-line="482"></span>En otro directorio copiamos <span data-line="482"></span><code class="code code1">worker.js</code><span data-line="482"></span> y el siguiente Dockerfile (asumiendo que la IP del broker es <span data-line="482"></span><code class="code code1">a.b.c.d</code><span data-line="482"></span>)
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="483" data-line-first="484" style="display:block"><code data-line="484">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./worker.js /zmq/worker.js
+WORKDIR /zmq
+CMD node worker tcp://a.b.c.d:8060</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="490"><span data-line="490"></span>En este directorio ejecutamos <span data-line="490"></span><code class="code code1">docker build -t worker .</code><span data-line="490"></span>  para crear la imagen
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="491"><span data-line="491"></span>Lanzamos el worker con <span data-line="491"></span><code class="code code1">docker run -d worker</code><span data-line="491"></span>
+
+<ul class="ul list-dash compact" data-line="492">
+<li class="li ul-li list-dash-li compact-li" data-line="492"><span data-line="492"></span>podemos lanzar tantas instancias como consideremos necesario
+</li></ul></li></ul>
+</section>
+<section id="sec-ejemplo-mtodo-manual--cliente-local" class="section section2" data-section-depth="2" data-line="494"><h3 id="heading-sec-ejemplo-mtodo-manual--cliente-local" class="h2" data-heading-depth="2" style="display:block">Ejemplo método manual: cliente local</h3>
+<ul class="ul list-dash compact" data-line="495">
+<li class="li ul-li list-dash-li compact-li" data-line="495"><span data-line="495"></span>En otro directorio copiamos <span data-line="495"></span><code class="code code1">client.js</code><span data-line="495"></span> y el siguiente Dockerfile
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="496" data-line-first="497" style="display:block"><code data-line="497">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./client.js /zmq/client.js
+WORKDIR /zmq
+CMD node worker tcp://a.b.c.d:8059</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="503"><span data-line="503"></span>En este directorio ejecutamos <span data-line="503"></span><code class="code code1">docker build -t client .</code><span data-line="503"></span>  para crear la imagen
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="504"><span data-line="504"></span>Lanzamos el cliente con docker run<span data-line="504"></span> <span data-line="504"></span>-d client
+
+<ul class="ul list-dash compact" data-line="505">
+<li class="li ul-li list-dash-li compact-li" data-line="505"><span data-line="505"></span>podemos lanzar tantos como consideremos necesario
+</li></ul></li></ul>
+</section>
+<section id="sec-ejemplo-mtodo-manual--clientes-remotos" class="section section2" data-section-depth="2" data-line="507"><h3 id="heading-sec-ejemplo-mtodo-manual--clientes-remotos" class="h2" data-heading-depth="2" style="display:block">Ejemplo método manual: clientes remotos</h3>
+<ul class="ul list-dash compact" data-line="508">
+<li class="li ul-li list-dash-li compact-li" data-line="508"><span data-line="508"></span>Lanzamos el broker con <span data-line="508"></span><code class="code code1">docker run -p 8000:8059 -d broker</code><span data-line="508"></span>
+
+<ul class="ul list-dash compact" data-line="509">
+<li class="li ul-li list-dash-li compact-li" data-line="509"><span data-line="509"></span>La opción <span data-line="509"></span><code class="code code1">-p portAnfitrion:portWorker</code><span data-line="509"></span> permite acceso al frontend desde el exterior (port 8000 del anfitrion)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="510"><span data-line="510"></span>La opción <span data-line="510"></span><code class="code code1">-d</code><span data-line="510"></span> lanza el contenedor en segundo plano
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="511"><span data-line="511"></span>No es necesario gestionar los clientes con contenedores
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="512"><span data-line="512"></span>Deben conectar a <span data-line="512"></span><code class="code code1">tcp://ipDelAnfitrion:8000</code><span data-line="512"></span>
+</li></ul>
+</section>
+<section id="sec-ejemplo-despliegue-automtico-1" class="section section2" data-section-depth="2" data-line="514"><h3 id="heading-sec-ejemplo-despliegue-automtico-1" class="h2" data-heading-depth="2" style="display:block">Ejemplo despliegue automático (1)</h3>
+<ul class="ul list-dash compact" data-line="515">
+<li class="li ul-li list-dash-li compact-li" data-line="515"><span data-line="515"></span>Crea subdir. <span data-line="515"></span><code class="code code1">broker</code><span data-line="515"></span>, copia <span data-line="515"></span><code class="code code1">broker.js</code><span data-line="515"></span> y el <span data-line="515"></span><code class="code code1">Dockerfile</code><span data-line="515"></span>
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="516" data-line-first="517" style="display:block"><code data-line="517">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./broker.js /zmq/broker.js
+EXPOSE 8059 8060
+CMD node zmq/broker</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="523"><span data-line="523"></span>Crea subdir. <span data-line="523"></span><code class="code code1">worker</code><span data-line="523"></span>, copia <span data-line="523"></span><code class="code code1">worker.js</code><span data-line="523"></span> y el <span data-line="523"></span><code class="code code1">Dockerfile</code><span data-line="523"></span>
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="524" data-line-first="525" style="display:block"><code data-line="525">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./worker.js /zmq/worker.js
+CMD node zmq/worker $BROKER_URL</code></pre></li>
+<li class="li ul-li list-dash-li compact-li" data-line="530"><span data-line="530"></span>Crea subdir. <span data-line="530"></span><code class="code code1">client</code><span data-line="530"></span>, copia <span data-line="530"></span><code class="code code1">client.js</code><span data-line="530"></span> y el <span data-line="530"></span><code class="code code1">Dockerfile</code><span data-line="530"></span>
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="531" data-line-first="532" style="display:block"><code data-line="532">FROM tsr1718/centos-zmq
+RUN mkdir /zmq
+COPY ./client.js /zmq/client.js
+CMD node zmq/client $BROKER_URL</code></pre></li></ul>
+</section>
+<section id="sec-ejemplo-despliegue-automtico-2" class="section section2" data-section-depth="2" data-line="538"><h3 id="heading-sec-ejemplo-despliegue-automtico-2" class="h2" data-heading-depth="2" style="display:block">Ejemplo despliegue automático (2)</h3><table class="columns block" data-line="539">
+<tbody><tr><td class="column" data-line="540" style="width:50%">
+<ul class="ul list-dash compact" data-line="541">
+<li class="li ul-li list-dash-li compact-li" data-line="541"><span data-line="541"></span>Copia el texto de la derecha en el fich <span data-line="541"></span><code class="code code1">docker-compose.yml</code><span data-line="541"></span>
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="542"><span data-line="542"></span>La orden
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="543" data-line-first="544" style="display:block"><code data-line="544">docker-compose up -d</code></pre>
+<ul class="ul list-dash compact" data-line="546">
+<li class="li ul-li list-dash-li compact-li" data-line="546"><span data-line="546"></span>Construye las 3 imágenes
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="547"><span data-line="547"></span>Arranca una instancia de cada una en el orden correcto
+</li></ul></li>
+<li class="li ul-li list-dash-li compact-li" data-line="548"><span data-line="548"></span>Permite lanzar <span data-line="548"></span><code class="code code1">n</code><span data-line="548"></span> instancias del servicio <span data-line="548"></span><code class="code code1">X</code><span data-line="548"></span>
+
+<pre class="para-block pre-fenced pre-fenced3" data-line="549" data-line-first="550" style="display:block"><code data-line="550">docker-compose up -d --scale X=n</code></pre></li></ul></td><td class="column" data-line="553" style="vertical-align:top">
+<pre class="para-block pre-fenced pre-fenced3" data-line="554" data-line-first="555" style="display:block"><code data-line="555">version: &#39;2&#39;
+services:
+    cli:
+        image: client
+        build: ./client/
+        links:
+            - bro
+        environment:
+            - BROKER_URL=tcp://bro:8059
+    bro:
+        image: broker
+        build: ./broker/
+        expose:
+            - &quot;8059&quot;
+            - &quot;8060&quot;
+    wor:
+        image: worker
+        build: ./worker/
+        links:
+            - bro
+        environment:
+            - BROKER_URL=tcp://bro:8060</code></pre></td></tr></tbody></table></section>
+<section class="slide section" data-line="581">
+<ol class="ol compact" data-line="582">
+<li class="li ol-li compact-li" data-line="582"><span data-line="582"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="583"><span data-line="583"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="584"><span data-line="584"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="585"><span data-line="585"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="586"><span data-line="586"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="587"><span data-line="587"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="588"><span data-line="588"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="589"><span data-line="589"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="590"><span data-line="590"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="591"><span data-line="591"></span><strong class="strong-star2">Múltiples componentes en distintos nodos</strong><span data-line="591"></span>
+</li>
+<li class="li ol-li compact-li" data-line="592"><span data-line="592"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="593"><span data-line="593"></span>Referencias</li></ol></section>
+<section id="sec-mltiples-componentes-en-distintos-nodos" class="section section1" data-section-depth="1" data-line="596"><h2 id="heading-sec-mltiples-componentes-en-distintos-nodos" class="h1" data-heading-depth="1" style="display:block">Múltiples componentes en distintos nodos</h2>
+<ul class="ul list-dash compact" data-line="597">
+<li class="li ul-li list-dash-li compact-li" data-line="597"><span data-line="597"></span>Docker-compose se limita a componentes en un único nodo
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="598"><span data-line="598"></span>Pero queremos distribuir las instancias entre distintos nodos <span data-line="598"></span><svg  class="math-inline math-render-svg math" style="vertical-align:-0.0210em;height:0.5879em;width:1.0890em" viewBox='88.468 56.545 10.371 5.599' ><desc>$\rightarrow$</desc><g id='math-0a183e'><use x='88.667' xlink:href='#g0-33' y='61.836'/></g></svg><span data-line="598"></span> la propuesta mas conocida es <span data-line="598"></span><strong class="strong-star2">kubernetes</strong><span data-line="598"></span>
+
+<ul class="ul list-dash compact" data-line="599">
+<li class="li ul-li list-dash-li compact-li" data-line="599"><span data-line="599"></span>Es un orquestador de contenedores, pero no depende de Docker
+</li></ul></li></ul>
+</section>
+<section class="slide section" data-line="601">
+<ol class="ol compact" data-line="602">
+<li class="li ol-li compact-li" data-line="602"><span data-line="602"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="603"><span data-line="603"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="604"><span data-line="604"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="605"><span data-line="605"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="606"><span data-line="606"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="607"><span data-line="607"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="608"><span data-line="608"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="609"><span data-line="609"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="610"><span data-line="610"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="611"><span data-line="611"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="612"><span data-line="612"></span><strong class="strong-star2">Objetivos de aprendizaje</strong><span data-line="612"></span>
+</li>
+<li class="li ol-li compact-li" data-line="613"><span data-line="613"></span>Referencias</li></ol></section>
+<section id="sec-objetivos-de-aprendizaje" class="section section1" data-section-depth="1" data-line="616"><h2 id="heading-sec-objetivos-de-aprendizaje" class="h1" data-heading-depth="1" style="display:block">Objetivos de aprendizaje</h2>
+<p class="p noindent" data-line="617"><span data-line="617"></span>Al finalizar este tema, el alumno debe ser capaz de:
+</p>
+<ul class="ul list-dash compact" data-line="619">
+<li class="li ul-li list-dash-li compact-li" data-line="619"><span data-line="619"></span>Conocer con cierto nivel de detalle los aspectos a considerar en el despliegue de una aplicación distribuida
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="620"><span data-line="620"></span>Entender los problemas derivados de la existencia de dependencias, y algunas alternativas para tratarlos
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="621"><span data-line="621"></span>Entender el funcionamiento de una aproximación en el entorno de la nube, con conocimiento acerca de su operativa, posibilidades y limitaciones
+</li></ul>
+</section>
+<section class="slide section" data-line="623">
+<ol class="ol compact" data-line="624">
+<li class="li ol-li compact-li" data-line="624"><span data-line="624"></span>Objetivos
+</li>
+<li class="li ol-li compact-li" data-line="625"><span data-line="625"></span>Concepto de despliegue
+</li>
+<li class="li ol-li compact-li" data-line="626"><span data-line="626"></span>Despliegue de un servicio
+</li>
+<li class="li ol-li compact-li" data-line="627"><span data-line="627"></span>Automatización del despliegue
+</li>
+<li class="li ol-li compact-li" data-line="628"><span data-line="628"></span>Despliegue en la nube
+</li>
+<li class="li ol-li compact-li" data-line="629"><span data-line="629"></span>Contenedores
+</li>
+<li class="li ol-li compact-li" data-line="630"><span data-line="630"></span>Docker
+</li>
+<li class="li ol-li compact-li" data-line="631"><span data-line="631"></span>Creación de una imagen
+</li>
+<li class="li ol-li compact-li" data-line="632"><span data-line="632"></span>Múltiples componentes en un nodo
+</li>
+<li class="li ol-li compact-li" data-line="633"><span data-line="633"></span>Múltiples componentes en distintos nodos
+</li>
+<li class="li ol-li compact-li" data-line="634"><span data-line="634"></span>Objetivos de aprendizaje
+</li>
+<li class="li ol-li compact-li" data-line="635"><span data-line="635"></span><strong class="strong-star2">Referencias</strong></li></ol></section>
+<section id="sec-referencias" class="section section1" data-section-depth="1" data-line="638"><h2 id="heading-sec-referencias" class="h1" data-heading-depth="1" style="display:block">Referencias</h2>
+<ul class="ul list-dash loose" data-line="639">
+<li class="li ul-li list-dash-li loose-li" data-line="639">
+<p data-line="639"><span data-line="639"></span>Inversión de Control/Inyección de dependencias
+</p>
+<ul class="ul list-dash compact" data-line="640">
+<li class="li ul-li list-dash-li compact-li" data-line="640"><span data-line="640"></span>http://martinfowler.com/articles/injection.html
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="641"><span data-line="641"></span>http://www.springsource.org/
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li loose-li" data-line="643">
+<p data-line="643"><span data-line="643"></span>www.docker.com (Website oficial de Docker)
+</p>
+<ul class="ul list-dash compact" data-line="644">
+<li class="li ul-li list-dash-li compact-li" data-line="644"><span data-line="644"></span>docs.docker.com/userguide/ (Documentación oficial)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="645"><span data-line="645"></span>docs.docker.com/compose/ (Compose)
+</li>
+<li class="li ul-li list-dash-li compact-li" data-line="646"><span data-line="646"></span>docs.docker.com/engine/swarm/ (Modo Swarm)
+</li></ul>
+</li>
+<li class="li ul-li list-dash-li loose-li" data-line="648">
+<p data-line="648"><span data-line="648"></span>github.com/wsargent/docker-cheat-sheet (Resumen de Docker)
+</p></li>
+<li class="li ul-li list-dash-li loose-li" data-line="650">
+<p data-line="650"><span data-line="650"></span>http://kubernetes.io
+</p></li>
+<li class="li ul-li list-dash-li loose-li" data-line="652">
+<p data-line="652"><span data-line="652"></span>12factor.net/ (La metodología <span data-line="652"></span>&#8216;The twelve-factor app&#8217;<span data-line="652"></span>)
+</p></li></ul></section></div></div><span data-line=""></span></div>
+<svg id='math-svg-paths' style='display:none' version='1.1' viewBox='0 0 0 0' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+<defs>
+<path d='M8.309 -2.291C7.761 -1.873 7.492 -1.465 7.412 -1.335C6.964 -0.648 6.884 -0.02 6.884 -0.01C6.884 0.11 7.004 0.11 7.083 0.11C7.253 0.11 7.263 0.09 7.303 -0.09C7.532 -1.066 8.12 -1.903 9.245 -2.361C9.365 -2.401 9.395 -2.421 9.395 -2.491S9.335 -2.59 9.315 -2.6C8.877 -2.77 7.671 -3.268 7.293 -4.941C7.263 -5.061 7.253 -5.091 7.083 -5.091C7.004 -5.091 6.884 -5.091 6.884 -4.971C6.884 -4.951 6.974 -4.324 7.392 -3.656C7.592 -3.357 7.88 -3.009 8.309 -2.69H0.907C0.727 -2.69 0.548 -2.69 0.548 -2.491S0.727 -2.291 0.907 -2.291H8.309Z' id='g0-33'/>
+</defs>
+</svg>
+
+</body>
+<script>
+    // initialize printing
+    revealConfig.initPrint();
+    // initialize background embedded images
+    revealConfig.getEmbeddedImages();
+    </script>
+</html>

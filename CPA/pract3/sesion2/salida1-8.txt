@@ -1,0 +1,4 @@
+Original
+Tiempo: 4.50 (8 procesos)
+Modificado
+Tiempo: 4.21 (8 procesos)
