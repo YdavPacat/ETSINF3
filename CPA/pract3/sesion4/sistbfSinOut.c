@@ -8,6 +8,7 @@
 #define EPSILON 1e-16
 #define CHECK(rc, paso) (rc) ? printf("Error %d, paso %d\n", rc, paso) : 0
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+// #define VERBOSE
 
 /* Generador de matrices bien condicionadas           */
 /* Entrada: Dimension del problema                    */
@@ -133,6 +134,7 @@ int printMat1D(double *A, int mloc, int m, char *header)
 }
 
 /* Impresion de los bloques de una matriz de los          */
+/* distintos procesos                                     */
 /* Entrada: Matriz a imprimir y sus dimensiones locales   */
 /* Salida: Diferentes codigos de error                    */
 int printMat(double **A, int mloc, int m, char *header)
@@ -268,7 +270,6 @@ int triSup(double **U, double *b, int n, int iproc, int p, int mb)
   for (i = n - 1; i >= 0; i--) {
     if (owner(i,p,mb) == iproc) {
       if (fabs(U[localIndex(i,p,mb)][i]) < EPSILON) return -1;
-      b[i] = b[i] / U[localIndex(i,p,mb)][i];
       b[i] = b[i] / U[localIndex(i,p,mb)][i];
     }
     /* Broadcast b[i] */
