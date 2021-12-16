@@ -378,7 +378,7 @@ int main(int argc, char *argv[])
 
   if(iproc == 0){
     texec =  MPI_Wtime() - texec;
-    printf("EXECUTION TIME sistcf: %f\n", texec);
+    printf("EXECUTION TIME sistbf: %f\n", texec);
   }
 
 #ifdef VERBOSE

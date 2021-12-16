@@ -1,0 +1,6 @@
+EXECUTION TIME sistbf: 15.708339
+
+Total accumulated error: 0.000000
+EXECUTION TIME sistcf: 12.215954
+
+Total accumulated error: 0.000000
