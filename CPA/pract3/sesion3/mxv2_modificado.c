@@ -212,15 +212,17 @@ int main(int argc, char *argv[])
   /* COMMUNICATIONS */
   /* Compute the 1-norm of the complete x from the 1-norm of each fragment,
    * i.e. compute the sum of the local norms, leaving the result in process 0 */
-  if (me == 0) {
-    for (proc = 1; proc < num_procs; proc++) {
-      MPI_Recv(&aux, 1, MPI_DOUBLE, proc, 65, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      norma += aux;
-    }
-  } else {
-    MPI_Send(&norma, 1, MPI_DOUBLE, 0, 65, MPI_COMM_WORLD);
-  }
-
+  //if (me == 0) {
+  //  for (proc = 1; proc < num_procs; proc++) {
+  //    MPI_Recv(&aux, 1, MPI_DOUBLE, proc, 65, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  //    norma += aux;
+  //  }
+  //} else {
+  //  MPI_Send(&norma, 1, MPI_DOUBLE, 0, 65, MPI_COMM_WORLD);
+  //}
+  
+  MPI_Reduce(&norma, &aux, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+  
   t = MPI_Wtime() - t;
 
   if (me == 0) {
