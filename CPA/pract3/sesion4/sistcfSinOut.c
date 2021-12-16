@@ -8,7 +8,7 @@
 #define EPSILON 1e-16
 #define CHECK(rc, paso) (rc) ? printf("Error %d, paso %d\n", rc, paso) : 0
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define VERBOSE
+//#define VERBOSE
 
 /* Generador de matrices bien condicionadas           */
 /* Entrada: Dimension del problema                    */
