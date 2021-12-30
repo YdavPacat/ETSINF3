@@ -59,6 +59,8 @@ services:
       - "9999"
     environment:
       - LOGGER_URL=tcp://log:9995
+    ports:
+      - "9998:9998"
   log:
     image: logger
     build: ./logger/
