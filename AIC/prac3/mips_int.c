@@ -384,26 +384,41 @@ dword mux_ALUinf(dword rb, dword imm, dword mem, dword wb) {
                         que la instruccion que hay en MEM es mas moderna */
                         
                         /* WBtoEX */
+               /* Ejercicio 2     */ 
+              /* INSERTAR CÓDIGO */
                         
-                        /* INSERTAR CÓDIGO */
-                        
+                if(escribe_Rdst(MEM_WB.IR) &&
+                    lee_Rfte2(ID_EX.IR) &&
+                    MEM_WB.IR.Rdestino == ID_EX.IR.Rfuente2){
 
-                        /* if (...) {
+                    WBaEXalu_s = SI;
+                        result = wb;
+                }
+
+                    /* if (...) {
                             ...
                             WBaEXalu_i = SI;
                             result = wb;
-                        }
-                         */
+                        }.nop
+                     */
 
-                        /* MEMtoEX */
-                        
+                    /* MEMtoEX */
+               /* Ejercicio 2     */ 
               /* INSERTAR CÓDIGO */
+                
+                if(escribe_Rdst(EX_MEM.IR) &&
+                    lee_Rfte2(ID_EX.IR) &&
+                    EX_MEM.IR.Rdestino == ID_EX.IR.Rfuente2){
 
-                        /* if (...) {
+                        MEMaEXalu_i = SI;
+                        result = mem;
+                }
+                    /* if (...) {
                             ...
                             MEMaEXalu_i = SI;
                             result = mem;
                         }
+                     */
                          */
                         break;
                     }
