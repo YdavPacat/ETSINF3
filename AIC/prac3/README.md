@@ -15,4 +15,4 @@
 
 ## [Ejercicio 3](https://htmlpreview.github.io/?https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac3/ejercicio3.htm)
 
-- [Código *mips.c*](https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac3/mips.c#L117-L125)
+- [Código *mips.c*](https://github.com/YdavPacat/ETSINF3/blob/main/AIC/prac3/mips.c#L117-L126)
