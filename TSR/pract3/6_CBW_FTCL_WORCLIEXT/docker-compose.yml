@@ -1,0 +1,108 @@
+version: '2'
+services:
+  cliA:
+    image: client
+    build: ./client/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9998
+      - CLASSID=A
+  cliB:
+    image: client
+    build: ./client/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9998
+      - CLASSID=B
+  cliC:
+    image: client
+    build: ./client/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9998
+      - CLASSID=C
+  cliD:
+    image: client
+    build: ./client/
+    links:
+      - bro2
+    environment:
+      - BROKER_URL=tcp://bro1:9998
+      - CLASSID=D
+      
+  worA:
+    image: worker
+    build: ./worker/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9999
+      - CLASSID=A
+  worB:
+    image: worker
+    build: ./worker/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9999
+      - CLASSID=B
+  worC:
+    image: worker
+    build: ./worker/
+    links:
+      - bro1
+    environment:
+      - BROKER_URL=tcp://bro1:9999
+      - CLASSID=C
+
+  worD:
+    image: worker
+    build: ./worker/
+    links:
+      - bro2
+    environment:
+      - BROKER_URL=tcp://bro2:9997
+      - CLASSID=D
+
+  bro1:
+    image: broker
+    build: ./broker/
+    links:
+      - log
+    expose:
+      - "9998"
+      - "9999"
+    environment:
+      - LOGGER_URL=tcp://log:9995
+      - BROKERCL_PORT=9998
+      - BROKERW_PORT=9999
+    ports:
+      - "9998:9998"
+      - "9999:9999"
+  bro2:
+    image: broker
+    build: ./broker/
+    links:
+      - log
+    expose:
+      - "9996"
+      - "9997"
+    environment:
+      - LOGGER_URL=tcp://log:9995
+      - BROKERCL_PORT=9996
+      - BROKERW_PORT=9997
+    ports:
+      - "9996:9996"
+  log:
+    image: logger
+    build: ./logger/
+    expose:
+      - "9995"
+    volumes:
+# /tmp/logger.log DIRECTORY must exist on host and writeable
+      - /tmp/logger.log:/tmp/cbwlog
+    environment:
+      - LOGGER_DIR=/tmp/cbwlog
