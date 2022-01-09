@@ -3,9 +3,9 @@
 ** Evaluación 
 - (10%) - 4 Pruebas objetivas de seguimiento (PoliformaT)
   + La nota obtenida quita el peso a los exámenes parciales 
-    - Si tienes un 0 ->  los parciales cuenta un 80%
-    - Si tienes un 5 ->  los parciales cuenta un 75%
-    - Si tienes un 10 -> los parciales cuenta un 70%
+    - Si tienes un 0 ->  los parciales cuentan un 80%
+    - Si tienes un 5 ->  los parciales cuentan un 75%
+    - Si tienes un 10 -> los parciales cuentan un 70%
   + NO hay nota mínima
 - (70%) - 2 exámenes parciales
   + Variable hasta un 80% en función de las pruebas objetivas
