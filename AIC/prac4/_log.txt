@@ -1,52 +1,83 @@
-Ciclo: 25, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 26, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 40, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 42, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 42, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 62, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 63, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 77, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 79, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 79, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 99, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 100, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 114, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 116, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 116, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 136, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 137, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 151, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 153, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 153, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 173, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 174, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 188, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 190, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 190, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 210, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 211, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 225, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 227, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 227, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 247, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 248, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 262, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 264, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 264, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 284, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 285, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 299, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 301, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 301, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 321, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 322, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 336, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 338, Señal: IFnop; Instrucción dadd r2,r2,#48
-Ciclo: 338, Señal: Salto Efectivo; Instrucción bnez r4,loop
-Ciclo: 358, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F9
-Ciclo: 359, Señal: Estructural_WB IDstall, IFstall; Instrucción add.d f4,f8,f2, Reg F17
-Ciclo: 373, Señal: corto MEMaEXalu_i; Rdst de dadd r1,r1,#48 (en MEM) == Rfte de dsub r4,r3,r1 (en EX)
-Ciclo: 376, Señal: IFstall; Instrucción trap 0
-Ciclo: 377, Señal: IFstall; Instrucción trap 0
-Ciclo: 378, Señal: IFstall; Instrucción trap 0
-Ciclo: 379, Señal: IFstall; Instrucción trap 0
+Ciclo: 20, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 21, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 22, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 24, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 24, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 41, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 42, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 43, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 45, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 45, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 62, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 63, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 64, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 66, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 66, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 83, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 84, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 85, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 87, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 87, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 104, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 105, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 106, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 108, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 108, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 125, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 126, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 127, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 129, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 129, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 146, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 147, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 148, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 150, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 150, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 167, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 168, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 169, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 171, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 171, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 188, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 189, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 190, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 192, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 192, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 209, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 210, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 211, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 213, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 213, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 230, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 231, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 232, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 234, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 234, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 251, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 252, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 253, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 255, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 255, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 272, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 273, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 274, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 276, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 276, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 293, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 294, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 295, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 297, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 297, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 314, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 315, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 316, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 318, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 318, Señal: Salto Efectivo; Instrucción bnez r5,loop
+Ciclo: 335, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f0,f8 (en FP WB) == Rfte de add.d f8,f1,f8 (en FP ADD)
+Ciclo: 336, Señal: corto WBaEXalu_s; Rdst de dadd r3,r3,#-4 (en WB) == Rfte de sgt r5,r3,r0 (en EX)
+Ciclo: 337, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f1,f8 (en FP WB) == Rfte de add.d f8,f2,f8 (en FP ADD)
+Ciclo: 339, Señal: corto FP_WBaA1_i; Rdst de add.d f8,f2,f8 (en FP WB) == Rfte de add.d f8,f3,f8 (en FP ADD)
+Ciclo: 341, Señal: IFstall; Instrucción trap 0
+Ciclo: 342, Señal: IFstall; Instrucción trap 0
+Ciclo: 343, Señal: IFstall; Instrucción trap 0
+Ciclo: 344, Señal: IFstall; Instrucción trap 0
