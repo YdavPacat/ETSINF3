@@ -1,0 +1,31 @@
+never security {    /* !([] ((mutex<2))) */
+T0_init:
+	do
+	:: atomic { (! (((mutex<2)))) -> assert(!(! (((mutex<2))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never liveness0 {    /* !([] ((! ((state[0]==entering))) || (<> ((state[0]==critical))))) */
+T0_init:
+	do
+	:: (! ((! ((state[0]==entering)))) && ! (((state[0]==critical)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state[0]==critical)))) -> goto accept_S4
+	od;
+}
+never liveness1 {    /* !([] ((! ((state[1]==entering))) || (<> ((state[1]==critical))))) */
+T0_init:
+	do
+	:: (! ((! ((state[1]==entering)))) && ! (((state[1]==critical)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state[1]==critical)))) -> goto accept_S4
+	od;
+}

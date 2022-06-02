@@ -1,0 +1,59 @@
+MODULE main
+VAR
+    semaphore : boolean;
+    turn: 1..2;
+    question1 : process question(1, semaphore, turn);
+    question2 : process question(2, semaphore, turn);
+ASSIGN
+    init(semaphore) := FALSE;
+    init(turn) := 1; 
+SPEC
+    AG !(question1.state = answering & question2.state = answering) ---safety
+SPEC
+    AG (question1.state = request -> AF question1.state = answering) ---liveness1
+SPEC
+    AG (question2.state = request -> AF question2.state = answering) ---liveness2
+
+MODULE question(id, semaphore, turn)
+VAR
+    state : {noanswer,request,answering,a,b,c,d};
+ASSIGN
+    init(state) := noanswer;
+    next(state) :=
+        case
+            state = noanswer : {noanswer,request};
+            state = request & !semaphore & turn = id : answering;
+            state = answering : {a,b,c,d};
+            state = a : {a,request};
+            state = b : {b,request};
+            state = c : {c,request};
+            state = d : {d,request};
+            TRUE : state;
+        esac;
+    next(semaphore) :=
+        case
+            state = request & !semaphore & turn = id : TRUE;
+            state = answering : FALSE;
+            TRUE : semaphore;
+        esac;
+
+    next(turn) :=
+        case 
+            ---state = noanswer & next(state) = noanswer & turn = id & id = 1 : 2;
+            ---state = noanswer & next(state) = noanswer & turn = id & id = 2 : 1;
+            ---state = a & next(state) = a & turn = id & id = 1 : 2;
+            ---state = a & next(state) = a & turn = id & id = 2 : 1;
+            ---state = b & next(state) = b & turn = id & id = 1 : 2;
+            ---state = b & next(state) = b & turn = id & id = 2 : 1;
+            ---state = c & next(state) = c & turn = id & id = 1 : 2;
+            ---state = c & next(state) = c & turn = id & id = 2 : 1;
+            ---state = d & next(state) = d & turn = id & id = 1 : 2;
+            ---state = d & next(state) = d & turn = id & id = 2 : 1;
+            state = next(state) & turn = id & turn = 1 : 2;
+            state = next(state) & turn = id & turn = 2 : 1;
+            state = answering & turn = id & turn = 1 : 2;
+            state = answering & turn = id & turn = 2 : 1;
+            TRUE : turn;
+        esac;
+FAIRNESS
+    running

@@ -1,0 +1,44 @@
+mod QUIZIFY-MAUDE-CHOREOGRAPHY is
+    protecting QUIZIFY-MAUDE-EXT1 .
+    sort State .
+    op _|_|_ : Nat? MsgSet Opt?NatList -> State [ctor] .
+    sort Nat? .
+    subsort Nat < Nat? .
+    op void : -> Nat? [ctor] .
+    sorts Msg MsgSet .
+    ops #?_ #!_ x_ : Nat -> Msg [ctor] .
+    subsort Msg < MsgSet .
+    op empty : -> MsgSet .
+    op __ : MsgSet MsgSet -> MsgSet [assoc comm id: empty] .
+    eq X:Msg X:Msg = X:Msg . --- Propiedad idempotencia
+
+    vars L1 L2 : OptNatList .
+    vars L1V L2V : OptVNatList . 
+    vars L? L1? L2? L3? : Opt?NatList .
+    var N? : Nat? . 
+    var MS : MsgSet . 
+    vars N M : Nat .
+
+    rl N? | MS | L? => N? | empty | L? .
+
+    --- One device
+        ---  El dispositivo pide permiso para contestar N 
+    rl N? | MS | L1? @ ? < N > @ L2? => N? | MS #? N | L1? @ * < N > @ L2? .
+
+        ---  El dispositivo pasa a listo para contestar la pregunta que le ha permido el servidor
+    rl N | MS #! N | L1? @ * < N > @ L2? => N | MS | L1? @ # < N > @ L2? .
+
+        --- El dispositivo a tiene el permiso de contestar y contesta
+    rl N? | MS | L1? @ # < N > @ L2? => N? | MS x N | L1? @ A < N > @ L2? .
+    rl N? | MS | L1? @ # < N > @ L2? => N? | MS x N | L1? @ B < N > @ L2? .
+    rl N? | MS | L1? @ # < N > @ L2? => N? | MS x N | L1? @ C < N > @ L2? .
+    rl N? | MS | L1? @ # < N > @ L2? => N? | MS x N | L1? @ D < N > @ L2? .
+
+    --- Server
+    rl void | MS #? N | L? => N | MS #! N | L? .
+    rl N? | MS x N | L? => void | MS | L? .
+
+    --- Tolerante a fallos 
+    rl void | empty | L1? @ * < N > @ L2? => void | empty | L1? @ ? < N > @ L2? .
+    rl void | empty | L1? @ # < N > @ L2? => void | empty | L1? @ ? < N > @ L2? .
+endm

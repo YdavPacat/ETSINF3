@@ -1,0 +1,31 @@
+never security {    /* !([] (! (((state[0]==5)) && ((state[1]==5))))) */
+T0_init:
+	do
+	:: atomic { (! ((! (((state[0]==5)) && ((state[1]==5)))))) -> assert(!(! ((! (((state[0]==5)) && ((state[1]==5))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never liveness0 {    /* !([] ((! ((state[0]==6))) || (<> ((state[0]==5))))) */
+T0_init:
+	do
+	:: (! ((! ((state[0]==6)))) && ! (((state[0]==5)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state[0]==5)))) -> goto accept_S4
+	od;
+}
+never liveness1 {    /* !([] ((! ((state[1]==6))) || (<> ((state[1]==5))))) */
+T0_init:
+	do
+	:: (! ((! ((state[1]==6)))) && ! (((state[1]==5)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state[1]==5)))) -> goto accept_S4
+	od;
+}

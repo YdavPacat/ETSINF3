@@ -1,0 +1,9 @@
+never security {    /* !([] ((mutex<2))) */
+T0_init:
+	do
+	:: atomic { (! (((mutex<2)))) -> assert(!(! (((mutex<2))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}

@@ -1,0 +1,115 @@
+MODULE main
+VAR
+    ch1 : process channel(); --- Channel question 1 to/from server
+    ch2 : process channel(); --- Channel question 2 to/from server
+    server : process server(turn,ch1.q2s,ch1.s2q,ch2.q2s,ch2.s2q);
+    question1 : process question(ch1.s2q,ch1.q2s);
+    question2 : process question(ch2.s2q,ch2.q2s);
+    turn : 1..2;
+SPEC
+    AG !(question1.state = answering & question2.state = answering) ---safety
+SPEC
+    AG (question1.state = request -> AF question1.state = answering) ---liveness1
+SPEC
+    AG (question2.state = request -> AF question2.state = answering) ---liveness2
+
+MODULE server(turn,input1,output1,input2,output2)
+VAR
+    chosen : 0..2;
+ASSIGN
+    init(chosen) := 0; --- No question chosen
+    next(chosen) :=
+        case
+            input1 = request & input2 != request & chosen = 0 : 1;
+            input1 != request & input2 = request & chosen = 0 : 2;
+            input1 = request & input2 = request & turn = 1 & chosen = 0 : 1;
+            input1 = request & input2 = request & turn = 2 & chosen = 0 : 2;
+            input1 = finished | input2 = finished : 0;
+            TRUE : chosen;
+        esac;
+
+    next(turn) :=
+        case
+            chosen = 1 : 2;
+            chosen = 2 : 1;
+            TRUE : turn;
+        esac;
+
+    next(input1) :=
+        case
+            input1 = request & next(chosen) = 1 : empty;
+            input1 = finished & next(chosen) = 0 : empty;
+            TRUE : input1;
+        esac;
+
+    next(input2) :=
+        case
+            input2 = request & next(chosen) = 2 : empty;
+            input2 = finished & next(chosen) = 0 : empty;
+            TRUE : input2;
+        esac;
+    next(output1) :=
+        case
+            chosen = 1 & input1 = request : granted;
+            input1 = finished : empty;
+            TRUE : output1;
+        esac;
+    next(output2) :=
+        case
+            chosen = 2 & input2 = request : granted;
+            input2 = finished : empty;
+            TRUE : output2;
+        esac;
+FAIRNESS
+running
+
+MODULE channel()
+VAR
+    q2s : {empty,request,finished}; --- question to server
+    s2q : {empty,granted}; --- server to question
+ASSIGN
+    init(q2s) := empty; --- Initialization
+    init(s2q) := empty; --- Initialization
+    next(q2s) := q2s; --- Keep current value
+    next(s2q) := s2q; --- Keep current value
+FAIRNESS
+running
+
+MODULE question(input,output)
+VAR
+    state : {noanswer,request,answering,a,b,c,d};
+ASSIGN
+    init(state) := noanswer;
+    next(state) :=
+        case
+            state = noanswer : {noanswer,request};
+            state = request & input = granted : answering;
+            state = answering : {a,b,c,d};
+            state = a : {a,request};
+            state = b : {b,request};
+            state = c : {c,request};
+            state = d : {d,request};
+            TRUE : state;
+        esac;
+    next(input) :=
+        case
+            input = granted & state = answering : empty;
+            TRUE : input;
+        esac;
+    next(output) :=
+        case
+            state = request & output = empty : request;
+            state = answering : finished;
+            TRUE : output;
+        esac;
+FAIRNESS
+running
+
+
+-- Pregunta 10
+
+--- AG (question1.state = request -> (AF question1.input = error | question1.output = error) 
+---                               | (AF question1.input != error & question1.output != error & question1.state = aswering))
+
+--- AG (question2.state = request -> (AF question2.input = error | question2.output = error) 
+---                               | (AF question2.input != error & question2.output != error & question1.state = aswering))

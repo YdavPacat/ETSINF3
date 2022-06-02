@@ -1,0 +1,20 @@
+mod QUIZIFY-MAUDE-SEMAPHORE is
+    protecting QUIZIFY-MAUDE-EXT1 .
+    sort State .
+    op _|_ : Bool Opt?NatList -> State [ctor] .
+
+    var B : Bool .
+    vars L1? L2? L3? : Opt?NatList . 
+    var L : OptNatList . 
+    vars N M : Nat . 
+
+    rl B | L @ ? < N > @ L2? => B | L @ * < N > @ L2? . 
+
+    rl false | L1? @ * < N > @ L2? => true | L1? @ # < N > @ L2? .
+
+    rl B | L1? @ # < N > @ L2? => false | L1? @ A < N > @ L2? .
+    rl B | L1? @ # < N > @ L2? => false | L1? @ B < N > @ L2? .
+    rl B | L1? @ # < N > @ L2? => false | L1? @ C < N > @ L2? .
+    rl B | L1? @ # < N > @ L2? => false | L1? @ D < N > @ L2? .
+
+endm
